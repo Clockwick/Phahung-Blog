@@ -1,4 +1,27 @@
-Phut Thung Saranung Katchami
-Thum Mung Saranung Katchami
-Sang kang Saranung Katchami
+Phut Thung Saranung Katchami <br />
+Thum Mung Saranung Katchami<br />
+Sang kang Saranung Katchami<br />
 
+
+//<br />
+//                       _oo0oo_<br />
+//                      o8888888o<br />
+//                      88" . "88<br />
+//                      (| -_- |)\n<br />
+//                      0\  =  /0<br />
+//                    ___/`---'\___<br />
+//                  .' \\|     |// '.<br />
+//                 / \\|||  :  |||// \<br />
+//                / _||||| -:- |||||- \<br />
+//               |   | \\\  -  /// |   |<br />
+//               | \_|  ''\---/''  |_/ |<br />
+//               \  .-\__  '-'  ___/-. /<br />
+//             ___'. .'  /--.--\  `. .'___<br />
+//          ."" '<  `.___\_<|>_/___.' >' "".<br />
+//         | | :  `- \`.;`\ _ /`;.`/ - ` : | |<br />
+//         \  \ `_.   \_ __\ /__ _/   .-` /  /<br />
+//     =====`-.____`.___ \_____/___.-`___.-'=====<br />
+//                       `=---='<br />
+//<br />
+//<br />
+//     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~<br />
