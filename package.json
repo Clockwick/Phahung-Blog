@@ -1,0 +1,29 @@
+{
+  "name": "@chan-chara/root",
+  "private": true,
+  "prettier": "@chan-chala/prettier-config",
+  "scripts": {
+    "bootstrap": "lerna bootstrap",
+    "start:chan-chara-app": "lerna exec yarn dev --scope @chan-chala/chan-chara-app",
+    "start:chan-chara-admin-app": "lerna exec yarn dev --scope @chan-chala/chan-chara-admin-app",
+    "start:uikit": "lerna exec yarn dev --scope @chan-chara/uikit",
+    "clean": "lerna clean",
+    "build": "lerna run build",
+    "lint": "lerna run lint --parallel",
+    "test": "lerna run test --parallel",
+    "prepare": "husky install"
+  },
+  "workspaces": {
+    "packages": [
+      "packages/**"
+    ],
+    "nohoist": [
+      "**/tailwindcss",
+      "**/@tailwindcss/**"
+    ]
+  },
+  "devDependencies": {
+    "husky": "^7.0.0",
+    "lerna": "^4.0.0"
+  }
+}

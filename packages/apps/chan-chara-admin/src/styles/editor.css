@@ -1,0 +1,19 @@
+h1.ce-header {
+  @apply text-5xl !important;
+  @apply font-bold !important;
+}
+
+h2.ce-header {
+  @apply text-4xl !important;
+  @apply font-bold !important;
+}
+
+h3.ce-header {
+  @apply text-3xl !important;
+  @apply font-bold !important;
+}
+
+/* hack to disable embed caption */
+.embed-tool__caption {
+  @apply hidden !important;
+}
