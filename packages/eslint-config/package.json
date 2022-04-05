@@ -1,0 +1,30 @@
+{
+  "name": "@chan-chala/eslint-config",
+  "version": "1.0.0",
+  "main": ".eslintrc.json",
+  "private": true,
+  "prettier": "@chan-chala/prettier-config",
+  "scripts": {
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.+(json|md)": [
+      "prettier --write"
+    ]
+  },
+  "devDependencies": {
+    "@chan-chala/prettier-config": "^1.0.0",
+    "@typescript-eslint/eslint-plugin": "^4.30.0",
+    "@typescript-eslint/parser": "^4.30.0",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-import-resolver-typescript": "^2.4.0",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-react": "^7.24.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "lint-staged": "^11.1.2"
+  }
+}

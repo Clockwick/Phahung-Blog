@@ -1,0 +1,36 @@
+{
+  "name": "editorjs-strikethrough",
+  "version": "1.0.0",
+  "description": "Strikethrough Tool for Editor.js",
+  "keywords": [
+    "codex editor",
+    "strikethrough",
+    "tool",
+    "editor.js",
+    "editorjs"
+  ],
+  "main": "./dist/bundle.js",
+  "scripts": {
+    "build": "webpack --mode production",
+    "build:dev": "webpack --mode development --watch"
+  },
+  "author": {
+    "name": "Andrew Ye",
+    "email": "yrfandrew@gmail.com"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.9.6",
+    "@babel/preset-env": "^7.9.6",
+    "babel-loader": "^8.1.0",
+    "css-loader": "^5.0.0",
+    "raw-loader": "^4.0.2",
+    "style-loader": "^2.0.0",
+    "webpack": "^4.44.2",
+    "webpack-cli": "^3.3.12"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yrfandrew/editorjs-strikethrough.git"
+  }
+}

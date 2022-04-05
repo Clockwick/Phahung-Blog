@@ -1,0 +1,4 @@
+{
+  "extends": ["@chan-chala/eslint-config"]
+  /* eslint-disable */
+}

@@ -1,0 +1,81 @@
+{
+  "name": "react-share-social",
+  "homepage": "http://sifatul.github.io/react-share-social",
+  "description": "UI component to share contents in Social media. Share contents in facebook, twitter, pinterest, whatsapp etc.",
+  "version": "0.1.48",
+  "keywords": [
+    "react",
+    "component",
+    " react-component",
+    "social",
+    "media",
+    "social-media",
+    "share",
+    "button",
+    "material design",
+    "material-ui"
+  ],
+  "author": "Md Sifatul Islam <devsifat@gmail.com> (http://sifatul.github.io/)",
+  "private": false,
+  "dependencies": {
+    "@material-ui/core": "^4.11.4",
+    "gh-pages": "^3.1.0",
+    "react-share": "^4.3.1"
+  },
+  "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
+    "start": "react-scripts start",
+    "build": "rm -rf dist && NODE_ENV=production babel src/components --out-dir dist --copy-files",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "publish:npm": "export NODE_ENV=production && BABEL_ENV=production && rm -rf dist && mkdir dist &&  babel src/components -d dist --copy-files",
+    "publish:window": "cross-env NODE_ENV=production && npx rimraf dist && mkdir dist &&  babel src/components -d dist --copy-files"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "main": "./dist/index.js",
+  "module": "dist/index.js",
+  "babel": {
+    "presets": [
+      "@babel/react"
+    ],
+    "plugins": [
+      [
+        "@babel/plugin-proposal-class-properties",
+        {
+          "loose": true
+        }
+      ]
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.12.10",
+    "@babel/core": "^7.12.10",
+    "babel-core": "^7.0.0-bridge.0",
+    "css-loader": "^5.0.1",
+    "react": "^17.0.1",
+    "react-scripts": "4.0.1",
+    "react-dom": "^17.0.1",
+    "@testing-library/jest-dom": "^5.11.6",
+    "@testing-library/react": "^11.2.2",
+    "@testing-library/user-event": "^12.6.0",
+    "web-vitals": "^0.2.4"
+  }
+}

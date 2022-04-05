@@ -1,0 +1,18 @@
+{
+  "name": "@chan-chala/prettier-config",
+  "version": "1.0.0",
+  "main": ".prettierrc.json",
+  "private": true,
+  "scripts": {
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.+(json|md)": [
+      "prettier --write"
+    ]
+  },
+  "devDependencies": {
+    "lint-staged": "^11.1.2",
+    "prettier": "^2.3.2"
+  }
+}
