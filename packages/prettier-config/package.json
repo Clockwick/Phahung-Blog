@@ -1,5 +1,5 @@
 {
-  "name": "@chan-chala/prettier-config",
+  "name": "@phahung/prettier-config",
   "version": "1.0.0",
   "main": ".prettierrc.json",
   "private": true,

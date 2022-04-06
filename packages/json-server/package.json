@@ -1,0 +1,21 @@
+{
+  "name": "@phahung/json-server",
+  "version": "0.0.0",
+  "description": "RESTful API mock server",
+  "main": "index.js",
+  "scripts": {
+    "serve": "node ./index.js"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "@faker-js/faker": "^6.0.0-alpha.7",
+    "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "apollo-server": "^3.6.3",
+    "express": "^4.17.3",
+    "graphql": "^16.3.0",
+    "json-graphql-server": "^2.3.1",
+    "json-server": "^0.17.0"
+  }
+}

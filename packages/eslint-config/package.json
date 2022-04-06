@@ -1,9 +1,9 @@
 {
-  "name": "@chan-chala/eslint-config",
+  "name": "@phahung/eslint-config",
   "version": "1.0.0",
   "main": ".eslintrc.json",
   "private": true,
-  "prettier": "@chan-chala/prettier-config",
+  "prettier": "@phahung/prettier-config",
   "scripts": {
     "pre-commit": "lint-staged"
   },
@@ -13,7 +13,7 @@
     ]
   },
   "devDependencies": {
-    "@chan-chala/prettier-config": "^1.0.0",
+    "@phahung/prettier-config": "^1.0.0",
     "@typescript-eslint/eslint-plugin": "^4.30.0",
     "@typescript-eslint/parser": "^4.30.0",
     "eslint": "^7.32.0",

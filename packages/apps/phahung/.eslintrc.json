@@ -1,0 +1,4 @@
+{
+  "extends": ["@phahung/eslint-config"]
+  /* eslint-disable */
+}
