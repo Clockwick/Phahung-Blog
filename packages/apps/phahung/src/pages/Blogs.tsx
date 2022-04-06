@@ -1,7 +1,8 @@
+import Comment from 'components/Comment';
 import React from 'react';
 
 function Blogs() {
-  return <div>Blogs</div>;
+  return <Comment />;
 }
 
 export default Blogs;
