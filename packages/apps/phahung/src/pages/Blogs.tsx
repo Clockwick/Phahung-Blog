@@ -1,8 +1,7 @@
-import Comment from 'components/Comment';
 import React from 'react';
 
 const Blogs: React.FC = () => {
-  return <Comment />;
+  return <></>;
 };
 
 export default Blogs;

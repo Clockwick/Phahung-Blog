@@ -58,6 +58,7 @@
         "endOfLine": "auto"
       }
     ],
-    "jsx-a11y/alt-text": "off"
+    "jsx-a11y/alt-text": "off",
+    "react/jsx-props-no-spreading": "off"
   }
 }
