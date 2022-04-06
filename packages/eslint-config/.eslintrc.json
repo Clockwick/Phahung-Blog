@@ -57,6 +57,7 @@
       {
         "endOfLine": "auto"
       }
-    ]
+    ],
+    "jsx-a11y/alt-text": "off"
   }
 }

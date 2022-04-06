@@ -11,22 +11,22 @@ import {
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { styled } from '@mui/styles';
 import React, { useState } from 'react';
-import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
-import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+// import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
+// import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 
 const HiddenAndShowButton = styled(Button)({
   paddingX: '4px',
   minWidth: 'min-content',
 });
 
-const Comment = () => {
+const Comment: React.FC = () => {
   const data =
     'lorem Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam aperiam nisi praesentium soluta repellendus quas enimconsequatur deleniti veritatis repellat, recusandae, delectus,rerum aliquam? Quia repellat similique nostrum doloribus';
 
   const [readMore, setReadMore] = useState(false);
   const [like, setLike] = useState(false);
   const handleOnclick = () => {
-    setLike((prevState) => !like);
+    setLike((prevState) => !prevState);
   };
   return (
     <Container maxWidth="lg">
@@ -92,7 +92,16 @@ const Comment = () => {
           <Stack direction="row" alignItems="center">
             <Button
               onClick={handleOnclick}
-              startIcon={like ? <ThumbUpIcon /> : <ThumbUpOutlinedIcon />}
+              startIcon={
+                <img
+                  src={
+                    like
+                      ? '../../../assets/images/buddha_color.png'
+                      : '../../../assets/images/buddha.png'
+                  }
+                  width={30}
+                />
+              }
               sx={{ color: 'blue' }}
             >
               Like
