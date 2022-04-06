@@ -11,7 +11,8 @@ import {
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { styled } from '@mui/styles';
 import React, { useState } from 'react';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 
 const HiddenAndShowButton = styled(Button)({
   paddingX: '4px',
@@ -23,6 +24,10 @@ const Comment = () => {
     'lorem Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam aperiam nisi praesentium soluta repellendus quas enimconsequatur deleniti veritatis repellat, recusandae, delectus,rerum aliquam? Quia repellat similique nostrum doloribus';
 
   const [readMore, setReadMore] = useState(false);
+  const [like, setLike] = useState(false);
+  const handleOnclick = () => {
+    setLike((prevState) => !like);
+  };
   return (
     <Container maxWidth="lg">
       <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
@@ -86,8 +91,9 @@ const Comment = () => {
           {/* <Rating name="read-only" value={4} readOnly /> */}
           <Stack direction="row" alignItems="center">
             <Button
-              startIcon={<FavoriteBorderIcon />}
-              sx={{ width: '5px', color: 'red' }}
+              onClick={handleOnclick}
+              startIcon={like ? <ThumbUpIcon /> : <ThumbUpOutlinedIcon />}
+              sx={{ color: 'blue' }}
             >
               Like
             </Button>
