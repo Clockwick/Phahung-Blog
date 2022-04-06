@@ -13,6 +13,8 @@ import { styled } from '@mui/styles';
 import React, { useState } from 'react';
 // import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
 // import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import IconButton from '@mui/material/IconButton';
+// import DeleteIcon from '@mui/icons-material/Delete';
 
 const HiddenAndShowButton = styled(Button)({
   paddingX: '4px',
@@ -28,11 +30,15 @@ const Comment: React.FC = () => {
   const handleOnclick = () => {
     setLike((prevState) => !prevState);
   };
+  const handle = () => {
+    // console.log('hello');
+  };
   return (
     <Container maxWidth="lg">
       <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
         รีวิวจากผู้อ่าน
       </Typography>
+      S
       <Stack direction="row" spacing={1}>
         <Typography sx={{ color: '#f9a825' }}>5.0</Typography>
         <Rating name="read-only" value={4} readOnly />
@@ -58,7 +64,13 @@ const Comment: React.FC = () => {
                 </Typography>
               </Stack>
             </Stack>
-            <MoreHorizIcon sx={{ ml: 'auto' }} />
+            <IconButton
+              onClick={handle}
+              aria-label="setting"
+              sx={{ ml: 'auto', mb: 'auto' }}
+            >
+              <MoreHorizIcon />
+            </IconButton>
           </Stack>
           <Divider />
           <Typography variant="body1">
