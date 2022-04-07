@@ -1,9 +1,9 @@
+/* eslint-disable no-nested-ternary */
 import {
   Typography,
   Stack,
   Rating,
   Paper,
-  Container,
   Button,
   Avatar,
   Divider,
@@ -11,29 +11,35 @@ import {
 import { styled } from '@mui/styles';
 import React, { useState } from 'react';
 import Popper from 'components/Popper/PopperComment';
+import TextareaAutosize from '@mui/material/TextareaAutosize';
 
 const HiddenAndShowButton = styled(Button)({
   paddingX: '4px',
   minWidth: 'min-content',
 });
 
-const Comment: React.FC = () => {
-  const data =
-    'lorem Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam aperiam nisi praesentium soluta repellendus quas enimconsequatur deleniti veritatis repellat, recusandae, delectus,rerum aliquam? Quia repellat similique nostrum doloribus';
+interface IComment {
+  id: string;
+  data: string;
+}
 
+const Comment: React.FC<IComment> = ({ id, data }) => {
   const [readMore, setReadMore] = useState(false);
   const [like, setLike] = useState(false);
+  const [canEdit, setCanEdit] = useState(false);
+  const [comment, setComment] = useState(data);
+  const handleCanEdit = (): void => {
+    setCanEdit(true);
+  };
   const handleOnclick = () => {
     setLike((prevState) => !prevState);
   };
-  const handle = () => {
-    // console.log('hello');
+  const handleSubmitComment = () => {
+    setCanEdit(false);
+    // setComment()
   };
   return (
     <>
-      <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
-        รีวิวจากผู้อ่าน
-      </Typography>
       <Stack direction="row" spacing={1}>
         <Typography sx={{ color: '#f9a825' }}>5.0</Typography>
         <Rating name="read-only" value={4} readOnly />
@@ -60,37 +66,60 @@ const Comment: React.FC = () => {
               </Stack>
             </Stack>
             <Typography sx={{ ml: 'auto', mb: 'auto' }}>
-              <Popper />
+              <Popper handleCanEdit={handleCanEdit} />
             </Typography>
           </Stack>
           <Divider />
-          <Typography variant="body1">
-            {readMore ? (
-              <>
-                <Typography>
-                  {data}
-                  <HiddenAndShowButton
-                    disableRipple
-                    onClick={() => setReadMore(false)}
+          {canEdit ? (
+            <Stack>
+              <TextareaAutosize
+                id="standard-basic"
+                maxRows={7}
+                minRows={7}
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+              />
+              <Button onClick={handleSubmitComment}>Submit</Button>
+            </Stack>
+          ) : comment.length > 50 ? (
+            <>
+              {readMore ? (
+                <>
+                  <Typography
+                    noWrap={false}
+                    sx={{
+                      wordWrap: 'break-word',
+                    }}
                   >
-                    ซ่อน
-                  </HiddenAndShowButton>
+                    {comment}
+                    <HiddenAndShowButton
+                      disableRipple
+                      onClick={() => setReadMore(false)}
+                    >
+                      ซ่อน
+                    </HiddenAndShowButton>
+                  </Typography>
+                </>
+              ) : (
+                <Typography variant="body1">
+                  <Typography>
+                    {comment.substring(0, 100)}
+                    <HiddenAndShowButton
+                      disableRipple
+                      onClick={() => setReadMore(true)}
+                    >
+                      ... อ่านเพิ่มเติม
+                    </HiddenAndShowButton>{' '}
+                  </Typography>
                 </Typography>
-              </>
-            ) : (
-              <>
-                <Typography>
-                  {data.substring(0, 100)}
-                  <HiddenAndShowButton
-                    disableRipple
-                    onClick={() => setReadMore(true)}
-                  >
-                    ... อ่านเพิ่มเติม
-                  </HiddenAndShowButton>{' '}
-                </Typography>
-              </>
-            )}
-          </Typography>
+              )}
+            </>
+          ) : (
+            <>
+              <Typography>{comment}</Typography>
+            </>
+          )}
+
           {/* <Rating name="read-only" value={4} readOnly /> */}
           <Stack direction="row" alignItems="center">
             <Button

@@ -7,7 +7,11 @@ import Paper from '@mui/material/Paper';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import IconButton from '@mui/material/IconButton';
 
-const PopperComment: React.FC = () => {
+interface PopperCommentProps {
+  handleCanEdit: () => void;
+}
+
+const PopperComment: React.FC<PopperCommentProps> = ({ handleCanEdit }) => {
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null,
   );
@@ -21,7 +25,10 @@ const PopperComment: React.FC = () => {
       setOpen((prev) => placement !== newPlacement || !prev);
       setPlacement(newPlacement);
     };
-
+  const handleOnClick = () => {
+    handleCanEdit();
+    setOpen(false);
+  };
   return (
     <Box sx={{ width: 500 }}>
       <PopperMUI
@@ -34,7 +41,9 @@ const PopperComment: React.FC = () => {
         {({ TransitionProps }) => (
           <Fade {...TransitionProps} timeout={350}>
             <Paper elevation={4}>
-              <Button sx={{ width: '100%' }}>Edit Comment</Button>
+              <Button sx={{ width: '100%' }} onClick={handleOnClick}>
+                Edit Comment
+              </Button>
               <Button sx={{ width: '100%' }}> Delete Comment</Button>
             </Paper>
           </Fade>
