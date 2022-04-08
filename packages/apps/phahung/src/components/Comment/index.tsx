@@ -119,8 +119,6 @@ const Comment: React.FC<IComment> = ({ id, data }) => {
               <Typography>{comment}</Typography>
             </>
           )}
-
-          {/* <Rating name="read-only" value={4} readOnly /> */}
           <Stack direction="row" alignItems="center">
             <Button
               onClick={handleOnclick}
