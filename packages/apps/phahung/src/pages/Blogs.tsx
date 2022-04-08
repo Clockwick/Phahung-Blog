@@ -1,7 +1,7 @@
 import React from 'react';
 
-function Blogs() {
-  return <div>Blogs</div>;
-}
+const Blogs: React.FC = () => {
+  return <>Blogs</>;
+};
 
 export default Blogs;
