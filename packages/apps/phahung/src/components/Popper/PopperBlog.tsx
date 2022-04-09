@@ -1,5 +1,6 @@
+/* eslint-disable */
 import React from 'react';
-import Box from '@mui/material/Box';
+import { Stack, Avatar, Box, Typography } from '@mui/material';
 import PopperMUI, { PopperPlacementType } from '@mui/material/Popper';
 import Button from '@mui/material/Button';
 import Fade from '@mui/material/Fade';
@@ -7,14 +8,22 @@ import Paper from '@mui/material/Paper';
 import IconButton from '@mui/material/IconButton';
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
 import { useHistory } from 'react-router-dom';
+import { useUser } from 'store/hooks/userHook';
 
 const PopperBlog: React.FC = () => {
+  const { isLoggedIn, logoutHandler } = useUser();
   const history = useHistory();
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null,
   );
   const [open, setOpen] = React.useState(false);
   const [placement, setPlacement] = React.useState<PopperPlacementType>();
+
+  const handleLogout = (): void => {
+    console.log('logout');
+    logoutHandler();
+    window.location.href = '/signin';
+  };
 
   const handleClick =
     (newPlacement: PopperPlacementType) =>
@@ -44,14 +53,20 @@ const PopperBlog: React.FC = () => {
               <Button sx={{ width: '100%' }} onClick={handleOnClick}>
                 Edit Profile
               </Button>
-              <Button sx={{ width: '100%' }}> Logout</Button>
+              <Button sx={{ width: '100%' }} onClick={handleLogout}>
+                {' '}
+                Logout
+              </Button>
             </Paper>
           </Fade>
         )}
       </PopperMUI>
-      <IconButton sx={{ float: 'right' }} onClick={handleClick('bottom-end')}>
-        <KeyboardArrowDownOutlinedIcon />
-      </IconButton>
+      <Typography sx={{ display: 'flex' }}>
+        <Avatar alt="Remy Sharp" src="assets/Avatar.png" />
+        <IconButton sx={{ float: 'right' }} onClick={handleClick('bottom-end')}>
+          <KeyboardArrowDownOutlinedIcon />
+        </IconButton>
+      </Typography>
     </Box>
   );
 };

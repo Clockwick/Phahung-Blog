@@ -12,7 +12,7 @@ const Navbar: React.FC = () => {
       direction="row"
       justifyContent="space-around"
       alignItems="center"
-      sx={{ height: '50px' }}
+      sx={{ height: '50px', backgroundColor: '#FFF7F2' }}
     >
       <Link href="/" to="/">
         <img
