@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Container,
-  Grid,
-  CircularProgress as Loading,
-} from '@mui/material';
+import { Container, Grid, CircularProgress as Loading } from '@mui/material';
 import BlogCard from 'components/BlogCard/BlogCard';
 import type { BlogPreview } from 'types/blog';
 import { BlogPreview as mockBlogPreview } from 'mocks/BlogPreview';
@@ -118,26 +114,26 @@ const Blogs = () => {
           </Grid>
         );
       }
-      // case '12': {
-      //   const {
-      //     image: image9,
-      //     title: title9,
-      //     author: author9,
-      //     likes: likes9,
-      //   } = receivedBlogs[9];
-      //   return (
-      //     <Grid container spacing={3}>
-      //       <Grid item xs={12}>
-      //         <BlogCard
-      //           image={image9}
-      //           title={title9}
-      //           author={author9}
-      //           likes={likes9}
-      //         />
-      //       </Grid>
-      //     </Grid>
-      //   );
-      // }
+      case '12': {
+        const {
+          image: image9,
+          title: title9,
+          author: author9,
+          likes: likes9,
+        } = receivedBlogs[9];
+        return (
+          <Grid container spacing={3}>
+            <Grid item xs={12}>
+              <BlogCard
+                image={image9}
+                title={title9}
+                author={author9}
+                likes={likes9}
+              />
+            </Grid>
+          </Grid>
+        );
+      }
       case '8-4': {
         const {
           image: image2,
@@ -218,12 +214,13 @@ const Blogs = () => {
         flexDirection: 'column',
         justifyContent: 'center',
         alignContent: 'center',
+        marginBlockStart: '3%',
       }}
       maxWidth="lg"
     >
       <Grid container direction="row" alignItems="center">
         {blogs && didFetchBlogsData ? (
-          (['6-6', '8-4', '4-8', '4-4-4'] as GridLayout[]).map((layout) =>
+          (['6-6', '8-4', '4-8', '4-4-4', '12'] as GridLayout[]).map((layout) =>
             renderLayout(layout, blogs),
           )
         ) : (

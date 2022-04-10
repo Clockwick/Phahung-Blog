@@ -1,7 +1,8 @@
 export const BlogPreview = [
   {
     id: '62531898214effcff9710947',
-    title: 'qui',
+    title:
+      'quidjgoidpjgdjafjadsjfopasdjfopjdasopfjo dpasjfjadspfopadsjfoadsopfjadopsj fopdasjfopadsjfpojdsaopf jsadjofjsdpojfadsofpjdsaopjfopj',
     author: 'Karyn Kerr',
     createdAt: 1649611639,
     likes: 70,

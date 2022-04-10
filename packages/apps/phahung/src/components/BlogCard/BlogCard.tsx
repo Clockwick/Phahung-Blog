@@ -1,9 +1,7 @@
 import React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import { Divider } from '@mui/material';
+import { Box, Stack, Divider, Typography } from '@mui/material';
 
 const tempData = {
   image: 'https://food.mthai.com/app/uploads/2019/04/Marble-Cafe-2.jpg',
@@ -23,16 +21,14 @@ const BlogCard: React.FC<BlogCardProps> = ({ image, title, author, likes }) => {
   return (
     <Box
       sx={{
-        // // backgroundColor: 'primary.dark',
-        // '&:hover': {
-        //   backgroundColor: 'primary.main',
-        //   opacity: [0.9, 0.8, 0.7],
-        // },
+        '&:hover': {
+          opacity: [0.9, 0.8, 0.7],
+        },
         height: '50vh',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        margin: '1%',
+        cursor: 'pointer',
       }}
     >
       <img
@@ -50,20 +46,32 @@ const BlogCard: React.FC<BlogCardProps> = ({ image, title, author, likes }) => {
 
       <Card
         sx={{
-          maxWidth: '70%',
+          maxWidth: '80%',
           borderRadius: 5,
           position: 'relative',
           top: '-10%',
-          textShadow: '2px 2px 4px #000000',
+          boxShadow: '2px 2px 4px #EEEEEE',
         }}
       >
         <CardContent style={{ textAlign: 'center' }}>
-          <Typography style={{ fontWeight: 'bold' }}>{title}</Typography>
+          <Stack direction="row" justifyContent="center" alignItems="center">
+            <img
+              src="../../../public/assets/images/buddha_color.png"
+              width="20px"
+              height="20px"
+              alt="buddha"
+              style={{ margin: '0% 7px 0% 0%' }}
+            />
+            <Typography>{likes}</Typography>
+          </Stack>
+          <Typography style={{ fontWeight: 'bold' }}>
+            {title.length > 50 ? title.slice(0, 51).concat('...') : title}
+          </Typography>
           <Divider style={{ margin: '3% 0%' }} />
           <Typography>author: {author}</Typography>
         </CardContent>
       </Card>
-    </Box>boxShadow: '2px 2px 4px #000000';
+    </Box>
   );
 };
 
