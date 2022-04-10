@@ -5,7 +5,8 @@
       "components/*": ["src/components/*"],
       "pages/*": ["src/pages/*"],
       "styles/*": ["src/styles/*"],
-      "store/*": ["src/store/*"]
+      "store/*": ["src/store/*"],
+      "mocks/*": ["src/mocks/*"]
     },
     "target": "ESNext",
     "useDefineForClassFields": true,

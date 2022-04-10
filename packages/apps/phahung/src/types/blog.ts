@@ -1,7 +1,8 @@
-export type blog = {
+export type BlogPreview = {
   id: string;
   title: string;
-  description: string;
-  time: number;
+  author: string;
+  like: number;
+  createdAt: number;
   image: string;
 };
