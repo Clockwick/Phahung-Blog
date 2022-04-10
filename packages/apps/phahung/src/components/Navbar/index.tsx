@@ -10,7 +10,7 @@ const Navbar: React.FC = () => {
   return (
     <Stack
       direction="row"
-      justifyContent="space-around"
+      justifyContent="space-between"
       alignItems="center"
       sx={{ height: '50px', backgroundColor: '#FFF7F2' }}
     >
