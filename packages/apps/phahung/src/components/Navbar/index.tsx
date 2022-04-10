@@ -12,18 +12,18 @@ const Navbar: React.FC = () => {
       direction="row"
       justifyContent="space-between"
       alignItems="center"
-      sx={{ height: '50px', backgroundColor: '#FFF7F2' }}
+      sx={{ height: '70px', backgroundColor: '#FFF7F2' }}
     >
       <Link href="/" to="/">
         <img
           src="/assets/images/logo.png"
-          width="50px"
-          height="50px"
+          width="60px"
+          height="60px"
           alt="logo"
         />
       </Link>
 
-      <Stack direction="row" alignItems="center">
+      <Stack direction="row" alignItems="center" sx={{ paddingRight: 4 }}>
         <SearchBar />
         <PopperBlog />
       </Stack>

@@ -8,7 +8,8 @@ import { makeStyles } from '@mui/styles';
 
 interface IComment {
   id: string;
-  data: string;
+  content: string;
+  likes: number;
 }
 const useStyles = makeStyles(() => ({
   header: {
@@ -18,22 +19,34 @@ const useStyles = makeStyles(() => ({
     width: '100px',
   },
   paragraph: {
-    // color: '',
+    color: 'blue',
   },
   figure: {
     width: '100px',
   },
 }));
-const Blog: React.FC = () => {
+const Blog = () => {
   const classes = useStyles();
   const mockComments = [
     {
       id: '1',
-      data: 'สวัสดีฉันคิอ ความคิดเห็นที่ 1 ',
+      content: 'สวัสดีฉันคิอ ความคิดเห็นที่ 1 ',
+      likes: 5,
     },
     {
       id: '2',
-      data: 'สวัสดีฉันคิอ ความคิดเห็นที่ 2 ',
+      content: 'สวัสดีฉันคิอ ความคิดเห็นที่ 2 ',
+      likes: 5,
+    },
+    {
+      id: '3',
+      content: 'สวัสดีฉันคิอ ความคิดเห็นที่ 3 ',
+      likes: 5,
+    },
+    {
+      id: '4',
+      content: 'สวัสดีฉันคิอ ความคิดเห็นที่ 4 ',
+      likes: 5,
     },
   ];
   const mockBlog = {
@@ -351,13 +364,42 @@ const Blog: React.FC = () => {
   // const [comments, setComments] = useState<IComment[]>([]);
   const [comments, setComments] = useState<IComment[]>(mockComments);
   const [newComment, setNewComment] = useState<string>('');
+  // const [state, setState] = useState<boolean>(false);
   // const [didFetchComment, setDidFetchComment] = useState(false);
   const handleOnClick = () => {
     // setDidFetchComment(true);
     // await axios.post
-    setComments([...comments, { id: '3', data: newComment }]);
+    setComments([...comments, { id: '3', content: newComment, likes: 0 }]);
     setNewComment('');
+    // setComments(comments.filter((comment) => comment.id !== '4'));
   };
+
+  const handleDelete = (id: string) => {
+    const newDataComments = comments.filter((comment) => comment.id !== id);
+    setComments(newDataComments);
+  };
+  const incrementLikes = (id: string) => {
+    console.log('incrementLikes');
+    const newDataComments = comments.map((comment) => {
+      if (comment.id === id) {
+        return { ...comment, likes: comment.likes + 1 };
+      }
+      console.log('comment.id', comment.likes);
+      return comment;
+    });
+    setComments(newDataComments);
+  };
+  const decrementLikes = (id: string) => {
+    console.log('decrementLikes');
+    const newDataComments = comments.map((comment) => {
+      if (comment.id === id) {
+        return { ...comment, likes: comment.likes - 1 };
+      }
+      return comment;
+    });
+    setComments(newDataComments);
+  };
+
   // useEffect(() => {
   //   if (!didFetchComment) {
   //     //  await axios.get('/blog')
@@ -408,7 +450,15 @@ const Blog: React.FC = () => {
         {comments &&
           comments.map((comment) => {
             return (
-              <Comment key={comment.id} id={comment.id} data={comment.data} />
+              <Comment
+                handleDelete={handleDelete}
+                key={comment.id}
+                id={comment.id}
+                content={comment.content}
+                likes={comment.likes}
+                decrementLikes={decrementLikes}
+                incrementLikes={incrementLikes}
+              />
             );
           })}
       </Stack>

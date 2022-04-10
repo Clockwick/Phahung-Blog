@@ -11,7 +11,7 @@ import {
 import { styled } from '@mui/styles';
 import React, { useState } from 'react';
 // eslint-disable-next-line import/no-unresolved
-import Popper from 'components/Popper/PopperComment';
+import PopperComment from 'components/Popper/PopperComment';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 
 const HiddenAndShowButton = styled(Button)({
@@ -21,24 +21,49 @@ const HiddenAndShowButton = styled(Button)({
 
 interface IComment {
   id: string;
-  data: string;
+  content: string;
+  likes: number;
+  handleDelete: (id: string) => void;
+  decrementLikes: (id: string) => void;
+  incrementLikes: (id: string) => void;
 }
 
-const Comment: React.FC<IComment> = ({ id, data }) => {
+const Comment: React.FC<IComment> = ({
+  id,
+  content,
+  likes,
+  handleDelete,
+  decrementLikes,
+  incrementLikes,
+}) => {
   const [readMore, setReadMore] = useState(false);
   const [like, setLike] = useState(false);
   const [canEdit, setCanEdit] = useState(false);
-  const [comment, setComment] = useState(data);
+  const [comment, setComment] = useState(content);
   const handleCanEdit = (): void => {
     setCanEdit(true);
   };
   const handleOnclick = () => {
-    setLike((prevState) => !prevState);
+    setLike((prevState) => {
+      if (prevState) {
+        console.log('prevState', prevState);
+        decrementLikes(id);
+        setLike(false);
+      } else if (!prevState) {
+        console.log('prevState', prevState);
+        incrementLikes(id);
+        console.log('asd');
+        setLike(true);
+      }
+      return !prevState;
+    });
   };
+
   const handleSubmitComment = () => {
     setCanEdit(false);
     // setComment()
   };
+  console.log('likes', likes);
   return (
     <>
       <Stack direction="row" spacing={1}>
@@ -67,7 +92,11 @@ const Comment: React.FC<IComment> = ({ id, data }) => {
               </Stack>
             </Stack>
             <Typography sx={{ ml: 'auto', mb: 'auto' }}>
-              <Popper handleCanEdit={handleCanEdit} />
+              <PopperComment
+                id={id}
+                handleCanEdit={handleCanEdit}
+                handleDelete={handleDelete}
+              />
             </Typography>
           </Stack>
           <Divider />
@@ -138,7 +167,7 @@ const Comment: React.FC<IComment> = ({ id, data }) => {
             >
               Like
             </Button>
-            13.1k
+            {likes}
           </Stack>
         </Stack>
       </Paper>
