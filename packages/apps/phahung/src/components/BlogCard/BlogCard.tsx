@@ -14,30 +14,21 @@ const tempData = {
 };
 
 interface BlogCardProps {
-  width: string | '100%';
   image: string;
   title: string;
   author: string;
-  like: number;
+  likes: number;
 }
-const BlogCard: React.FC<BlogCardProps> = ({
-  width,
-  image,
-  title,
-  author,
-  like,
-}) => {
+const BlogCard: React.FC<BlogCardProps> = ({ image, title, author, likes }) => {
   return (
     <Box
       sx={{
-        height: '60vh',
-        width: { width },
-        // backgroundColor: 'primary.dark',
+        // // backgroundColor: 'primary.dark',
         // '&:hover': {
         //   backgroundColor: 'primary.main',
         //   opacity: [0.9, 0.8, 0.7],
         // },
-        // width: '90vw',
+        height: '50vh',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -47,7 +38,7 @@ const BlogCard: React.FC<BlogCardProps> = ({
       <img
         height="80%"
         width="100%"
-        src={tempData.image}
+        src={image}
         alt="Logo"
         style={{
           borderRadius: '15px',
@@ -63,17 +54,16 @@ const BlogCard: React.FC<BlogCardProps> = ({
           borderRadius: 5,
           position: 'relative',
           top: '-10%',
+          textShadow: '2px 2px 4px #000000',
         }}
       >
         <CardContent style={{ textAlign: 'center' }}>
-          <Typography style={{ fontWeight: 'bold' }}>
-            {tempData.title}
-          </Typography>
+          <Typography style={{ fontWeight: 'bold' }}>{title}</Typography>
           <Divider style={{ margin: '3% 0%' }} />
-          <Typography>author: {tempData.author}</Typography>
+          <Typography>author: {author}</Typography>
         </CardContent>
       </Card>
-    </Box>
+    </Box>boxShadow: '2px 2px 4px #000000';
   );
 };
 

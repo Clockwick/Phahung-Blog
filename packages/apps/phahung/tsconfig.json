@@ -6,7 +6,8 @@
       "pages/*": ["src/pages/*"],
       "styles/*": ["src/styles/*"],
       "store/*": ["src/store/*"],
-      "mocks/*": ["src/mocks/*"]
+      "mocks/*": ["src/mocks/*"],
+      "types/*": ["src/types/*"]
     },
     "target": "ESNext",
     "useDefineForClassFields": true,
