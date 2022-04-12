@@ -39,6 +39,7 @@ const PopperComment: React.FC<PopperCommentProps> = ({ handleCanEdit }) => {
         sx={{ width: '200px' }}
       >
         {({ TransitionProps }) => (
+          // eslint-disable-next-line react/jsx-props-no-spreading
           <Fade {...TransitionProps} timeout={350}>
             <Paper elevation={4}>
               <Button sx={{ width: '100%' }} onClick={handleOnClick}>

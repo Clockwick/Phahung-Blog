@@ -6,8 +6,10 @@ import Fade from '@mui/material/Fade';
 import Paper from '@mui/material/Paper';
 import IconButton from '@mui/material/IconButton';
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
+import { useHistory } from 'react-router-dom';
 
-const PopperBlog = () => {
+const PopperBlog: React.FC = () => {
+  const history = useHistory();
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null,
   );
@@ -22,6 +24,10 @@ const PopperBlog = () => {
       setPlacement(newPlacement);
     };
 
+  const handleOnClick = () => {
+    history.push('/profile');
+    setOpen(false);
+  };
   return (
     <Box>
       <PopperMUI
@@ -32,9 +38,12 @@ const PopperBlog = () => {
         sx={{ width: '200px' }}
       >
         {({ TransitionProps }) => (
+          // eslint-disable-next-line react/jsx-props-no-spreading
           <Fade {...TransitionProps} timeout={350}>
             <Paper elevation={4}>
-              <Button sx={{ width: '100%' }}>Edit Profile</Button>
+              <Button sx={{ width: '100%' }} onClick={handleOnClick}>
+                Edit Profile
+              </Button>
               <Button sx={{ width: '100%' }}> Logout</Button>
             </Paper>
           </Fade>

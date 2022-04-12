@@ -1,10 +1,11 @@
+/* eslint-disable import/no-unresolved */
 import React from 'react';
 import Blog from 'pages/Blog';
 import Blogs from 'pages/Blogs';
 import NotFound from 'pages/NotFound';
 import Signin from 'pages/Signin';
 import Signup from 'pages/Signup';
-
+import Profile from 'pages/Profile';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Navbar from 'components/Navbar';
 
@@ -17,6 +18,7 @@ const App: React.FC = () => (
         <Route exact path="/" component={Blogs} />
         <Route exact path="/signin" component={Signin} />
         <Route exact path="/signup" component={Signup} />
+        <Route exact path="/profile" component={Profile} />
         <Route path="*" component={NotFound} />
       </Switch>
     </React.Suspense>

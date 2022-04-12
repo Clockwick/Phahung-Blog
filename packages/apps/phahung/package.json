@@ -4,33 +4,19 @@
   "private": true,
   "prettier": "@phahung/prettier-config",
   "scripts": {
-    "pre-commit": "lint-staged",
     "dev": "vite",
     "build": "tsc && vite build",
     "serve": "vite preview",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
     "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\" --fix"
   },
-  "lint-staged": {
-    "*.+(js|jsx|ts|tsx)": [
-      "rustywind --write",
-      "eslint --fix",
-      "prettier --write --ignore-unknown"
-    ],
-    "*.+(json|md)": [
-      "prettier --write"
-    ],
-    "*.html": [
-      "rustywind --write"
-    ]
-  },
   "dependencies": {
     "@editorjs/editorjs": "^2.22.2",
-    "@mui/icons-material": "^5.3.1",
-    "@mui/material": "^5.4.0",
-    "@mui/styles": "^5.3.0",
-    "@phntms/react-share": "^0.0.7",
-    "@tailwindcss/line-clamp": "^0.2.1",
+    "@emotion/react": "^11.9.0",
+    "@emotion/styled": "^11.8.1",
+    "@mui/icons-material": "^5.6.0",
+    "@mui/material": "^5.6.0",
+    "@mui/styles": "^5.6.0",
     "@types/react-html-parser": "^2.0.2",
     "@tailwindcss/line-clamp": "^0.2.1",
     "@types/react-router": "^5.1.17",
@@ -40,25 +26,17 @@
     "moment": "^2.29.1",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
-    "react-helmet": "^6.1.0",
     "react-html-parser": "^2.0.2",
-    "react-router-dom": "^5.3.0",
-    "react-share": "^4.4.0",
-    "react-share-social": "^0.1.48"
+    "react-router-dom": "^5.3.0"
   },
   "devDependencies": {
     "@phahung/eslint-config": "^1.0.0",
     "@phahung/prettier-config": "^1.0.0",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
-    "@types/react-helmet": "^6.1.5",
     "@types/react-router-dom": "^5.1.8",
     "@vitejs/plugin-react-refresh": "^1.3.1",
-    "autoprefixer": "^10.3.4",
     "lint-staged": "^11.1.2",
-    "postcss": "^8.3.6",
-    "rustywind": "^0.12.2",
-    "tailwindcss": "^2.2.9",
     "typescript": "^4.3.2",
     "vite": "^2.5.2",
     "vite-plugin-eslint": "^1.3.0",

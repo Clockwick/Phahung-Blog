@@ -51,11 +51,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
   },
 }));
-const SearchBar = () => {
+const SearchBar: React.FC = () => {
   const [value, setValue] = useState<string>('');
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    console.log(value);
+    // console.log(value);
     setValue('');
   };
 

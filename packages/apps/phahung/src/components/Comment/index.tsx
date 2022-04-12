@@ -10,6 +10,7 @@ import {
 } from '@mui/material';
 import { styled } from '@mui/styles';
 import React, { useState } from 'react';
+// eslint-disable-next-line import/no-unresolved
 import Popper from 'components/Popper/PopperComment';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 
@@ -126,9 +127,10 @@ const Comment: React.FC<IComment> = ({ id, data }) => {
                 <img
                   src={
                     like
-                      ? '../../../assets/images/buddha_color.png'
-                      : '../../../assets/images/buddha.png'
+                      ? '/assets/images/buddha_color.png'
+                      : '/assets/images/buddha.png'
                   }
+                  alt="likeIcon"
                   width={30}
                 />
               }

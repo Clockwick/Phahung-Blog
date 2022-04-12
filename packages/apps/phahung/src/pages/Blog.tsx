@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+// eslint-disable-next-line import/no-unresolved
 import Comment from 'components/Comment';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 import { Button, Container, Stack, Typography } from '@mui/material';

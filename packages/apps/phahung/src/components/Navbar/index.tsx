@@ -1,7 +1,10 @@
 import { Stack } from '@mui/material';
+import PopperBlog from 'components/Popper/PopperBlog';
+// eslint-disable-next-line import/no-unresolved
 import SearchBar from 'components/SearchBar';
 import React from 'react';
-import PopperBlog from 'components/Popper/PopperBlog';
+// eslint-disable-next-line import/no-unresolved
+import { Link } from 'react-router-dom';
 
 const Navbar: React.FC = () => {
   return (
@@ -11,7 +14,14 @@ const Navbar: React.FC = () => {
       alignItems="center"
       sx={{ height: '50px' }}
     >
-      <img src="../../../assets/images/logo.png" width="50px" height="50px" />
+      <Link href="/" to="/">
+        <img
+          src="/assets/images/logo.png"
+          width="50px"
+          height="50px"
+          alt="logo"
+        />
+      </Link>
       <Stack direction="row" alignItems="center">
         <SearchBar />
         <PopperBlog />
