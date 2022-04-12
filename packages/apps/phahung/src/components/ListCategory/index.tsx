@@ -1,12 +1,14 @@
 /* eslint-disable react/no-array-index-key */
+import React, { useState } from 'react';
 import { Button, Stack } from '@mui/material';
-import React from 'react';
 import categoryNames from './cofig';
 
-const ListCategory = () => {
-  const query = 'โพสต์ธรรมะ';
-  const handleOnClick = () => {
-    // fetch data
+const ListCategory = (): JSX.Element => {
+  const [query, setQuery] = useState<string>('');
+  const handleOnClick = (categoryName: string) => {
+    // fetch data axios post query
+    setQuery(categoryName);
+
     console.log('onclick');
   };
   console.log('categoryNames', categoryNames);
@@ -16,7 +18,7 @@ const ListCategory = () => {
         <Button
           key={index}
           variant={query === categoryName ? 'contained' : 'outlined'}
-          onClick={handleOnClick}
+          onClick={() => handleOnClick(categoryName)}
         >
           {categoryName}
         </Button>

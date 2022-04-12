@@ -1,7 +1,9 @@
 export type blog = {
   id: string;
   title: string;
-  description: string;
-  time: number;
+  content: string[];
+  author: string;
+  likes: number;
+  createdAt: number;
   image: string;
 };
