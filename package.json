@@ -5,7 +5,7 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "start:app": "lerna exec yarn dev --scope @phahung/phahung-app",
-    "start:admin": "lerna exec yarn dev --scope @phahung/phahung-admin-aapp",
+    "start:admin": "lerna exec yarn dev --scope @phahung/phahung-admin-app",
     "start:json-server": "lerna exec yarn serve --scope @phahung/json-server",
     "clean": "lerna clean",
     "build": "lerna run build",

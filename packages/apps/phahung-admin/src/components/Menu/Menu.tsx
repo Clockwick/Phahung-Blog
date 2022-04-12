@@ -6,23 +6,16 @@ import { useUser } from 'store/hooks/userHook';
 import MenuTitle from './MenuTitle';
 import config from './config';
 import MenuDropdown from './MenuDropdown';
+import mockProfile from '../../../public/images/Avatar.png';
 
 const Menu: React.FC = ({ children }) => {
   const { user } = useUser();
-  return user!.role === 'Administrator' ? (
-    <MenuUI
-      title={<MenuTitle />}
-      links={config.filter((conf) => conf.label !== 'Users')}
-      user={{ nickname: user!.name, picture: user!.picture }}
-      dropdown={<MenuDropdown />}
-    >
-      {children}
-    </MenuUI>
-  ) : (
+  const name = `${user?.firstName} ${user?.lastName}`;
+  return (
     <MenuUI
       title={<MenuTitle />}
       links={config}
-      user={{ nickname: user!.name, picture: user!.picture }}
+      user={{ nickname: name, picture: mockProfile }}
       dropdown={<MenuDropdown />}
     >
       {children}

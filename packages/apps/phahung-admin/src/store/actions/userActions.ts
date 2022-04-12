@@ -4,9 +4,10 @@ import { userApiCall } from '../../api';
 
 interface User {
   id: string;
-  name: string;
+  firstName: string;
+  lastName: string;
   email: string;
-  picture: string;
+  image: string;
   role: string;
 }
 interface IUser {
@@ -15,8 +16,16 @@ interface IUser {
 
 export const fetchSession = createAsyncThunk('user/fetchSession', async () => {
   /* for production */
-  const res = await userApiCall.getSession();
-  const { user } = res.data as IUser;
+  // const res = await userApiCall.getSession();
+  // const { user } = res.data as IUser;
+  const user: User = {
+    id: '111',
+    firstName: 'Phan',
+    lastName: 'Hung',
+    email: 'phahung@gmail.com',
+    image: '/assets/image/Avatar.png',
+    role: 'Admin',
+  };
   return user;
 });
 
