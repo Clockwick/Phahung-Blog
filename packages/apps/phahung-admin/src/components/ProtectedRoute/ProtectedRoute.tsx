@@ -13,7 +13,6 @@ interface Props extends RouteProps {
 
 const ProtectedRoute: React.FC<Props> = ({ acceptRoles, ...routeProps }) => {
   const { user, isLoggedIn } = useUser();
-  console.log(user);
 
   const canAccess = user && acceptRoles.includes(user.role);
   return (

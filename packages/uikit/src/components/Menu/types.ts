@@ -10,7 +10,7 @@ export interface MenuProps {
   };
   user: {
     nickname: string;
-    image: string;
+    picture: string;
   };
   dropdown: React.ReactNode;
 }
