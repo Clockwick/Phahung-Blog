@@ -33,15 +33,6 @@ const LoginCallback: React.FC = () => {
   //   }
   // };
 
-  const loginWithGoogle = (): void => {
-    const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider).then(async (res) => {
-      const idToken = await res.user.getIdToken();
-      localStorage.setItem('idToken', idToken);
-      fetchSessionHandler();
-    });
-  };
-
   useEffect(() => {
     if (isLoggedIn) {
       history.push('/blogs');
@@ -50,28 +41,24 @@ const LoginCallback: React.FC = () => {
 
   return (
     <div className="flex justify-center items-center w-full h-screen">
-      <div className="hidden w-7/12 h-full bg-green-400 xl:flex" />
+      <div className="hidden w-7/12 h-full bg-yellow-600 xl:flex" />
       <div className="flex justify-center items-center w-full h-full bg-white xl:w-5/12">
         <div className="flex flex-col justify-center items-center">
           <div className="flex justify-center items-center mb-12">
             <img
-              className="w-36 h-36"
+              className="w-36"
               alt="chan-chara-logo"
-              src="/images/chan-chara-logo-green.png"
+              src="/images/logo.png"
             />
           </div>
           <div className="flex flex-col justify-center items-center space-y-4">
-            <p>เข้าสู่ระบบโดย</p>
             <Button
               size="lg"
               color="white"
               type="button"
-              onClick={() => loginWithGoogle()}
+              onClick={fetchSessionHandler}
             >
-              <div className="flex justify-center items-center space-x-2">
-                <Google className="w-8" />
-                <p>Google</p>
-              </div>
+              เข้าสู่ระบบ
             </Button>
           </div>
         </div>

@@ -8,10 +8,16 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import IconButton from '@mui/material/IconButton';
 
 interface PopperCommentProps {
+  id: string;
   handleCanEdit: () => void;
+  handleDelete: (id: string) => void;
 }
 
-const PopperComment: React.FC<PopperCommentProps> = ({ handleCanEdit }) => {
+const PopperComment: React.FC<PopperCommentProps> = ({
+  id,
+  handleCanEdit,
+  handleDelete,
+}) => {
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null,
   );
@@ -25,10 +31,11 @@ const PopperComment: React.FC<PopperCommentProps> = ({ handleCanEdit }) => {
       setOpen((prev) => placement !== newPlacement || !prev);
       setPlacement(newPlacement);
     };
-  const handleOnClick = () => {
+  const handleOnClickEditComment = () => {
     handleCanEdit();
     setOpen(false);
   };
+
   return (
     <Box sx={{ width: 500 }}>
       <PopperMUI
@@ -42,10 +49,13 @@ const PopperComment: React.FC<PopperCommentProps> = ({ handleCanEdit }) => {
           // eslint-disable-next-line react/jsx-props-no-spreading
           <Fade {...TransitionProps} timeout={350}>
             <Paper elevation={4}>
-              <Button sx={{ width: '100%' }} onClick={handleOnClick}>
+              <Button sx={{ width: '100%' }} onClick={handleOnClickEditComment}>
                 Edit Comment
               </Button>
-              <Button sx={{ width: '100%' }}> Delete Comment</Button>
+              <Button sx={{ width: '100%' }} onClick={() => handleDelete(id)}>
+                {' '}
+                Delete Comment
+              </Button>
             </Paper>
           </Fade>
         )}

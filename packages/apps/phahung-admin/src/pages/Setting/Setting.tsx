@@ -5,6 +5,7 @@ import { useUser } from 'store/hooks/userHook';
 import HelpButton from 'components/Button/HelpButton';
 import Rename from './Rename';
 import RenameGuide from './guide';
+import mockProfile from '../../../public/images/Avatar.png';
 
 const Setting: React.FC = () => {
   const { user } = useUser();
@@ -20,8 +21,8 @@ const Setting: React.FC = () => {
               <div className="flex justify-center content-center">
                 <img
                   referrerPolicy="no-referrer"
-                  src={user.picture}
-                  alt="user.beauty.face"
+                  src={mockProfile}
+                  alt="user.profile"
                   className="w-48 rounded-full border-2 border-white border-solid md:w-60"
                 />
               </div>
