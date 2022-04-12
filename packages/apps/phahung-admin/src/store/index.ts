@@ -9,7 +9,7 @@ import userReducer from './reducers/userReducer';
 const rootReducer = combineReducers({ user: userReducer });
 
 const persistedReducer = persistReducer(
-  { key: 'chan-chara-admin', storage },
+  { key: 'phahung-admin', storage },
   rootReducer,
 );
 

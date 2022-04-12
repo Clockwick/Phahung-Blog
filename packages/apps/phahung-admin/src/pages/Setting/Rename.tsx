@@ -6,10 +6,7 @@ import { ToastTrigger } from 'components/Toasts';
 import axios from 'axios';
 import { useUser } from 'store/hooks/userHook';
 import { INamePayload } from './types';
-
-type User = {
-  name: string;
-};
+import { User } from 'store/types';
 
 interface UserProps {
   user: User;
@@ -19,7 +16,7 @@ const Rename: React.FC<UserProps> = ({ user }) => {
   const toast = useToast();
   const { fetchSessionHandler } = useUser();
   const [state, setState] = useState(false);
-  const [name, setName] = useState(user.name);
+  const [name, setName] = useState(`${user.firstName}  ${user.lastName}`);
 
   const handleRename = (): void => {
     axios.defaults.withCredentials = true;
