@@ -371,7 +371,6 @@ const Blog = () => {
     // await axios.post
     setComments([...comments, { id: '3', content: newComment, likes: 0 }]);
     setNewComment('');
-    // setComments(comments.filter((comment) => comment.id !== '4'));
   };
 
   const handleDelete = (id: string) => {
@@ -379,18 +378,15 @@ const Blog = () => {
     setComments(newDataComments);
   };
   const incrementLikes = (id: string) => {
-    console.log('incrementLikes');
     const newDataComments = comments.map((comment) => {
       if (comment.id === id) {
         return { ...comment, likes: comment.likes + 1 };
       }
-      console.log('comment.id', comment.likes);
       return comment;
     });
     setComments(newDataComments);
   };
   const decrementLikes = (id: string) => {
-    console.log('decrementLikes');
     const newDataComments = comments.map((comment) => {
       if (comment.id === id) {
         return { ...comment, likes: comment.likes - 1 };

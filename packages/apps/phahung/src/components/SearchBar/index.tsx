@@ -51,11 +51,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
   },
 }));
-const SearchBar: React.FC = () => {
+const SearchBar = () => {
   const [value, setValue] = useState<string>('');
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    // console.log(value);
+    console.log(value);
     setValue('');
   };
 
@@ -83,7 +83,7 @@ const SearchBar: React.FC = () => {
               placeholder="ค้นหาบทความ..."
               inputProps={{ 'aria-label': 'search' }}
               // onKeyDown={(e) => handleSubmit(e)}
-              onChange={(e) => setValue(e.target.value)}
+              onChange={(e: any) => setValue(e.target.value)}
               value={value}
               sx={{ width: '90%' }}
             />
