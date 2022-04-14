@@ -1,8 +1,14 @@
-import ListCategory from '../components/ListCategory';
 import React from 'react';
+import ListCategory from '../components/ListCategory';
+import Slogan from '../components/Slogan/Slogan';
 
 const Blogs: React.FC = () => {
-  return <ListCategory />;
+  return (
+    <>
+      <Slogan />
+      <ListCategory />
+    </>
+  );
 };
 
 export default Blogs;
