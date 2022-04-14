@@ -1,4 +1,4 @@
-export type blog = {
+export type BlogPreview = {
   id: string;
   title: string;
   content: string[];
