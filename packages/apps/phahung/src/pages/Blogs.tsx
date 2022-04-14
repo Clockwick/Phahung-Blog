@@ -3,6 +3,7 @@ import { Container, Grid, CircularProgress as Loading } from '@mui/material';
 import BlogCard from 'components/BlogCard/BlogCard';
 import type { BlogPreview } from 'types/blog';
 import { BlogPreview as mockBlogPreview } from 'mocks/BlogPreview';
+import ListCategory from 'components/ListCategory';
 
 type GridLayout = '4-4-4' | '6-6' | '12' | '8-4' | '4-8';
 
@@ -94,24 +95,27 @@ const Blogs = () => {
           likes: likes1,
         } = receivedBlogs[1];
         return (
-          <Grid container spacing={3}>
-            <Grid item xs={6}>
-              <BlogCard
-                image={image0}
-                title={title0}
-                author={author0}
-                likes={likes0}
-              />
+          <>
+            <Grid container spacing={3}>
+              <Grid item xs={6}>
+                <BlogCard
+                  image={image0}
+                  title={title0}
+                  author={author0}
+                  likes={likes0}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <BlogCard
+                  image={image1}
+                  title={title1}
+                  author={author1}
+                  likes={likes1}
+                />
+              </Grid>
             </Grid>
-            <Grid item xs={6}>
-              <BlogCard
-                image={image1}
-                title={title1}
-                author={author1}
-                likes={likes1}
-              />
-            </Grid>
-          </Grid>
+            <ListCategory />
+          </>
         );
       }
       case '12': {
