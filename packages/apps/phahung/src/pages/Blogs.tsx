@@ -207,6 +207,33 @@ const Blogs = () => {
     }
   };
 
+  const getBlogs = (receivedBlogs: BlogPreview[]) => {
+    const layouts: any[] = [
+      ['12'],
+      ['6-6'],
+      ['6-6', '12'],
+      ['6-6', '4-8'],
+      ['4-8', '4-4-4'],
+      ['4-8', '4-4-4', '12'],
+      ['6-6', '8-4', '4-4-4'],
+      ['6-6', '8-4', '4-4-4', '12'],
+      ['6-6', '8-4', '4-8', '4-4-4'],
+      ['6-6', '8-4', '4-8', '4-4-4', '12'],
+    ];
+
+    const allEle: any[] = [];
+    const chunkSize = 10;
+
+    for (let i = 0; i < receivedBlogs.length; i += chunkSize) {
+      const chunkBlogs: BlogPreview[] = receivedBlogs.slice(i, i + chunkSize);
+      (layouts[chunkBlogs.length - 1] as GridLayout[]).map((layout) =>
+        allEle.push(renderLayout(layout, chunkBlogs)),
+      );
+    }
+
+    return allEle;
+  };
+
   return (
     <Container
       sx={{
@@ -219,13 +246,14 @@ const Blogs = () => {
       maxWidth="lg"
     >
       <Grid container direction="row" alignItems="center">
-        {blogs && didFetchBlogsData ? (
+        {/* {blogs && didFetchBlogsData ? (
           (['6-6', '8-4', '4-8', '4-4-4', '12'] as GridLayout[]).map((layout) =>
             renderLayout(layout, blogs),
           )
         ) : (
           <Loading />
-        )}
+        )} */}
+        {blogs && didFetchBlogsData ? getBlogs(blogs) : <Loading />}
       </Grid>
     </Container>
   );
