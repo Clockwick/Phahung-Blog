@@ -7,9 +7,9 @@ import {
   Box,
   TextField,
   Container,
+  Link,
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { Link } from 'react-router-dom';
 
 const Signup: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -17,9 +17,9 @@ const Signup: React.FC = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const handleSubmit = () => {
-    console.log('submit');
-  };
+
+  const handleSubmit = () => {};
+
   return (
     <>
       <Container component="main" maxWidth="xs">
@@ -35,7 +35,7 @@ const Signup: React.FC = () => {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign up
+            ลงทะเบียน
           </Typography>
           <Box
             component="form"
@@ -51,7 +51,7 @@ const Signup: React.FC = () => {
                   required
                   fullWidth
                   id="firstName"
-                  label="First Name"
+                  label="ชื่อจริง"
                   autoFocus
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
@@ -62,7 +62,7 @@ const Signup: React.FC = () => {
                   required
                   fullWidth
                   id="lastName"
-                  label="Last Name"
+                  label="นามสกุล"
                   name="lastName"
                   autoComplete="family-name"
                   value={lastName}
@@ -74,7 +74,7 @@ const Signup: React.FC = () => {
                   required
                   fullWidth
                   id="email"
-                  label="Email Address"
+                  label="อีเมล"
                   name="email"
                   autoComplete="email"
                   value={email}
@@ -86,7 +86,7 @@ const Signup: React.FC = () => {
                   required
                   fullWidth
                   name="password"
-                  label="Password"
+                  label="รหัสผ่าน"
                   type="password"
                   id="password"
                   autoComplete="new-password"
@@ -99,7 +99,7 @@ const Signup: React.FC = () => {
                   required
                   fullWidth
                   name="confirmPassword"
-                  label="ConfirmPassword"
+                  label="ยืนยันรหัสผ่าน"
                   type="password"
                   id="confirmPassword"
                   autoComplete="new-password"
@@ -114,13 +114,11 @@ const Signup: React.FC = () => {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign Up
+              ลงทะเบียน
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="/signin" to="/signin">
-                  Already have an account? Sign in
-                </Link>
+                <Link href="/signup">ลงทะเบียนแล้วใช่ไหม ? ล็อกอินเลย</Link>
               </Grid>
             </Grid>
           </Box>
