@@ -15,6 +15,8 @@ export const fetchSession = createAsyncThunk('user/fetchSession', async () => {
     firstName: 'Claudette',
     lastName: 'Scott',
     email: 'claudettescott@schoolio.com',
+    role: 'user',
+    isBan: false,
   };
   return user;
 });

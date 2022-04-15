@@ -67,9 +67,9 @@ const Comment: React.FC<IComment> = ({
   return (
     <>
       <Stack direction="row" spacing={1}>
-        <Typography sx={{ color: '#f9a825' }}>5.0</Typography>
-        <Rating name="read-only" value={4} readOnly />
-        <Typography color="textSecondary"> (15 รีวิว)</Typography>
+        {/* <Typography sx={{ color: '#f9a825' }}>5.0</Typography> */}
+        {/* <Rating name="read-only" value={4} readOnly />
+        <Typography color="textSecondary"> (15 รีวิว)</Typography> */}
       </Stack>
       <Paper elevation={2} sx={{ padding: '20px' }}>
         <Stack spacing={1}>
@@ -81,7 +81,7 @@ const Comment: React.FC<IComment> = ({
             <Stack direction="row" spacing={1}>
               <Avatar
                 alt="Remy Sharp"
-                src="/assets/man.png"
+                src="https://images.unsplash.com/photo-1543357480-c60d40007a3f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTc3MDV8MHwxfHJhbmRvbXx8fHx8fHx8fDE2NDk5NTczNjc&ixlib=rb-1.2.1&q=80&w=400"
                 sx={{ width: 56, height: 56 }}
               />
               <Stack direction="column">
@@ -165,7 +165,7 @@ const Comment: React.FC<IComment> = ({
               }
               sx={{ color: 'blue' }}
             >
-              Like
+              สาธุ
             </Button>
             {likes}
           </Stack>
