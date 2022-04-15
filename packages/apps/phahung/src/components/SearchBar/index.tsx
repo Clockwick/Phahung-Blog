@@ -31,7 +31,7 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
+  color: 'black',
   width: '90%',
   cursor: 'pointer',
   '& .MuiInputBase-input': {
@@ -70,7 +70,7 @@ const SearchBar = () => {
               justifyContent: 'space-between',
             }}
           >
-            <SearchIcon sx={{ color: '#C4C4C4' }} />
+            <SearchIcon sx={{ color: 'black' }} />
           </SearchIconWrapper>
           <Stack
             direction="row"
