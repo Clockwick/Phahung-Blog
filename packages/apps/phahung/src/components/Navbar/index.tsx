@@ -103,11 +103,13 @@ const Navbar = () => {
               </Link>
             </Typography>
 
-            <Box
+            <Stack
               sx={{
                 flexGrow: 1,
-                display: { xs: 'none', md: 'flex' },
+                display: { md: 'flex' },
               }}
+              direction="row"
+              spacing={3}
             >
               <Link to="/" style={{ textDecoration: 'none' }}>
                 <Button
@@ -142,14 +144,15 @@ const Navbar = () => {
                     paddingBottom: '9px',
                     letterSpacing: '2.0px',
                     lineHeight: 1.08,
+                    paddingX: '4px',
                   }}
                 >
                   Annoucement
                 </Button>
               </Link>
-            </Box>
-            <SearchBar />
-            <Box sx={{ flexGrow: 0 }}>
+            </Stack>
+            <Stack direction="row" spacing={1}>
+              <SearchBar />
               <Tooltip title="Open settings">
                 <IconButton sx={{}}>
                   <Stack
@@ -162,7 +165,12 @@ const Navbar = () => {
                       alt="Remy Sharp"
                       src="https://images.unsplash.com/photo-1543357480-c60d40007a3f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTc3MDV8MHwxfHJhbmRvbXx8fHx8fHx8fDE2NDk5NTczNjc&ixlib=rb-1.2.1&q=80&w=400"
                     />
-                    <Typography sx={{ color: 'black' }}>
+                    <Typography
+                      sx={{
+                        color: 'black',
+                        display: { xs: 'none', md: 'flex' },
+                      }}
+                    >
                       Pim Piyajiranan
                     </Typography>
                   </Stack>
@@ -207,7 +215,7 @@ const Navbar = () => {
                   </Typography>
                 </MenuItem>
               </Menu>
-            </Box>
+            </Stack>
           </Toolbar>
         </Container>
       </AppBar>

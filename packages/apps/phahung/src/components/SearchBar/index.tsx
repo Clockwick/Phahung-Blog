@@ -12,6 +12,7 @@ const Search = styled('div')(({ theme }) => ({
   //   '&:hover': { border: '1px solid' },
   cursor: 'pointer',
   marginLeft: 0,
+  marginRight: 0,
   width: '100%',
   [theme.breakpoints.up('sm')]: {
     marginLeft: theme.spacing(1),
@@ -77,7 +78,7 @@ const SearchBar = () => {
             justifyContent="space-between"
             alignItems="center"
             spacing={2}
-            sx={{ width: '100%', px: 1.3, py: 0.4 }}
+            sx={{ width: '100%', py: 0.4 }}
           >
             <StyledInputBase
               placeholder="ค้นหาบทความ..."
@@ -87,19 +88,6 @@ const SearchBar = () => {
               value={value}
               sx={{ width: '90%' }}
             />
-            {/* <Button
-              href=""
-              variant="contained"
-              color="secondary"
-              sx={{
-                height: '100%',
-                whiteSpace: 'nowrap',
-                color: 'white',
-              }}
-              onClick={() => setValue('')}
-            >
-              ค้นหา
-            </Button> */}
           </Stack>
         </Search>
       </>
