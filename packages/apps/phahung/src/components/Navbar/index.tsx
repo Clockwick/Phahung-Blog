@@ -91,7 +91,7 @@ const Navbar = () => {
               variant="h6"
               noWrap
               component="div"
-              sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
+              sx={{ mr: 2, display: { xs: 'none', md: 'flex' }, px: 2 }}
             >
               <Link href="/" to="/">
                 <img
@@ -103,12 +103,27 @@ const Navbar = () => {
               </Link>
             </Typography>
 
-            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-              <Link to="/blog" style={{ textDecoration: 'none' }}>
+            <Box
+              sx={{
+                flexGrow: 1,
+                display: { xs: 'none', md: 'flex' },
+              }}
+            >
+              <Link to="/" style={{ textDecoration: 'none' }}>
                 <Button
                   key="Blog"
                   onClick={handleCloseNavMenu}
-                  sx={{ my: 2, color: 'black', display: 'block', px: 2 }}
+                  sx={{
+                    my: 2,
+                    color: 'black',
+                    display: 'block',
+                    px: 3.5,
+                    borderBottom: path === '/' ? '2px solid #000' : 'none',
+                    paddingBottom: '9px',
+                    paddingX: '5px',
+                    letterSpacing: '1.8px',
+                    lineHeight: 1.08,
+                  }}
                 >
                   Blog
                 </Button>
@@ -121,7 +136,12 @@ const Navbar = () => {
                     my: 2,
                     color: 'black',
                     display: 'block',
-                    px: 2,
+                    px: 3,
+                    borderBottom:
+                      path === '/annoucement' ? '2px solid #000' : 'none',
+                    paddingBottom: '9px',
+                    letterSpacing: '2.0px',
+                    lineHeight: 1.08,
                   }}
                 >
                   Annoucement

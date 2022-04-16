@@ -20,7 +20,7 @@ const useStyles = makeStyles(() => ({
     width: '100px',
   },
   paragraph: {
-    color: 'blue',
+    color: 'black',
   },
   figure: {
     width: '100px',

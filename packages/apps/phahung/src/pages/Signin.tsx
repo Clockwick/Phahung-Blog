@@ -32,7 +32,9 @@ const Signin: React.FC = () => {
   };
   console.log(isLoggedIn);
   useEffect(() => {
-    if (isLoggedIn) history.push('/');
+    if (isLoggedIn) {
+      history.push('/');
+    }
   }, [isLoggedIn, history]);
   return (
     <>
