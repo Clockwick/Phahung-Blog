@@ -13,9 +13,8 @@ import { useUser } from 'store/hooks/userHook';
 const PopperBlog: React.FC = () => {
   const { isLoggedIn, logoutHandler } = useUser();
   const history = useHistory();
-  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
-    null,
-  );
+  const [anchorEl, setAnchorEl] =
+    React.useState<HTMLButtonElement | null>(null);
   const [open, setOpen] = React.useState(false);
   const [placement, setPlacement] = React.useState<PopperPlacementType>();
 
@@ -37,6 +36,11 @@ const PopperBlog: React.FC = () => {
     history.push('/profile');
     setOpen(false);
   };
+  const handleProfile = () => {
+    history.push('/profile');
+    setOpen(false);
+  };
+
   return (
     <Box>
       <PopperMUI
@@ -62,7 +66,26 @@ const PopperBlog: React.FC = () => {
         )}
       </PopperMUI>
       <Typography sx={{ display: 'flex' }}>
-        <Avatar alt="Remy Sharp" src="assets/Avatar.png" />
+        <Stack
+          direction="row"
+          alignItems="center"
+          spacing={0.5}
+          onClick={handleProfile}
+          sx={{ cursor: 'pointer' }}
+        >
+          <Avatar
+            alt="Remy Sharp"
+            src="https://images.unsplash.com/photo-1543357480-c60d40007a3f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTc3MDV8MHwxfHJhbmRvbXx8fHx8fHx8fDE2NDk5NTczNjc&ixlib=rb-1.2.1&q=80&w=400"
+          />
+          <Typography
+            sx={{
+              color: 'black',
+              display: { xs: 'none', md: 'flex' },
+            }}
+          >
+            Pim Piyajiranan
+          </Typography>
+        </Stack>
         <IconButton sx={{ float: 'right' }} onClick={handleClick('bottom-end')}>
           <KeyboardArrowDownOutlinedIcon />
         </IconButton>

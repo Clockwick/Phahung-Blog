@@ -9,8 +9,8 @@ import {
   Box,
   TextField,
   Paper,
+  Link,
 } from '@mui/material';
-import { Link } from 'react-router-dom';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { useHistory } from 'react-router';
 import { useUser } from '../store/hooks/userHook';
@@ -32,7 +32,9 @@ const Signin: React.FC = () => {
   };
   console.log(isLoggedIn);
   useEffect(() => {
-    if (isLoggedIn) history.push('/');
+    if (isLoggedIn) {
+      history.push('/');
+    }
   }, [isLoggedIn, history]);
   return (
     <>
@@ -116,9 +118,7 @@ const Signin: React.FC = () => {
               </Button>
             </Box>
             <Grid item>
-              <Link href="/" to="/signup">
-                {"Don't have an account? Sign Up"}
-              </Link>
+              <Link href="/signup">Don't have an account? Sign Up</Link>
             </Grid>
           </Box>
         </Grid>

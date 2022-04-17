@@ -4,6 +4,8 @@ export interface User {
   lastName: string;
   email: string;
   picture: string;
+  role: string;
+  isBan: boolean;
 }
 
 export interface UserState {

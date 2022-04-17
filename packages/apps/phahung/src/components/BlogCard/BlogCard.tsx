@@ -2,6 +2,7 @@ import React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import { Box, Stack, Divider, Typography } from '@mui/material';
+import PersonIcon from '@mui/icons-material/Person';
 
 const tempData = {
   image: 'https://food.mthai.com/app/uploads/2019/04/Marble-Cafe-2.jpg',
@@ -54,6 +55,19 @@ const BlogCard: React.FC<BlogCardProps> = ({ image, title, author, likes }) => {
         }}
       >
         <CardContent style={{ textAlign: 'center' }}>
+          <Typography
+            style={{
+              fontWeight: 'bold',
+              fontSize: '26px',
+            }}
+          >
+            {title.length > 50 ? title.slice(0, 51).concat('...') : title}
+          </Typography>
+          {/* <Divider style={{ margin: '3% 0%' }} /> */}
+          <Stack direction="row" justifyContent="center">
+            <PersonIcon />
+            <Typography>{author}</Typography>
+          </Stack>
           <Stack direction="row" justifyContent="center" alignItems="center">
             <img
               src="../../../public/assets/images/buddha_color.png"
@@ -64,11 +78,6 @@ const BlogCard: React.FC<BlogCardProps> = ({ image, title, author, likes }) => {
             />
             <Typography>{likes}</Typography>
           </Stack>
-          <Typography style={{ fontWeight: 'bold' }}>
-            {title.length > 50 ? title.slice(0, 51).concat('...') : title}
-          </Typography>
-          <Divider style={{ margin: '3% 0%' }} />
-          <Typography>author: {author}</Typography>
         </CardContent>
       </Card>
     </Box>

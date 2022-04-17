@@ -1,3 +1,5 @@
+import { tag } from './tag';
+
 export type BlogPreview = {
   id: string;
   title: string;
@@ -6,4 +8,5 @@ export type BlogPreview = {
   likes: number;
   createdAt: number;
   image: string;
+  tag: tag;
 };

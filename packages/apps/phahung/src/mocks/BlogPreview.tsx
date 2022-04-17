@@ -1,8 +1,9 @@
 export const BlogPreview = [
   {
     id: '62531898214effcff9710947',
-    title:
-      'quidjgoidpjgdjafjadsjfopasdjfopjdasopfjo dpasjfjadspfopadsjfoadsopfjadopsj fopdasjfopadsjfpojdsaopf jsadjofjsdpojfadsofpjdsaopjfopj',
+    title: 'คนมือเติบกับนกนางแอ่น',
+    content: [],
+    tag: { id: '1', name: 'จุดเติมบุญ' },
     author: 'Karyn Kerr',
     createdAt: 1649611639,
     likes: 70,
@@ -10,7 +11,9 @@ export const BlogPreview = [
   },
   {
     id: '6253189876caef34b1525220',
-    title: 'ullamco',
+    title: 'การแบ่งของสิงโต',
+    content: [],
+    tag: { id: '1', name: 'จุดเติมบุญ' },
     author: 'Walton Mendoza',
     createdAt: 1649611639,
     likes: 26,
@@ -18,7 +21,9 @@ export const BlogPreview = [
   },
   {
     id: '625318988dc70a7c1c225b27',
-    title: 'et',
+    title: 'สวัสดีวันจันทร์ ',
+    content: [],
+    tag: { id: '1', name: 'จุดเติมบุญ' },
     author: 'Bianca Douglas',
     createdAt: 1649611639,
     likes: 82,
@@ -26,7 +31,9 @@ export const BlogPreview = [
   },
   {
     id: '62531898ecdda0031670d2b9',
-    title: 'ipsum',
+    title: 'ยินดีต้อนรับเช้าสู่อาณาจักร',
+    content: [],
+    tag: { id: '1', name: 'จุดเติมบุญ' },
     author: 'Skinner Rich',
     createdAt: 1649611639,
     likes: 88,
@@ -34,7 +41,9 @@ export const BlogPreview = [
   },
   {
     id: '62531898d06e8079d8f09a15',
-    title: 'fugiat',
+    title: 'อยากให้เธอลองรัก',
+    content: [],
+    tag: { id: '1', name: 'จุดเติมบุญ' },
     author: 'Beasley Richardson',
     createdAt: 1649611639,
     likes: 13,
@@ -42,7 +51,9 @@ export const BlogPreview = [
   },
   {
     id: '625318982d1c9011ec185f6d',
-    title: 'qui',
+    title: 'ขอให้วันนี้เป็นวันที่ดี',
+    content: [],
+    tag: { id: '1', name: 'จุดเติมบุญ' },
     author: 'Carroll Soto',
     createdAt: 1649611639,
     likes: 98,
@@ -50,7 +61,9 @@ export const BlogPreview = [
   },
   {
     id: '62531898367b02cf00e0c604',
-    title: 'cupidatat',
+    title: 'สวัสดีวันอังคาร',
+    content: [],
+    tag: { id: '1', name: 'จุดเติมบุญ' },
     author: 'Gardner Bond',
     createdAt: 1649611639,
     likes: 96,
@@ -58,7 +71,9 @@ export const BlogPreview = [
   },
   {
     id: '6253189820e3a4268c617462',
-    title: 'nostrud',
+    title: 'ความสุขคือตัวเรา',
+    content: [],
+    tag: { id: '1', name: 'จุดเติมบุญ' },
     author: 'Bernice Brown',
     createdAt: 1649611639,
     likes: 67,
@@ -66,7 +81,9 @@ export const BlogPreview = [
   },
   {
     id: '625318987f9fb2371a26d73b',
-    title: 'sint',
+    title: 'สวัสดีวันพฤหัสบดี',
+    content: [],
+    tag: { id: '1', name: 'จุดเติมบุญ' },
     author: 'Flynn Haney',
     createdAt: 1649611639,
     likes: 60,
@@ -74,7 +91,9 @@ export const BlogPreview = [
   },
   {
     id: '62531898896140821dd98e4f',
-    title: 'irure',
+    title: 'วันนี้เป็นวันสงกรานต์',
+    content: [],
+    tag: { id: '1', name: 'จุดเติมบุญ' },
     author: 'Liza Cunningham',
     createdAt: 1649611639,
     likes: 46,

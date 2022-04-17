@@ -8,6 +8,7 @@ import {
   FormHelperText,
   Container,
   Avatar,
+  Badge,
 } from '@mui/material';
 
 import styled from '@emotion/styled';
@@ -18,6 +19,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
 import CreateIcon from '@mui/icons-material/Create';
 import CheckIcon from '@mui/icons-material/Check';
+import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 interface IValues {
   firstName: {
     value: string;
@@ -145,7 +147,7 @@ const Profile: React.FC = () => {
   });
 
   return (
-    <Container>
+    <Container sx={{ py: 3 }}>
       <Stack alignItems="center" spacing={3}>
         <Stack
           direction="row"
@@ -153,17 +155,36 @@ const Profile: React.FC = () => {
           justifyContent="center"
           spacing={1}
         >
-          <Avatar
-            alt="Remy Sharp"
-            src="/static/images/avatar/1.jpg"
-            sx={{ width: 100, height: 100 }}
-          />
-          <label htmlFor="icon-button-file">
-            <Input accept="image/*" id="icon-button-file" type="file" />
-            <IconButton aria-label="upload picture" component="span">
-              <CreateIcon />
-            </IconButton>
-          </label>
+          <Stack direction="row" alignItems="center" justifyContent="center">
+            <Avatar
+              alt="Remy Sharp"
+              src="https://images.unsplash.com/photo-1543357480-c60d40007a3f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTc3MDV8MHwxfHJhbmRvbXx8fHx8fHx8fDE2NDk5NTczNjc&ixlib=rb-1.2.1&q=80&w=400"
+              sx={{ width: 200, height: 200, backgroundColor: 'blue' }}
+            />
+            <label
+              htmlFor="icon-button-file"
+              style={{
+                marginTop: 'auto',
+                marginRight: 'auto',
+              }}
+            >
+              <Input accept="image/*" id="icon-button-file" type="file" />
+              <IconButton aria-label="upload picture" component="span">
+                <PhotoCameraIcon />
+              </IconButton>
+            </label>
+          </Stack>
+          {/* <Badge
+            overlap="circular"
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+            badgeContent={<CreateIcon />}
+          >
+            <Avatar
+              alt="Travis Howard"
+              src="https://images.unsplash.com/photo-1543357480-c60d40007a3f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTc3MDV8MHwxfHJhbmRvbXx8fHx8fHx8fDE2NDk5NTczNjc&ixlib=rb-1.2.1&q=80&w=400"
+              sx={{ width: 200, height: 200, my: 2 }}
+            />
+          </Badge> */}
         </Stack>
         <form onSubmit={handleSubmit}>
           <Stack spacing={5.5}>

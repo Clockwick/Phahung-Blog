@@ -7,6 +7,7 @@ import {
   Button,
   Avatar,
   Divider,
+  Box,
 } from '@mui/material';
 import { styled } from '@mui/styles';
 import React, { useState } from 'react';
@@ -14,8 +15,6 @@ import React, { useState } from 'react';
 import PopperComment from 'components/Popper/PopperComment';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 import ReplyIcon from '@mui/icons-material/Reply';
-// eslint-disable-next-line import/no-unresolved
-import CommentReply from 'components/CommentReply';
 
 const HiddenAndShowButton = styled(Button)({
   paddingX: '4px',
@@ -31,7 +30,7 @@ interface IComment {
   incrementLikes: (id: string) => void;
 }
 
-const Comment: React.FC<IComment> = ({
+const CommentReply: React.FC<IComment> = ({
   id,
   content,
   likes,
@@ -44,21 +43,21 @@ const Comment: React.FC<IComment> = ({
   const [canEdit, setCanEdit] = useState<boolean>(false);
   const [comment, setComment] = useState<string>(content);
   const [reply, setReply] = useState<boolean>(false);
-  const [contentReplyField, setContentReplyField] = useState<string>('');
+  const [contentReplyFiled, setContentReplyFiled] = useState('');
   const [contentReply, setContentReply] = useState<string[]>([]);
-  const [isLikeReply, setIsLikeReply] = useState<boolean>(false);
-  const [likeReply, setLikeReply] = useState<number>(0);
-
   const handleCanEdit = (): void => {
     setCanEdit(true);
   };
   const handleOnclick = () => {
     setLike((prevState) => {
       if (prevState) {
+        console.log('prevState', prevState);
         decrementLikes(id);
         setLike(false);
       } else if (!prevState) {
+        console.log('prevState', prevState);
         incrementLikes(id);
+        console.log('asd');
         setLike(true);
       }
       return !prevState;
@@ -72,8 +71,8 @@ const Comment: React.FC<IComment> = ({
 
   const handleReply = () => {
     setReply(false);
-    setContentReply([...contentReply, contentReplyField]);
-    setContentReplyField('');
+    setContentReply([...contentReply, contentReplyFiled]);
+    setContentReplyFiled('');
   };
 
   return (
@@ -81,9 +80,9 @@ const Comment: React.FC<IComment> = ({
       <Stack direction="row" spacing={1}>
         {/* <Typography sx={{ color: '#f9a825' }}>5.0</Typography> */}
         {/* <Rating name="read-only" value={4} readOnly />
-        <Typography color="textSecondary"> (15 รีวิว)</Typography> */}
+          <Typography color="textSecondary"> (15 รีวิว)</Typography> */}
       </Stack>
-      <Paper elevation={2} sx={{ padding: '20px' }}>
+      <Box sx={{ paddingX: '30px' }}>
         <Stack spacing={1}>
           <Stack
             direction="row"
@@ -190,11 +189,11 @@ const Comment: React.FC<IComment> = ({
               contentReply.map((reply) => {
                 return (
                   <CommentReply
-                    id="1123123"
+                    id="asdasd"
                     content={reply}
                     handleDelete={handleDelete}
                     decrementLikes={decrementLikes}
-                    likes={likeReply}
+                    likes={0}
                     incrementLikes={incrementLikes}
                   />
                 );
@@ -213,8 +212,8 @@ const Comment: React.FC<IComment> = ({
                 minRows={2}
                 style={{ width: 500, fontSize: '16px' }}
                 autoFocus
-                value={contentReplyField}
-                onChange={(e) => setContentReplyField(e.target.value)}
+                value={contentReplyFiled}
+                onChange={(e) => setContentReplyFiled(e.target.value)}
               />
               <Button onClick={handleReply}>Reply</Button>
             </Stack>
@@ -222,9 +221,9 @@ const Comment: React.FC<IComment> = ({
             <></>
           )}
         </Stack>
-      </Paper>
+      </Box>
     </>
   );
 };
 
-export default Comment;
+export default CommentReply;
