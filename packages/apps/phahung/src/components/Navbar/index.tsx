@@ -91,7 +91,7 @@ const Navbar = () => {
               variant="h6"
               noWrap
               component="div"
-              sx={{ mr: 2, display: { xs: 'none', md: 'flex' }, px: 2 }}
+              sx={{ mr: 2, display: { xs: 'none', md: 'flex' }, pr: 2 }}
             >
               <Link href="/" to="/">
                 <img
@@ -154,7 +154,7 @@ const Navbar = () => {
             <Stack direction="row" spacing={1}>
               <SearchBar />
               <Tooltip title="Open settings">
-                <IconButton sx={{}}>
+                <IconButton>
                   <Stack
                     direction="row"
                     alignItems="center"
