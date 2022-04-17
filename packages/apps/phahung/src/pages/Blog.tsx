@@ -32,22 +32,22 @@ const Blog = () => {
     {
       id: '1',
       content: 'สวัสดีฉันคิอ ความคิดเห็นที่ 1 ',
-      likes: 5,
+      likes: 1,
     },
     {
       id: '2',
       content: 'สวัสดีฉันคิอ ความคิดเห็นที่ 2 ',
-      likes: 5,
+      likes: 2,
     },
     {
       id: '3',
       content: 'สวัสดีฉันคิอ ความคิดเห็นที่ 3 ',
-      likes: 5,
+      likes: 3,
     },
     {
       id: '4',
       content: 'สวัสดีฉันคิอ ความคิดเห็นที่ 4 ',
-      likes: 5,
+      likes: 4,
     },
   ];
 
@@ -99,7 +99,7 @@ const Blog = () => {
   return (
     <Container>
       <Stack spacing={3}>
-        <Typography sx={{ maxWidth: '100%' }}>
+        {/* <Typography sx={{ maxWidth: '100%' }}>
           <Blocks
             data={BlogContent}
             config={{
@@ -129,7 +129,7 @@ const Blog = () => {
           >
             เพิ่มความคิดเห็น
           </Button>
-        </Stack>
+        </Stack> */}
         <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
           รีวิวจากผู้อ่าน
         </Typography>

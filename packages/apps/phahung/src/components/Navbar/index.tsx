@@ -84,7 +84,7 @@ const Navbar = () => {
 
   return path !== '/signin' && path !== '/signup' ? (
     <>
-      <AppBar position="static" sx={{ backgroundColor: '#FFF7F2' }}>
+      <AppBar position="static" sx={{ backgroundColor: '#FFF7F2', mb: 5 }}>
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             <Typography
