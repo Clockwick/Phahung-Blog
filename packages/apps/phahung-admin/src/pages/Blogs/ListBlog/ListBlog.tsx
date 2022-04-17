@@ -151,8 +151,8 @@ const ListBlog: React.FC = () => {
                       isChecked={
                         blog.title
                           ? blogStatus.filter(
-                              (childBlog) => childBlog.id === blog.id,
-                            )[0]?.checked
+                            (childBlog) => childBlog.id === blog.id,
+                          )[0]?.checked
                           : false
                       }
                       onChange={() =>
