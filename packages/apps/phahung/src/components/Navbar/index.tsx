@@ -1,22 +1,8 @@
-
-// eslint-disable-next-line import/no-unresolved
-// export default Navbar;
 /* eslint-disable */
 import React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
 import SearchBar from 'components/SearchBar';
 import { Link } from 'react-router-dom';
-import { Stack } from '@mui/material';
+import { Stack,AppBar ,Toolbar,Box,Typography,Container,Button} from '@mui/material';
 import { useUser } from 'store/hooks/userHook';
 import PopperBlog from 'components/Popper/PopperBlog';
 // const pages = ['Blog', 'Annoucement'];
