@@ -51,6 +51,7 @@ import SearchBar from 'components/SearchBar';
 import { Link } from 'react-router-dom';
 import { Stack } from '@mui/material';
 import { useUser } from 'store/hooks/userHook';
+import PopperBlog from 'components/Popper/PopperBlog';
 // const pages = ['Blog', 'Annoucement'];
 // const settings = ['Profile', 'Logout'];
 
@@ -151,9 +152,14 @@ const Navbar = () => {
                 </Button>
               </Link>
             </Stack>
-            <Stack direction="row" spacing={1}>
+            <Stack
+              direction="row"
+              spacing={1}
+              justifyContent="center"
+              alignItems="center"
+            >
               <SearchBar />
-              <Tooltip title="Open settings">
+              {/* <Tooltip title="Open settings">
                 <IconButton>
                   <Stack
                     direction="row"
@@ -175,9 +181,9 @@ const Navbar = () => {
                     </Typography>
                   </Stack>
                 </IconButton>
-              </Tooltip>
+              </Tooltip> */}
 
-              <Menu
+              {/* <Menu
                 sx={{ mt: '45px' }}
                 id="menu-appbar"
                 anchorEl={anchorElUser}
@@ -214,7 +220,8 @@ const Navbar = () => {
                     Logout
                   </Typography>
                 </MenuItem>
-              </Menu>
+              </Menu> */}
+              <PopperBlog />
             </Stack>
           </Toolbar>
         </Container>
