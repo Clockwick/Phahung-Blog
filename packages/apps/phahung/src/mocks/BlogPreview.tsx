@@ -1,8 +1,9 @@
 export const BlogPreview = [
   {
     id: '62531898214effcff9710947',
-    title:
-      'quidjgoidpjgdjafjadsjfopasdjfopjdasopfjo dpasjfjadspfopadsjfoadsopfjadopsj fopdasjfopadsjfpojdsaopf jsadjofjsdpojfadsofpjdsaopjfopj',
+    title: 'คนมือเติบกับนกนางแอ่น',
+    content: [],
+    tag: { id: '1', name: 'จุดเติมบุญ' },
     author: 'Karyn Kerr',
     createdAt: 1649611639,
     likes: 70,
@@ -10,7 +11,9 @@ export const BlogPreview = [
   },
   {
     id: '6253189876caef34b1525220',
-    title: 'ullamco',
+    title: 'การแบ่งของสิงโต',
+    content: [],
+    tag: { id: '1', name: 'จุดเติมบุญ' },
     author: 'Walton Mendoza',
     createdAt: 1649611639,
     likes: 26,
@@ -18,7 +21,9 @@ export const BlogPreview = [
   },
   {
     id: '625318988dc70a7c1c225b27',
-    title: 'et',
+    title: 'สวัสดีวันจันทร์ ',
+    content: [],
+    tag: { id: '1', name: 'จุดเติมบุญ' },
     author: 'Bianca Douglas',
     createdAt: 1649611639,
     likes: 82,

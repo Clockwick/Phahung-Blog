@@ -6,5 +6,5 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [tsconfigPaths(), eslintPlugin({ cache: false }), reactRefresh()],
-  server: { host: true },
+  server: { host: true, port: 3021 },
 });

@@ -11,8 +11,11 @@ import {
 import { styled } from '@mui/styles';
 import React, { useState } from 'react';
 // eslint-disable-next-line import/no-unresolved
-import Popper from 'components/Popper/PopperComment';
+import PopperComment from 'components/Popper/PopperComment';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
+import ReplyIcon from '@mui/icons-material/Reply';
+// eslint-disable-next-line import/no-unresolved
+import CommentReply from 'components/CommentReply';
 
 const HiddenAndShowButton = styled(Button)({
   paddingX: '4px',
@@ -21,30 +24,64 @@ const HiddenAndShowButton = styled(Button)({
 
 interface IComment {
   id: string;
-  data: string;
+  content: string;
+  likes: number;
+  handleDelete: (id: string) => void;
+  decrementLikes: (id: string) => void;
+  incrementLikes: (id: string) => void;
 }
 
-const Comment: React.FC<IComment> = ({ id, data }) => {
-  const [readMore, setReadMore] = useState(false);
-  const [like, setLike] = useState(false);
-  const [canEdit, setCanEdit] = useState(false);
-  const [comment, setComment] = useState(data);
+const Comment: React.FC<IComment> = ({
+  id,
+  content,
+  likes,
+  handleDelete,
+  decrementLikes,
+  incrementLikes,
+}) => {
+  const [readMore, setReadMore] = useState<boolean>(false);
+  const [like, setLike] = useState<boolean>(false);
+  const [canEdit, setCanEdit] = useState<boolean>(false);
+  const [comment, setComment] = useState<string>(content);
+  const [reply, setReply] = useState<boolean>(false);
+  const [contentReplyFiled, setContentReplyFiled] = useState<string>('');
+  const [contentReply, setContentReply] = useState<string[]>([]);
+  const [isLikeReply, setIsLikeReply] = useState<boolean>(false);
+  const [likeReply, setLikeReply] = useState<number>(0);
+
   const handleCanEdit = (): void => {
     setCanEdit(true);
   };
   const handleOnclick = () => {
-    setLike((prevState) => !prevState);
+    setLike((prevState) => {
+      if (prevState) {
+        decrementLikes(id);
+        setLike(false);
+      } else if (!prevState) {
+        incrementLikes(id);
+        setLike(true);
+      }
+      return !prevState;
+    });
   };
+
   const handleSubmitComment = () => {
     setCanEdit(false);
     // setComment()
   };
+
+  const handleReply = () => {
+    setReply(false);
+    setContentReply([...contentReply, contentReplyFiled]);
+    setContentReplyFiled('');
+  };
+
   return (
     <>
       <Stack direction="row" spacing={1}>
-        <Typography sx={{ color: '#f9a825' }}>5.0</Typography>
-        <Rating name="read-only" value={4} readOnly />
-        <Typography color="textSecondary"> (15 รีวิว)</Typography>
+        {/* <Typography sx={{ color: '#f9a825' }}>5.0</Typography> */}
+        {/* <Rating name="read-only" value={4} readOnly />
+        <Typography color="textSecondary"> (15 รีวิว)</Typography> */}
       </Stack>
       <Paper elevation={2} sx={{ padding: '20px' }}>
         <Stack spacing={1}>
@@ -56,7 +93,7 @@ const Comment: React.FC<IComment> = ({ id, data }) => {
             <Stack direction="row" spacing={1}>
               <Avatar
                 alt="Remy Sharp"
-                src="/assets/man.png"
+                src="https://images.unsplash.com/photo-1543357480-c60d40007a3f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTc3MDV8MHwxfHJhbmRvbXx8fHx8fHx8fDE2NDk5NTczNjc&ixlib=rb-1.2.1&q=80&w=400"
                 sx={{ width: 56, height: 56 }}
               />
               <Stack direction="column">
@@ -67,7 +104,11 @@ const Comment: React.FC<IComment> = ({ id, data }) => {
               </Stack>
             </Stack>
             <Typography sx={{ ml: 'auto', mb: 'auto' }}>
-              <Popper handleCanEdit={handleCanEdit} />
+              <PopperComment
+                id={id}
+                handleCanEdit={handleCanEdit}
+                handleDelete={handleDelete}
+              />
             </Typography>
           </Stack>
           <Divider />
@@ -120,7 +161,7 @@ const Comment: React.FC<IComment> = ({ id, data }) => {
               <Typography>{comment}</Typography>
             </>
           )}
-          <Stack direction="row" alignItems="center">
+          <Stack direction="row" alignItems="center" spacing={1.5}>
             <Button
               onClick={handleOnclick}
               startIcon={
@@ -134,12 +175,52 @@ const Comment: React.FC<IComment> = ({ id, data }) => {
                   width={30}
                 />
               }
-              sx={{ color: 'blue' }}
+              sx={{ color: 'red' }}
             >
-              Like
+              สาธุ
             </Button>
-            13.1k
+            {likes}
+            <Button startIcon={<ReplyIcon />} onClick={() => setReply(true)}>
+              reply
+            </Button>
           </Stack>
+          <>
+            {contentReply &&
+              // eslint-disable-next-line @typescript-eslint/no-shadow
+              contentReply.map((reply) => {
+                return (
+                  <CommentReply
+                    id="1123123"
+                    content={reply}
+                    handleDelete={handleDelete}
+                    decrementLikes={decrementLikes}
+                    likes={likeReply}
+                    incrementLikes={incrementLikes}
+                  />
+                );
+              })}
+          </>
+          {reply ? (
+            <Stack direction="row" alignItems="center" spacing={2}>
+              <Avatar
+                alt="Remy Sharp"
+                src="https://images.unsplash.com/photo-1543357480-c60d40007a3f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTc3MDV8MHwxfHJhbmRvbXx8fHx8fHx8fDE2NDk5NTczNjc&ixlib=rb-1.2.1&q=80&w=400"
+                sx={{ width: 56, height: 56 }}
+              />
+              <TextareaAutosize
+                id="standard-basic"
+                maxRows={2}
+                minRows={2}
+                style={{ width: 500, fontSize: '16px' }}
+                autoFocus
+                value={contentReplyFiled}
+                onChange={(e) => setContentReplyFiled(e.target.value)}
+              />
+              <Button onClick={handleReply}>Reply</Button>
+            </Stack>
+          ) : (
+            <></>
+          )}
         </Stack>
       </Paper>
     </>

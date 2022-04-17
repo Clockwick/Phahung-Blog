@@ -12,6 +12,7 @@ const Search = styled('div')(({ theme }) => ({
   //   '&:hover': { border: '1px solid' },
   cursor: 'pointer',
   marginLeft: 0,
+  marginRight: 0,
   width: '100%',
   [theme.breakpoints.up('sm')]: {
     marginLeft: theme.spacing(1),
@@ -31,7 +32,7 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
+  color: 'black',
   width: '90%',
   cursor: 'pointer',
   '& .MuiInputBase-input': {
@@ -70,14 +71,14 @@ const SearchBar = () => {
               justifyContent: 'space-between',
             }}
           >
-            <SearchIcon sx={{ color: '#C4C4C4' }} />
+            <SearchIcon sx={{ color: 'black' }} />
           </SearchIconWrapper>
           <Stack
             direction="row"
             justifyContent="space-between"
             alignItems="center"
             spacing={2}
-            sx={{ width: '100%', px: 1.3, py: 0.4 }}
+            sx={{ width: '100%', py: 0.4 }}
           >
             <StyledInputBase
               placeholder="ค้นหาบทความ..."
@@ -87,19 +88,6 @@ const SearchBar = () => {
               value={value}
               sx={{ width: '90%' }}
             />
-            {/* <Button
-              href=""
-              variant="contained"
-              color="secondary"
-              sx={{
-                height: '100%',
-                whiteSpace: 'nowrap',
-                color: 'white',
-              }}
-              onClick={() => setValue('')}
-            >
-              ค้นหา
-            </Button> */}
           </Stack>
         </Search>
       </>
