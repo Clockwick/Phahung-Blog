@@ -1,4 +1,6 @@
 {
-  "extends": ["@phahung/eslint-config"]
-  /* eslint-disable */
+  "extends": ["@phahung/eslint-config"],
+  "rules": {
+    "import/no-unresolved": "off"
+  }
 }

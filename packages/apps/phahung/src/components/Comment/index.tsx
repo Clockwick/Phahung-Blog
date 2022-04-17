@@ -44,7 +44,7 @@ const Comment: React.FC<IComment> = ({
   const [canEdit, setCanEdit] = useState<boolean>(false);
   const [comment, setComment] = useState<string>(content);
   const [reply, setReply] = useState<boolean>(false);
-  const [contentReplyFiled, setContentReplyFiled] = useState<string>('');
+  const [contentReplyField, setContentReplyField] = useState<string>('');
   const [contentReply, setContentReply] = useState<string[]>([]);
   const [isLikeReply, setIsLikeReply] = useState<boolean>(false);
   const [likeReply, setLikeReply] = useState<number>(0);
@@ -72,8 +72,8 @@ const Comment: React.FC<IComment> = ({
 
   const handleReply = () => {
     setReply(false);
-    setContentReply([...contentReply, contentReplyFiled]);
-    setContentReplyFiled('');
+    setContentReply([...contentReply, contentReplyField]);
+    setContentReplyField('');
   };
 
   return (
@@ -213,8 +213,8 @@ const Comment: React.FC<IComment> = ({
                 minRows={2}
                 style={{ width: 500, fontSize: '16px' }}
                 autoFocus
-                value={contentReplyFiled}
-                onChange={(e) => setContentReplyFiled(e.target.value)}
+                value={contentReplyField}
+                onChange={(e) => setContentReplyField(e.target.value)}
               />
               <Button onClick={handleReply}>Reply</Button>
             </Stack>
