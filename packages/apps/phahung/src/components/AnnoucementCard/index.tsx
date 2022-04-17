@@ -7,6 +7,7 @@ import {
   Avatar,
   Divider,
 } from '@mui/material';
+import CampaignIcon from '@mui/icons-material/Campaign';
 
 interface AnnoucementCardProps {
   id: string;
@@ -26,7 +27,10 @@ const AnnoucementCard: React.FC<AnnoucementCardProps> = ({
       <Stack direction="row" spacing={10}>
         <Stack direction="row" alignItems="center" spacing={2}>
           <Stack spacing={1}>
-            <Typography variant="h5">{title}</Typography>
+            <Stack direction="row" spacing={1} alignItems="center">
+              <CampaignIcon />
+              <Typography variant="h5">{title}</Typography>
+            </Stack>
             <Typography variant="subtitle1">{description}</Typography>
           </Stack>
         </Stack>
@@ -36,7 +40,7 @@ const AnnoucementCard: React.FC<AnnoucementCardProps> = ({
           }}
         >
           <Typography variant="h6" sx={{ mt: 'auto' }}>
-            Posted on
+            Posted on Pim
           </Typography>
           <Typography variant="subtitle1">{createdAt}</Typography>
         </Stack>
