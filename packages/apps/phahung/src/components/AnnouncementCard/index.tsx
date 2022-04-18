@@ -16,7 +16,7 @@ interface AnnoucementCardProps {
   createdAt: string;
 }
 
-const AnnoucementCard: React.FC<AnnoucementCardProps> = ({
+const AnnouncementCard: React.FC<AnnoucementCardProps> = ({
   id,
   title,
   description,
@@ -50,4 +50,4 @@ const AnnoucementCard: React.FC<AnnoucementCardProps> = ({
   );
 };
 
-export default AnnoucementCard;
+export default AnnouncementCard;

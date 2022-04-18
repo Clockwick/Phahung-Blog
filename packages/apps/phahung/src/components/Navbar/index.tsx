@@ -2,14 +2,22 @@
 import React from 'react';
 import SearchBar from 'components/SearchBar';
 import { Link } from 'react-router-dom';
-import { Stack,AppBar ,Toolbar,Box,Typography,Container,Button} from '@mui/material';
+import {
+  Stack,
+  AppBar,
+  Toolbar,
+  Box,
+  Typography,
+  Container,
+  Button,
+} from '@mui/material';
 import { useUser } from 'store/hooks/userHook';
 import PopperBlog from 'components/Popper/PopperBlog';
 // const pages = ['Blog', 'Annoucement'];
 // const settings = ['Profile', 'Logout'];
 
 const Navbar = () => {
-  const { isLoggedIn, logoutHandler } = useUser();
+  const { user, isLoggedIn, logoutHandler } = useUser();
   const [anchorElNav, setAnchorElNav] =
     React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] =
@@ -34,11 +42,14 @@ const Navbar = () => {
     window.location.href = '/signin';
   };
   const path = window.location.pathname;
-  console.log('path', path);
-
+  // console.log('path', path);
+  // console.log('user', user);
   return path !== '/signin' && path !== '/signup' ? (
     <>
-      <AppBar position="static" sx={{ backgroundColor: '#FFF7F2', mb: 5 }}>
+      <AppBar
+        position="static"
+        sx={{ backgroundColor: '#FFF7F2', mb: 5, width: '100vw' }}
+      >
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             <Typography
@@ -101,7 +112,7 @@ const Navbar = () => {
                     paddingX: '4px',
                   }}
                 >
-                  Annoucement
+                  Announcement
                 </Button>
               </Link>
             </Stack>
@@ -112,68 +123,6 @@ const Navbar = () => {
               alignItems="center"
             >
               <SearchBar />
-              {/* <Tooltip title="Open settings">
-                <IconButton>
-                  <Stack
-                    direction="row"
-                    alignItems="center"
-                    onClick={handleOpenUserMenu}
-                    spacing={0.5}
-                  >
-                    <Avatar
-                      alt="Remy Sharp"
-                      src="https://images.unsplash.com/photo-1543357480-c60d40007a3f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTc3MDV8MHwxfHJhbmRvbXx8fHx8fHx8fDE2NDk5NTczNjc&ixlib=rb-1.2.1&q=80&w=400"
-                    />
-                    <Typography
-                      sx={{
-                        color: 'black',
-                        display: { xs: 'none', md: 'flex' },
-                      }}
-                    >
-                      Pim Piyajiranan
-                    </Typography>
-                  </Stack>
-                </IconButton>
-              </Tooltip> */}
-
-              {/* <Menu
-                sx={{ mt: '45px' }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                <MenuItem
-                  key="Profile"
-                  onClick={handleCloseUserMenu}
-                  sx={{ px: 5 }}
-                >
-                  <Link
-                    to="/profile"
-                    style={{ textDecoration: 'none', color: 'black' }}
-                  >
-                    <Typography textAlign="center">Profile</Typography>
-                  </Link>
-                </MenuItem>
-                <MenuItem
-                  key="Logout"
-                  onClick={handleCloseUserMenu}
-                  sx={{ px: 5 }}
-                >
-                  <Typography textAlign="center" onClick={handleLogout}>
-                    Logout
-                  </Typography>
-                </MenuItem>
-              </Menu> */}
               <PopperBlog />
             </Stack>
           </Toolbar>

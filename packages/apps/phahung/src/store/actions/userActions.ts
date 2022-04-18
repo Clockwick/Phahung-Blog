@@ -12,10 +12,10 @@ export const fetchSession = createAsyncThunk('user/fetchSession', async () => {
   const user: User = {
     id: '61e117bcbb06b63455356b30',
     picture: '/assets/man.png',
-    firstName: 'Claudette',
-    lastName: 'Scott',
-    email: 'claudettescott@schoolio.com',
-    role: 'user',
+    firstName: 'Pims',
+    lastName: 'Piyajiranan',
+    email: 'test1234@gmail.com',
+    role: 'admin',
     isBan: false,
   };
   return user;

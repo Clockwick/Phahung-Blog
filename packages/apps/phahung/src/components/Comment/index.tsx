@@ -2,11 +2,11 @@
 import {
   Typography,
   Stack,
-  Rating,
   Paper,
   Button,
   Avatar,
   Divider,
+  Container,
 } from '@mui/material';
 import { styled } from '@mui/styles';
 import React, { useState } from 'react';
@@ -26,9 +26,11 @@ interface IComment {
   id: string;
   content: string;
   likes: number;
+  hide: boolean;
   handleDelete: (id: string) => void;
   decrementLikes: (id: string) => void;
   incrementLikes: (id: string) => void;
+  handleHideComment: (id: string) => void;
 }
 
 const Comment: React.FC<IComment> = ({
@@ -38,6 +40,8 @@ const Comment: React.FC<IComment> = ({
   handleDelete,
   decrementLikes,
   incrementLikes,
+  handleHideComment,
+  hide,
 }) => {
   const [readMore, setReadMore] = useState<boolean>(false);
   const [like, setLike] = useState<boolean>(false);
@@ -77,39 +81,53 @@ const Comment: React.FC<IComment> = ({
   };
 
   return (
-    <>
+    <Container>
       <Stack direction="row" spacing={1}>
         {/* <Typography sx={{ color: '#f9a825' }}>5.0</Typography> */}
         {/* <Rating name="read-only" value={4} readOnly />
         <Typography color="textSecondary"> (15 รีวิว)</Typography> */}
       </Stack>
-      <Paper elevation={2} sx={{ padding: '20px' }}>
+      <Paper
+        elevation={2}
+        sx={{
+          padding: '20px',
+          backgroundColor: hide ? '#bdbdbd' : '',
+          color: hide ? '#4b4949' : '',
+        }}
+      >
         <Stack spacing={1}>
           <Stack
             direction="row"
             sx={{ paddingTop: '3px' }}
-            justifyContent="space-evenly"
+            // justifyContent="space-evenly"
           >
-            <Stack direction="row" spacing={1}>
-              <Avatar
-                alt="Remy Sharp"
-                src="https://images.unsplash.com/photo-1543357480-c60d40007a3f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTc3MDV8MHwxfHJhbmRvbXx8fHx8fHx8fDE2NDk5NTczNjc&ixlib=rb-1.2.1&q=80&w=400"
-                sx={{ width: 56, height: 56 }}
-              />
-              <Stack direction="column">
-                <Typography variant="subtitle1">สมชาย ขายไก่</Typography>
-                <Typography variant="subtitle1" color="textSecondary">
-                  10 มกราคม 2565 12:12 น.
-                </Typography>
+            <Stack
+              direction="row"
+              justifyContent="space-between"
+              sx={{ minWidth: '100%' }}
+            >
+              <Stack direction="row" spacing={1}>
+                <Avatar
+                  alt="Remy Sharp"
+                  src="https://images.unsplash.com/photo-1543357480-c60d40007a3f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTc3MDV8MHwxfHJhbmRvbXx8fHx8fHx8fDE2NDk5NTczNjc&ixlib=rb-1.2.1&q=80&w=400"
+                  sx={{ width: 56, height: 56, opacity: hide ? 0.2 : 1 }}
+                />
+                <Stack direction="column">
+                  <Typography variant="subtitle1">สมชาย ขายไก่</Typography>
+                  <Typography variant="subtitle1" color="textSecondary">
+                    10 มกราคม 2565 12:12 น.
+                  </Typography>
+                </Stack>
               </Stack>
+              <Typography sx={{}}>
+                <PopperComment
+                  id={id}
+                  handleCanEdit={handleCanEdit}
+                  handleDelete={handleDelete}
+                  handleHideComment={handleHideComment}
+                />
+              </Typography>
             </Stack>
-            <Typography sx={{ ml: 'auto', mb: 'auto' }}>
-              <PopperComment
-                id={id}
-                handleCanEdit={handleCanEdit}
-                handleDelete={handleDelete}
-              />
-            </Typography>
           </Stack>
           <Divider />
           {canEdit ? (
@@ -158,12 +176,15 @@ const Comment: React.FC<IComment> = ({
             </>
           ) : (
             <>
-              <Typography>{comment}</Typography>
+              <Typography sx={{ color: hide ? '#4b4949' : '' }}>
+                {comment}
+              </Typography>
             </>
           )}
           <Stack direction="row" alignItems="center" spacing={1.5}>
             <Button
               onClick={handleOnclick}
+              disabled={hide}
               startIcon={
                 <img
                   src={
@@ -175,12 +196,17 @@ const Comment: React.FC<IComment> = ({
                   width={30}
                 />
               }
-              sx={{ color: 'red' }}
+              sx={{ color: hide ? '#4b4949' : 'red' }}
             >
               สาธุ
             </Button>
             {likes}
-            <Button startIcon={<ReplyIcon />} onClick={() => setReply(true)}>
+            <Button
+              startIcon={<ReplyIcon />}
+              onClick={() => setReply(true)}
+              sx={{ color: hide ? '#4b4949' : 'primary' }}
+              disabled={hide}
+            >
               reply
             </Button>
           </Stack>
@@ -223,7 +249,7 @@ const Comment: React.FC<IComment> = ({
           )}
         </Stack>
       </Paper>
-    </>
+    </Container>
   );
 };
 

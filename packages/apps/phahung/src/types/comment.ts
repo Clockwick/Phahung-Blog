@@ -4,4 +4,5 @@ export type comment = {
   author: string;
   content: string;
   likes: number;
+  hide: boolean;
 };

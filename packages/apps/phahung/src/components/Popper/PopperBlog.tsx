@@ -11,7 +11,7 @@ import { useHistory } from 'react-router-dom';
 import { useUser } from 'store/hooks/userHook';
 
 const PopperBlog: React.FC = () => {
-  const { isLoggedIn, logoutHandler } = useUser();
+  const { user, isLoggedIn, logoutHandler } = useUser();
   const history = useHistory();
   const [anchorEl, setAnchorEl] =
     React.useState<HTMLButtonElement | null>(null);
@@ -42,7 +42,7 @@ const PopperBlog: React.FC = () => {
   };
 
   return (
-    <Box>
+    <Box sx={{ width: '100%' }}>
       <PopperMUI
         open={open}
         anchorEl={anchorEl}
@@ -83,10 +83,10 @@ const PopperBlog: React.FC = () => {
               display: { xs: 'none', md: 'flex' },
             }}
           >
-            Pim Piyajiranan
+            {user?.firstName} {user?.lastName}
           </Typography>
         </Stack>
-        <IconButton sx={{ float: 'right' }} onClick={handleClick('bottom-end')}>
+        <IconButton sx={{}} onClick={handleClick('bottom-end')}>
           <KeyboardArrowDownOutlinedIcon />
         </IconButton>
       </Typography>
