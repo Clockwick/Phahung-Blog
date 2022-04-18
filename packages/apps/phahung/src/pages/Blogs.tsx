@@ -40,6 +40,7 @@ const Blogs = () => {
     receivedBlogs: BlogPreview[],
   ): React.ReactNode => {
     const {
+      id: id0,
       image: image0,
       title: title0,
       author: author0,
@@ -48,12 +49,14 @@ const Blogs = () => {
     switch (gridLayout) {
       case '4-4-4': {
         const {
+          id: id1,
           image: image1,
           title: title1,
           author: author1,
           likes: likes1,
         } = receivedBlogs[1];
         const {
+          id: id2,
           image: image2,
           title: title2,
           author: author2,
@@ -63,6 +66,7 @@ const Blogs = () => {
           <Grid container spacing={3}>
             <Grid item xs={4}>
               <BlogCard
+                id={id0}
                 image={image0}
                 title={title0}
                 author={author0}
@@ -71,6 +75,7 @@ const Blogs = () => {
             </Grid>
             <Grid item xs={4}>
               <BlogCard
+                id={id1}
                 image={image1}
                 title={title1}
                 author={author1}
@@ -79,6 +84,7 @@ const Blogs = () => {
             </Grid>
             <Grid item xs={4}>
               <BlogCard
+                id={id2}
                 image={image2}
                 title={title2}
                 author={author2}
@@ -90,39 +96,33 @@ const Blogs = () => {
       }
       case '6-6': {
         const {
+          id: id1,
           image: image1,
           title: title1,
           author: author1,
           likes: likes1,
         } = receivedBlogs[1];
         return (
-          <>
-            <Grid container spacing={3}>
-              <Grid item xs={6}>
-                <BlogCard
-                  image={image0}
-                  title={title0}
-                  author={author0}
-                  likes={likes0}
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <BlogCard
-                  image={image1}
-                  title={title1}
-                  author={author1}
-                  likes={likes1}
-                />
-              </Grid>
+          <Grid container spacing={3}>
+            <Grid item xs={6}>
+              <BlogCard
+                id={id0}
+                image={image0}
+                title={title0}
+                author={author0}
+                likes={likes0}
+              />
             </Grid>
-            <Stack
-              justifyContent="center"
-              alignItems="center"
-              sx={{ width: '100%', paddingBottom: 3 }}
-            >
-              <ListCategory />
-            </Stack>
-          </>
+            <Grid item xs={6}>
+              <BlogCard
+                id={id1}
+                image={image1}
+                title={title1}
+                author={author1}
+                likes={likes1}
+              />
+            </Grid>
+          </Grid>
         );
       }
       case '12': {
@@ -130,6 +130,7 @@ const Blogs = () => {
           <Grid container spacing={3}>
             <Grid item xs={12}>
               <BlogCard
+                id={id0}
                 image={image0}
                 title={title0}
                 author={author0}
@@ -141,6 +142,7 @@ const Blogs = () => {
       }
       case '8-4': {
         const {
+          id: id1,
           image: image1,
           title: title1,
           author: author1,
@@ -150,6 +152,7 @@ const Blogs = () => {
           <Grid container spacing={3}>
             <Grid item xs={8}>
               <BlogCard
+                id={id0}
                 image={image0}
                 title={title0}
                 author={author0}
@@ -158,6 +161,7 @@ const Blogs = () => {
             </Grid>
             <Grid item xs={4}>
               <BlogCard
+                id={id1}
                 image={image1}
                 title={title1}
                 author={author1}
@@ -169,6 +173,7 @@ const Blogs = () => {
       }
       case '4-8': {
         const {
+          id: id1,
           image: image1,
           title: title1,
           author: author1,
@@ -178,6 +183,7 @@ const Blogs = () => {
           <Grid container spacing={3}>
             <Grid item xs={4}>
               <BlogCard
+                id={id0}
                 image={image0}
                 title={title0}
                 author={author0}
@@ -186,6 +192,7 @@ const Blogs = () => {
             </Grid>
             <Grid item xs={8}>
               <BlogCard
+                id={id1}
                 image={image1}
                 title={title1}
                 author={author1}
@@ -246,14 +253,14 @@ const Blogs = () => {
       maxWidth="lg"
     >
       <Slogan />
+      <Stack
+        justifyContent="center"
+        alignItems="center"
+        sx={{ width: '100%', paddingBottom: 3 }}
+      >
+        <ListCategory />
+      </Stack>
       <Grid container direction="row" alignItems="center">
-        {/* {blogs && didFetchBlogsData ? (
-          (['6-6', '8-4', '4-8', '4-4-4', '12'] as GridLayout[]).map((layout) =>
-            renderLayout(layout, blogs),
-          )
-        ) : (
-          <Loading />
-        )} */}
         {blogs && didFetchBlogsData ? getBlogs(blogs) : <Loading />}
       </Grid>
     </Container>
