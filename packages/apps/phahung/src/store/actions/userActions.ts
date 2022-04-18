@@ -15,7 +15,7 @@ export const fetchSession = createAsyncThunk('user/fetchSession', async () => {
     firstName: 'Pims',
     lastName: 'Piyajiranan',
     email: 'test1234@gmail.com',
-    role: 'user',
+    role: 'admin',
     isBan: false,
   };
   return user;

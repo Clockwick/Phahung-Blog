@@ -63,13 +63,6 @@ const PopperComment: React.FC<PopperCommentProps> = ({
           <Fade {...TransitionProps} timeout={350}>
             <Paper elevation={4}>
               <Button
-                sx={{ width: '100%', color: 'red' }}
-                onClick={() => handleOnClickDeleteComment()}
-              >
-                {' '}
-                Delete Comment
-              </Button>
-              <Button
                 sx={{ width: '100%' }}
                 onClick={() => handleOnClickHideComment()}
               >
@@ -82,6 +75,13 @@ const PopperComment: React.FC<PopperCommentProps> = ({
               >
                 {' '}
                 Ban User
+              </Button>
+              <Button
+                sx={{ width: '100%', color: 'red' }}
+                onClick={() => handleOnClickDeleteComment()}
+              >
+                {' '}
+                Delete Comment
               </Button>
             </Paper>
           </Fade>

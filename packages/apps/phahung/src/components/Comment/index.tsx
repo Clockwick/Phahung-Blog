@@ -110,7 +110,7 @@ const Comment: React.FC<IComment> = ({
                 <Avatar
                   alt="Remy Sharp"
                   src="https://images.unsplash.com/photo-1543357480-c60d40007a3f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTc3MDV8MHwxfHJhbmRvbXx8fHx8fHx8fDE2NDk5NTczNjc&ixlib=rb-1.2.1&q=80&w=400"
-                  sx={{ width: 56, height: 56 }}
+                  sx={{ width: 56, height: 56, opacity: hide ? 0.2 : 1 }}
                 />
                 <Stack direction="column">
                   <Typography variant="subtitle1">สมชาย ขายไก่</Typography>
@@ -184,6 +184,7 @@ const Comment: React.FC<IComment> = ({
           <Stack direction="row" alignItems="center" spacing={1.5}>
             <Button
               onClick={handleOnclick}
+              disabled={hide}
               startIcon={
                 <img
                   src={
@@ -204,6 +205,7 @@ const Comment: React.FC<IComment> = ({
               startIcon={<ReplyIcon />}
               onClick={() => setReply(true)}
               sx={{ color: hide ? '#4b4949' : 'primary' }}
+              disabled={hide}
             >
               reply
             </Button>
