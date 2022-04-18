@@ -1,14 +1,14 @@
 /* eslint-disable import/no-unresolved */
 import React from 'react';
 import { Container } from '@mui/material';
-import AnnoucementCard from 'components/AnnoucementCard';
-import mockAnnoucement from '../mocks/Annoucement';
+import AnnouncementCard from 'components/AnnouncementCard';
+import mockAnnoucement from '../mocks/Announcement';
 
 const Annoucement: React.FC = () => {
   return (
     <Container>
       {mockAnnoucement?.map((annoucement: any) => (
-        <AnnoucementCard
+        <AnnouncementCard
           id={annoucement.id}
           title={annoucement.title}
           description={annoucement.description}

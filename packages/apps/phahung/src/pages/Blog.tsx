@@ -6,8 +6,10 @@ import { Button, Container, Stack, Typography } from '@mui/material';
 import Blocks from 'editorjs-blocks-react-renderer';
 import { makeStyles } from '@mui/styles';
 import BlogContent from '../mocks/ฺBlogContent';
+import mockComments from '../mocks/Comments';
 
 interface IComment {
+  hide: boolean;
   id: string;
   content: string;
   likes: number;
@@ -27,30 +29,6 @@ const useStyles = makeStyles(() => ({
   },
 }));
 const Blog = () => {
-  const classes = useStyles();
-  const mockComments = [
-    {
-      id: '1',
-      content: 'สวัสดีฉันคิอ ความคิดเห็นที่ 1 ',
-      likes: 1,
-    },
-    {
-      id: '2',
-      content: 'สวัสดีฉันคิอ ความคิดเห็นที่ 2 ',
-      likes: 2,
-    },
-    {
-      id: '3',
-      content: 'สวัสดีฉันคิอ ความคิดเห็นที่ 3 ',
-      likes: 3,
-    },
-    {
-      id: '4',
-      content: 'สวัสดีฉันคิอ ความคิดเห็นที่ 4 ',
-      likes: 4,
-    },
-  ];
-
   // const [comments, setComments] = useState<IComment[]>([]);
   const [comments, setComments] = useState<IComment[]>(mockComments);
   const [newComment, setNewComment] = useState<string>('');
@@ -59,7 +37,10 @@ const Blog = () => {
   const handleOnClick = () => {
     // setDidFetchComment(true);
     // await axios.post
-    setComments([...comments, { id: '3', content: newComment, likes: 0 }]);
+    setComments([
+      ...comments,
+      { id: '3', content: newComment, likes: 0, hide: false },
+    ]);
     setNewComment('');
   };
 
@@ -86,6 +67,15 @@ const Blog = () => {
     setComments(newDataComments);
   };
 
+  const handleHideComment = (id: string) => {
+    const newDataComments = comments.map((comment) => {
+      if (comment.id === id) {
+        return { ...comment, hide: true };
+      }
+      return comment;
+    });
+    setComments(newDataComments);
+  };
   // useEffect(() => {
   //   if (!didFetchComment) {
   //     //  await axios.get('/blog')
@@ -99,6 +89,7 @@ const Blog = () => {
   return (
     <Container>
       <Stack spacing={3}>
+        {/* ----------------------------------------- read block content from local json file ------------------------ */}
         {/* <Typography sx={{ maxWidth: '100%' }}>
           <Blocks
             data={BlogContent}
@@ -130,6 +121,7 @@ const Blog = () => {
             เพิ่มความคิดเห็น
           </Button>
         </Stack> */}
+        {/* ----------------------------------------- read block content from local json file ------------------------ */}
         <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
           รีวิวจากผู้อ่าน
         </Typography>
@@ -144,6 +136,8 @@ const Blog = () => {
                 likes={comment.likes}
                 decrementLikes={decrementLikes}
                 incrementLikes={incrementLikes}
+                handleHideComment={handleHideComment}
+                hide={comment.hide}
               />
             );
           })}
