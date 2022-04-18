@@ -40,7 +40,7 @@ const AnnoucementCard: React.FC<AnnoucementCardProps> = ({
           }}
         >
           <Typography variant="h6" sx={{ mt: 'auto' }}>
-            Posted on Pim
+            Posted on
           </Typography>
           <Typography variant="subtitle1">{createdAt}</Typography>
         </Stack>
