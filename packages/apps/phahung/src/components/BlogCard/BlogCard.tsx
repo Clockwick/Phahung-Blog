@@ -5,7 +5,6 @@ import CardContent from '@mui/material/CardContent';
 import { Box, Stack, Divider, Typography } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 
-type imageFit = 'cover' | 'contain';
 interface BlogCardProps {
   id: string;
   image: string;

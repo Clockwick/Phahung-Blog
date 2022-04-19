@@ -6,6 +6,7 @@ import { Button, Container, Stack, Typography } from '@mui/material';
 import Blocks from 'editorjs-blocks-react-renderer';
 import { makeStyles } from '@mui/styles';
 import BlogContent from '../mocks/ฺBlogContent';
+import BlogCard from '../components/BlogCard/BlogCard';
 
 interface IComment {
   id: string;
@@ -99,7 +100,14 @@ const Blog = () => {
   return (
     <Container>
       <Stack spacing={3}>
-        {/* <Typography sx={{ maxWidth: '100%' }}>
+        {/* <BlogCard
+          id={id}
+          image={image}
+          title={title}
+          author={author}
+          likes={likes}
+        /> */}
+        <Typography sx={{ maxWidth: '100%' }}>
           <Blocks
             data={BlogContent}
             config={{
@@ -129,7 +137,7 @@ const Blog = () => {
           >
             เพิ่มความคิดเห็น
           </Button>
-        </Stack> */}
+        </Stack>
         <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
           รีวิวจากผู้อ่าน
         </Typography>
