@@ -39,50 +39,56 @@ const Blogs = () => {
     gridLayout: GridLayout,
     receivedBlogs: BlogPreview[],
   ): React.ReactNode => {
+    const {
+      id: id0,
+      image: image0,
+      title: title0,
+      author: author0,
+      likes: likes0,
+    } = receivedBlogs[0];
     switch (gridLayout) {
       case '4-4-4': {
         const {
-          image: image6,
-          title: title6,
-          author: author6,
-          likes: likes6,
-        } = receivedBlogs[6];
+          id: id1,
+          image: image1,
+          title: title1,
+          author: author1,
+          likes: likes1,
+        } = receivedBlogs[1];
         const {
-          image: image7,
-          title: title7,
-          author: author7,
-          likes: likes7,
-        } = receivedBlogs[7];
-        const {
-          image: image8,
-          title: title8,
-          author: author8,
-          likes: likes8,
-        } = receivedBlogs[8];
+          id: id2,
+          image: image2,
+          title: title2,
+          author: author2,
+          likes: likes2,
+        } = receivedBlogs[2];
         return (
           <Grid container spacing={3}>
             <Grid item xs={4}>
               <BlogCard
-                image={image6}
-                title={title6}
-                author={author6}
-                likes={likes6}
+                id={id0}
+                image={image0}
+                title={title0}
+                author={author0}
+                likes={likes0}
               />
             </Grid>
             <Grid item xs={4}>
               <BlogCard
-                image={image7}
-                title={title7}
-                author={author7}
-                likes={likes7}
+                id={id1}
+                image={image1}
+                title={title1}
+                author={author1}
+                likes={likes1}
               />
             </Grid>
             <Grid item xs={4}>
               <BlogCard
-                image={image8}
-                title={title8}
-                author={author8}
-                likes={likes8}
+                id={id2}
+                image={image2}
+                title={title2}
+                author={author2}
+                likes={likes2}
               />
             </Grid>
           </Grid>
@@ -90,62 +96,45 @@ const Blogs = () => {
       }
       case '6-6': {
         const {
-          image: image0,
-          title: title0,
-          author: author0,
-          likes: likes0,
-        } = receivedBlogs[0];
-        const {
+          id: id1,
           image: image1,
           title: title1,
           author: author1,
           likes: likes1,
         } = receivedBlogs[1];
         return (
-          <>
-            <Grid container spacing={3}>
-              <Grid item xs={6}>
-                <BlogCard
-                  image={image0}
-                  title={title0}
-                  author={author0}
-                  likes={likes0}
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <BlogCard
-                  image={image1}
-                  title={title1}
-                  author={author1}
-                  likes={likes1}
-                />
-              </Grid>
+          <Grid container spacing={3}>
+            <Grid item xs={6}>
+              <BlogCard
+                id={id0}
+                image={image0}
+                title={title0}
+                author={author0}
+                likes={likes0}
+              />
             </Grid>
-            <Stack
-              justifyContent="center"
-              alignItems="center"
-              sx={{ width: '100%', paddingBottom: 3 }}
-            >
-              <ListCategory />
-            </Stack>
-          </>
+            <Grid item xs={6}>
+              <BlogCard
+                id={id1}
+                image={image1}
+                title={title1}
+                author={author1}
+                likes={likes1}
+              />
+            </Grid>
+          </Grid>
         );
       }
       case '12': {
-        const {
-          image: image9,
-          title: title9,
-          author: author9,
-          likes: likes9,
-        } = receivedBlogs[9];
         return (
           <Grid container spacing={3}>
             <Grid item xs={12}>
               <BlogCard
-                image={image9}
-                title={title9}
-                author={author9}
-                likes={likes9}
+                id={id0}
+                image={image0}
+                title={title0}
+                author={author0}
+                likes={likes0}
               />
             </Grid>
           </Grid>
@@ -153,33 +142,30 @@ const Blogs = () => {
       }
       case '8-4': {
         const {
-          image: image2,
-          title: title2,
-          author: author2,
-          likes: likes2,
-        } = receivedBlogs[2];
-        const {
-          image: image3,
-          title: title3,
-          author: author3,
-          likes: likes3,
-        } = receivedBlogs[3];
+          id: id1,
+          image: image1,
+          title: title1,
+          author: author1,
+          likes: likes1,
+        } = receivedBlogs[1];
         return (
           <Grid container spacing={3}>
             <Grid item xs={8}>
               <BlogCard
-                image={image2}
-                title={title2}
-                author={author2}
-                likes={likes2}
+                id={id0}
+                image={image0}
+                title={title0}
+                author={author0}
+                likes={likes0}
               />
             </Grid>
             <Grid item xs={4}>
               <BlogCard
-                image={image3}
-                title={title3}
-                author={author3}
-                likes={likes3}
+                id={id1}
+                image={image1}
+                title={title1}
+                author={author1}
+                likes={likes1}
               />
             </Grid>
           </Grid>
@@ -187,33 +173,30 @@ const Blogs = () => {
       }
       case '4-8': {
         const {
-          image: image4,
-          title: title4,
-          author: author4,
-          likes: likes4,
-        } = receivedBlogs[4];
-        const {
-          image: image5,
-          title: title5,
-          author: author5,
-          likes: likes5,
-        } = receivedBlogs[5];
+          id: id1,
+          image: image1,
+          title: title1,
+          author: author1,
+          likes: likes1,
+        } = receivedBlogs[1];
         return (
           <Grid container spacing={3}>
             <Grid item xs={4}>
               <BlogCard
-                image={image4}
-                title={title4}
-                author={author4}
-                likes={likes4}
+                id={id0}
+                image={image0}
+                title={title0}
+                author={author0}
+                likes={likes0}
               />
             </Grid>
             <Grid item xs={8}>
               <BlogCard
-                image={image5}
-                title={title5}
-                author={author5}
-                likes={likes5}
+                id={id1}
+                image={image1}
+                title={title1}
+                author={author1}
+                likes={likes1}
               />
             </Grid>
           </Grid>
@@ -222,6 +205,40 @@ const Blogs = () => {
       default:
         return null;
     }
+  };
+
+  const getBlogs = (receivedBlogs: BlogPreview[]) => {
+    const layouts: any[] = [
+      ['12'],
+      ['6-6'],
+      ['6-6', '12'],
+      ['6-6', '4-8'],
+      ['4-8', '4-4-4'],
+      ['4-8', '4-4-4', '12'],
+      ['6-6', '8-4', '4-4-4'],
+      ['6-6', '8-4', '4-4-4', '12'],
+      ['6-6', '8-4', '4-8', '4-4-4'],
+      ['6-6', '8-4', '4-8', '4-4-4', '12'],
+    ];
+
+    const allEle: any[] = [];
+    const chunkSize = 10;
+
+    for (let i = 0; i < receivedBlogs.length; i += chunkSize) {
+      const chunkBlogs: BlogPreview[] = receivedBlogs.slice(i, i + chunkSize);
+      let currBlogs: BlogPreview[] = [];
+      let pastBlogs = 0;
+
+      (layouts[chunkBlogs.length - 1] as GridLayout[]).map((layout) => {
+        const len = layout.split('-').length;
+        currBlogs = chunkBlogs.slice(pastBlogs, pastBlogs + len);
+        pastBlogs += len;
+
+        return allEle.push(renderLayout(layout, currBlogs));
+      });
+    }
+
+    return allEle;
   };
 
   return (
@@ -236,14 +253,15 @@ const Blogs = () => {
       maxWidth="lg"
     >
       <Slogan />
+      <Stack
+        justifyContent="center"
+        alignItems="center"
+        sx={{ width: '100%', paddingBottom: 3 }}
+      >
+        <ListCategory />
+      </Stack>
       <Grid container direction="row" alignItems="center">
-        {blogs && didFetchBlogsData ? (
-          (['6-6', '8-4', '4-8', '4-4-4', '12'] as GridLayout[]).map((layout) =>
-            renderLayout(layout, blogs),
-          )
-        ) : (
-          <Loading />
-        )}
+        {blogs && didFetchBlogsData ? getBlogs(blogs) : <Loading />}
       </Grid>
     </Container>
   );

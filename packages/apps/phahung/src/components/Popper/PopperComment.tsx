@@ -21,8 +21,9 @@ const PopperComment: React.FC<PopperCommentProps> = ({
   handleDelete,
   handleHideComment,
 }) => {
-  const [anchorEl, setAnchorEl] =
-    React.useState<HTMLButtonElement | null>(null);
+  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
+    null,
+  );
   const [open, setOpen] = React.useState(false);
   const [placement, setPlacement] = React.useState<PopperPlacementType>();
   const { user } = useUser();
