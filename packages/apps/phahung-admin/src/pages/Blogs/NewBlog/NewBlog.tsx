@@ -23,7 +23,7 @@ const NewBlog: React.FC = () => {
   const [didFetchTags, setDidFetchTags] = useState(false as boolean);
   const imagePath = uuidv4();
   const [isTagsLoading, setIsTagsLoading] = useState(false);
-  const [author, setAuthor] = useState(user ? user.name : '');
+  const [author, setAuthor] = useState(user ? user.firstName : '');
 
   const saveSessionImagePath = (newimagePath: string): void => {
     sessionStorage.setItem('imagePath', newimagePath);
