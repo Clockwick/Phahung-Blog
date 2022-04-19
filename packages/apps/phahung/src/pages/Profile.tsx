@@ -24,6 +24,10 @@ import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import SaveIcon from '@mui/icons-material/Save';
 import axios from 'axios';
+import BlockCard from '../components/BlogCard/BlogCard';
+import { BlogPreview as mockBlogPreview } from '../mocks/BlogPreview';
+import type { BlogPreview } from '../types/blog';
+
 interface IValues {
   firstName: {
     value: string;
@@ -319,6 +323,7 @@ const ProfileSSS: React.FC = () => {
 
 const Profile: React.FC = () => {
   const [didFetchData, setDidFetchData] = useState(false);
+  const [likedBlogs, setLikedBlogs] = useState<BlogPreview[]>([]);
   const [values, setValues] = React.useState<IValues>({
     firstName: {
       value: 'พิม',
@@ -339,16 +344,17 @@ const Profile: React.FC = () => {
   });
 
   const fetchData = async (): Promise<void> => {
-    axios
-      .get('https://localhost:5001/blogs/3SvKPAotte5DsKqZXypK')
-      .then((response) => {
-        console.log('response: ', response);
-        // do something about response
-        // setValues();
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    // axios
+    //   .get('https://localhost:5001/blogs/3SvKPAotte5DsKqZXypK')
+    //   .then((response) => {
+    //     console.log('response: ', response);
+    //     // do something about response
+    //
+    //   })
+    //   .catch((err) => {
+    //     console.error(err);
+    //   });
+    setLikedBlogs(mockBlogPreview);
     setDidFetchData(true);
   };
 
@@ -422,152 +428,159 @@ const Profile: React.FC = () => {
     display: 'none',
   });
   return (
-    <Container
-      sx={{
-        display: 'flex',
-        flexDirection: ['column', 'column', 'row', 'row', 'row'],
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '70vw',
-        height: '70vh',
-        boxShadow: '3px 3px 6px #EEEEEE',
-      }}
-    >
-      <Box
-        sx={{
-          width: ['100', '100', '50%', '50%', '50%'],
-          height: '100%',
-          overflow: 'hidden',
-          display: 'flex',
-          justifyContent: 'center',
-        }}
-      >
-        <img
-          height="100%"
-          src="https://images.unsplash.com/photo-1650343759375-aa845fda39a8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-          alt="Logo"
-          style={{
-            objectFit: 'cover',
-            overflow: 'hidden',
-          }}
-        />
-      </Box>
-
-      <IconButton
-        size="large"
-        sx={{
-          position: 'relative',
-          top: '50%',
-          left: '-25%',
-          backgroundColor: 'white',
-          // border: '0.3px solid black',
-          boxShadow: '2px 2px 4px #EEEEEE',
-          '&:hover': {
-            backgroundColor: '#f5f5f5',
-          },
-        }}
-      >
-        <AddPhotoAlternateIcon
-          fontSize="large"
-          color="primary"
-          sx={{ '&:hover': { opacity: 0.8 } }}
-        />
-      </IconButton>
-      <Box
+    <Stack>
+      <Container
         sx={{
           display: 'flex',
-          flexDirection: 'column',
+          flexDirection: ['column', 'column', 'row', 'row', 'row'],
           justifyContent: 'center',
           alignItems: 'center',
-          gap: '5%',
-          width: '50%',
-          height: '100%',
-
-          // backgroundColor: 'green',
+          width: '70vw',
+          height: '50vh',
+          boxShadow: '3px 3px 6px #EEEEEE',
         }}
       >
-        <Box sx={{ display: 'flex', gap: '5%', alignItems: 'center' }}>
-          <Typography>First Name</Typography>
-          <FormControl
-            variant="outlined"
-            disabled={values.firstName.status}
-            sx={{ width: '70%' }}
-          >
-            <InputLabel htmlFor="teacher-input-firstName" required>
-              First Name
-            </InputLabel>
-            <OutlinedInput
-              id="teacher-input-firstName"
-              value={values.firstName.value}
-              required
-              label="First Name"
-              onChange={handleChange('firstName')}
-              inputProps={{
-                readOnly: values.firstName.status,
-              }}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle edit firstName"
-                    onClick={handleClickStatus(
-                      'firstName',
-                      values.firstName.status,
-                    )}
-                    edge="end"
-                  >
-                    {values.firstName.status ? (
-                      <CreateIcon />
-                    ) : (
-                      <SaveIcon sx={{ color: 'green' }} />
-                    )}
-                  </IconButton>
-                </InputAdornment>
-              }
-            />
-          </FormControl>
+        <Box
+          sx={{
+            width: ['100', '100', '50%', '50%', '50%'],
+            height: '100%',
+            overflow: 'hidden',
+            display: 'flex',
+            justifyContent: 'center',
+          }}
+        >
+          <img
+            height="100%"
+            src="https://images.unsplash.com/photo-1650343759375-aa845fda39a8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+            alt="Logo"
+            style={{
+              objectFit: 'cover',
+              overflow: 'hidden',
+            }}
+          />
         </Box>
-        <Box sx={{ display: 'flex', gap: '5%', alignItems: 'center' }}>
-          <Typography>Last Name</Typography>
-          <FormControl
-            variant="outlined"
-            disabled={values.lastName.status}
-            sx={{ width: '70%' }}
-          >
-            <InputLabel htmlFor="teacher-input-lastName" required>
-              Last Name
-            </InputLabel>
-            <OutlinedInput
-              id="teacher-input-lastName"
-              value={values.lastName.value}
-              required
-              label="Last Name"
-              onChange={handleChange('lastName')}
-              inputProps={{
-                readOnly: values.lastName.status,
-              }}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle edit lastName"
-                    onClick={handleClickStatus(
-                      'lastName',
-                      values.lastName.status,
-                    )}
-                    edge="end"
-                  >
-                    {values.lastName.status ? (
-                      <CreateIcon />
-                    ) : (
-                      <CheckIcon sx={{ color: 'green' }} />
-                    )}
-                  </IconButton>
-                </InputAdornment>
-              }
-            />
-          </FormControl>
+
+        <IconButton
+          size="large"
+          sx={{
+            position: 'relative',
+            top: ['-5%', '-5%', '50%', '50%', '50%'],
+            left: ['-5%', '-5%', '-25%', '-25%', '-25%'],
+            backgroundColor: 'white',
+            // border: '0.3px solid black',
+            boxShadow: '2px 2px 4px #EEEEEE',
+            '&:hover': {
+              backgroundColor: '#f5f5f5',
+            },
+          }}
+        >
+          <AddPhotoAlternateIcon
+            fontSize="large"
+            color="primary"
+            sx={{ '&:hover': { opacity: 0.8 } }}
+          />
+        </IconButton>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: '5%',
+            width: ['100', '100', '50%', '50%', '50%'],
+            height: '100%',
+
+            // backgroundColor: 'green',
+          }}
+        >
+          <Box sx={{ display: 'flex', gap: '5%', alignItems: 'center' }}>
+            <Typography>First Name</Typography>
+            <FormControl
+              variant="outlined"
+              disabled={values.firstName.status}
+              sx={{ width: '70%' }}
+            >
+              <InputLabel htmlFor="teacher-input-firstName" required>
+                First Name
+              </InputLabel>
+              <OutlinedInput
+                id="teacher-input-firstName"
+                value={values.firstName.value}
+                required
+                label="First Name"
+                onChange={handleChange('firstName')}
+                inputProps={{
+                  readOnly: values.firstName.status,
+                }}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle edit firstName"
+                      onClick={handleClickStatus(
+                        'firstName',
+                        values.firstName.status,
+                      )}
+                      edge="end"
+                    >
+                      {values.firstName.status ? (
+                        <CreateIcon />
+                      ) : (
+                        <SaveIcon sx={{ color: 'green' }} />
+                      )}
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
+            </FormControl>
+          </Box>
+          <Box sx={{ display: 'flex', gap: '5%', alignItems: 'center' }}>
+            <Typography>Last Name</Typography>
+            <FormControl
+              variant="outlined"
+              disabled={values.lastName.status}
+              sx={{ width: '70%' }}
+            >
+              <InputLabel htmlFor="teacher-input-lastName" required>
+                Last Name
+              </InputLabel>
+              <OutlinedInput
+                id="teacher-input-lastName"
+                value={values.lastName.value}
+                required
+                label="Last Name"
+                onChange={handleChange('lastName')}
+                inputProps={{
+                  readOnly: values.lastName.status,
+                }}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle edit lastName"
+                      onClick={handleClickStatus(
+                        'lastName',
+                        values.lastName.status,
+                      )}
+                      edge="end"
+                    >
+                      {values.lastName.status ? (
+                        <CreateIcon />
+                      ) : (
+                        <CheckIcon sx={{ color: 'green' }} />
+                      )}
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
+            </FormControl>
+          </Box>
         </Box>
-      </Box>
-    </Container>
+      </Container>
+      <Container>
+        {/* likedBlogs.map((blog)=>
+      <BlockCard id={blog.id}  { image, title, author, likes }/>
+      ) */}
+      </Container>
+    </Stack>
   );
 };
 

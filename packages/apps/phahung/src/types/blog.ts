@@ -11,13 +11,3 @@ export type BlogPreview = {
   tag: tag;
 };
 
-export type Blog = {
-  id: string;
-  title: string;
-  content: string[];//
-  author: string;
-  likes: number;
-  createdAt: number;
-  image: string;
-  tag?: tag;
-};

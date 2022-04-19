@@ -21,19 +21,19 @@ const Blogs = () => {
 
   /// SEND GET TO BACKEND
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // const fetchBlogsData = async (): Promise<void> => {
-  //   // using axios naja
-  //   await setTimeout(() => {
-  //     setBlogs(mockBlogPreview);
-  //     setDidFetchBlogsData(true);
-  //   }, 250);
-  // };
+  const fetchBlogsData = async (): Promise<void> => {
+    // using axios naja
+    await setTimeout(() => {
+      setBlogs(mockBlogPreview);
+      setDidFetchBlogsData(true);
+    }, 250);
+  };
 
-  // useEffect(() => {
-  //   if (!didFetchBlogsData) {
-  //     fetchBlogsData();
-  //   }
-  // }, [didFetchBlogsData, fetchBlogsData]);
+  useEffect(() => {
+    if (!didFetchBlogsData) {
+      fetchBlogsData();
+    }
+  }, [didFetchBlogsData, fetchBlogsData]);
 
   const renderLayout = (
     gridLayout: GridLayout,
