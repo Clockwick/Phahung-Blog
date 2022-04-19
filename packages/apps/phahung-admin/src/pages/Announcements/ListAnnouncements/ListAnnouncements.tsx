@@ -7,8 +7,7 @@ import moment from 'moment';
 
 const ListAnnouncements: React.FC = () => {
   const history = useHistory();
-  console.log('mockAnnouncements', mockAnnouncements);
-  console.log(moment(1650354639000).format('LLLL'));
+
   return (
     <div className="w-full h-full">
       <div className="relative">

@@ -1,8 +1,33 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { Button, Input } from '@chan-chala/uikit';
-import React from 'react';
+import announcementApiCall from 'api/Announcement/announcement';
+import React, { useState } from 'react';
+import { INewAnnouncementPayload } from './types';
+import { ToastTrigger } from 'components/Toasts';
+import { useToast } from '@chakra-ui/react';
+import { useHistory } from 'react-router-dom';
 
-const AnnouncementForm: React.FC = () => {
+const NewAnnouncement: React.FC = () => {
+  const history = useHistory();
+  const [title, setTitle] = useState<string>('');
+  const [description, setDescription] = useState<string>('');
+  const toast = useToast();
+  const payload: INewAnnouncementPayload = {
+    title,
+    description,
+  };
+  const handleOnClick = () => {
+    announcementApiCall.createNewAnnouncement(payload).then((res) => {
+      console.log('res', res);
+      toast(
+        ToastTrigger.createAnnouncementSuccess(
+          `ประกาศชื่อ "${title}" ได้ถูกสร้างขึ้น`,
+        ),
+      );
+      history.push('/announcements');
+    });
+  };
+
   return (
     <>
       <div className="w-full h-full">
@@ -17,7 +42,8 @@ const AnnouncementForm: React.FC = () => {
             <Input
               placeholder="ใส่ชื่อหัวข้อประกาศ..."
               size="md"
-              // onChange={handleOnChange}
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
             />
           </div>
           <div className="flex justify-center  my-4 space-x-4 w-full ">
@@ -33,6 +59,8 @@ const AnnouncementForm: React.FC = () => {
                 id="exampleFormControlTextarea1"
                 rows={3}
                 placeholder="ใส่รายละเอียดประกาศ..."
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
               />
             </div>
           </div>
@@ -42,7 +70,7 @@ const AnnouncementForm: React.FC = () => {
               color="blue"
               type="button"
               border={false}
-              // onClick={() => onClick('publish')}
+              onClick={() => handleOnClick()}
             >
               โพสประกาศ
             </Button>
@@ -53,4 +81,4 @@ const AnnouncementForm: React.FC = () => {
   );
 };
 
-export default AnnouncementForm;
+export default NewAnnouncement;
