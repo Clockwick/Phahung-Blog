@@ -179,6 +179,14 @@ const ToastCall: IToastCall = {
     isClosable: true,
     position: 'bottom-right',
   }),
+  createAnnouncementSuccess: (description) => ({
+    title: 'สร้างประกาศใหม่สำเร็จ',
+    description,
+    status: 'success',
+    duration: 5000,
+    isClosable: true,
+    position: 'bottom-right',
+  }),
 };
 
 export default ToastCall;
