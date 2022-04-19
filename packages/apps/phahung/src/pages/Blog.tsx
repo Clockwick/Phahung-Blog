@@ -7,6 +7,7 @@ import Blocks from 'editorjs-blocks-react-renderer';
 import { makeStyles } from '@mui/styles';
 import BlogContent from '../mocks/ฺBlogContent';
 import mockComments from '../mocks/Comments';
+import axios from 'axios';
 
 interface IComment {
   hide: boolean;
@@ -34,6 +35,30 @@ const Blog = () => {
   const [newComment, setNewComment] = useState<string>('');
   // const [state, setState] = useState<boolean>(false);
   // const [didFetchComment, setDidFetchComment] = useState(false);
+
+  const [blogCardData, setBlogCardData] = useState(null);
+  const [didFetchData, setDidFetchData] = useState(false);
+
+  const fetchData = async (): Promise<void> => {
+    axios
+      .get('https://localhost:5001/blogs/3SvKPAotte5DsKqZXypK') // edit this
+      .then((response) => {
+        console.log('response: ', response);
+        // do something about response
+        // setValues();
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+    setDidFetchData(true);
+  };
+
+  useEffect(() => {
+    if (!didFetchData) {
+      fetchData();
+    }
+  }, [didFetchData, fetchData]);
+
   const handleOnClick = () => {
     // setDidFetchComment(true);
     // await axios.post
