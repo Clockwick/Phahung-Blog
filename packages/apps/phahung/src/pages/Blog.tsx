@@ -7,6 +7,7 @@ import Blocks from 'editorjs-blocks-react-renderer';
 import { makeStyles } from '@mui/styles';
 import BlogContent from '../mocks/ฺBlogContent';
 import mockComments from '../mocks/Comments';
+import BlogCard from '../components/BlogCard/BlogCard';
 
 interface IComment {
   hide: boolean;
@@ -29,6 +30,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 const Blog = () => {
+  const classes = useStyles();
   // const [comments, setComments] = useState<IComment[]>([]);
   const [comments, setComments] = useState<IComment[]>(mockComments);
   const [newComment, setNewComment] = useState<string>('');
@@ -90,6 +92,14 @@ const Blog = () => {
     <Container>
       <Stack spacing={3}>
         {/* ----------------------------------------- read block content from local json file ------------------------ */}
+        {/* <Typography sx={{ maxWidth: '100%' }}>
+        {/* <BlogCard
+          id={id}
+          image={image}
+          title={title}
+          author={author}
+          likes={likes}
+        /> */}
         {/* <Typography sx={{ maxWidth: '100%' }}>
           <Blocks
             data={BlogContent}
