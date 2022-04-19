@@ -16,5 +16,4 @@ export interface IAnnouncementAPICall {
     perPage: number,
     q: string,
   ) => Promise<AxiosResponse>;
-  getAnnouncementById: (announcementId: string) => Promise<AxiosResponse>;
 }
