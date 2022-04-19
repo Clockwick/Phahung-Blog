@@ -45,6 +45,15 @@ const announcementApiCall: IAnnouncementAPICall = {
       },
     });
   },
+  getAnnouncementById: (announcementId) => {
+    return api({
+      method: 'get',
+      url: `/announcement/edit/${announcementId}`,
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('idToken')}`,
+      },
+    });
+  },
 };
 
 export default announcementApiCall;

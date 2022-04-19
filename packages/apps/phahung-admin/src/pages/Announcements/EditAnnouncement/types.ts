@@ -9,5 +9,4 @@ export interface IEditAnnouncementPayload {
   id: string;
   title: string;
   description: string;
-  //   createdAt: number;
 }
