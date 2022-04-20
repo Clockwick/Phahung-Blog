@@ -30,6 +30,8 @@ import BlockCard from '../components/BlogCard/BlogCard';
 import { BlogPreview as mockBlogPreview } from '../mocks/BlogPreview';
 import type { BlogPreview } from '../types/blog';
 import StackCard from '../components/StackCard/StackCard';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 interface IValues {
   firstName: {
@@ -345,6 +347,7 @@ const Profile: React.FC = () => {
       status: true,
     },
   });
+  const [cardPage, setCardPage] = useState<number>(0);
 
   const fetchData = async (): Promise<void> => {
     // axios
@@ -432,17 +435,31 @@ const Profile: React.FC = () => {
     display: 'none',
   });
 
-  const getStack = (receivedBlogs: BlogPreview[]) => {
-    const allEle: any[] = [];
+  const getStack = (receivedBlogs: BlogPreview[], page: number) => {
     const chunkSize = 5;
 
-    for (let i = 0; i < receivedBlogs.length; i += chunkSize) {
-      const chunkBlogs: BlogPreview[] = receivedBlogs.slice(i, i + chunkSize);
-      allEle.push(<StackCard Blogs={chunkBlogs} />);
-    }
+    // for (let i = 0; i < receivedBlogs.length; i += chunkSize) {
+    const chunkBlogs: BlogPreview[] = receivedBlogs.slice(
+      page * chunkSize,
+      page * chunkSize + chunkSize,
+    );
 
-    return allEle;
+    // }
+
+    return <StackCard Blogs={chunkBlogs} />;
   };
+
+  function changePageCard(direction: 'next' | 'prev') {
+    const len = likedBlogs.length;
+    console.log(cardPage, direction, len / 5);
+
+    if (direction === 'next' && cardPage < Math.floor(len / 5)) {
+      setCardPage(cardPage + 1);
+    }
+    if (direction === 'prev' && cardPage > 0) {
+      setCardPage(cardPage - 1);
+    }
+  }
 
   return (
     <Stack>
@@ -455,7 +472,6 @@ const Profile: React.FC = () => {
           width: '70vw',
           height: '40vh',
           boxShadow: '3px 3px 6px #EEEEEE',
-          marginBottom: '3%',
         }}
       >
         <Box
@@ -498,6 +514,7 @@ const Profile: React.FC = () => {
             sx={{ color: '#ff8a00', '&:hover': { opacity: 0.8 } }}
           />
         </IconButton>
+
         <Box
           sx={{
             display: 'flex',
@@ -585,11 +602,64 @@ const Profile: React.FC = () => {
           </Box>
         </Box>
       </Container>
+
+      {/* Card */}
       <Container sx={{ width: '100vw' }}>
         {didFetchData && likedBlogs ? (
-          getStack(likedBlogs)
+          <Stack
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
+            sx={
+              {
+                // marginLeft: '-5%'
+              }
+            }
+          >
+            <IconButton
+              size="large"
+              sx={{
+                height: '10%',
+                zIndex: 100,
+                backgroundColor: 'white',
+                boxShadow: '3px 3px 5px #CCCCCC',
+                '&:hover': {
+                  backgroundColor: '#f5f5f5',
+                },
+              }}
+              onClick={() => changePageCard('prev')}
+            >
+              <ArrowBackIcon
+                fontSize="large"
+                sx={{
+                  color: '#ff8a00',
+                  '&:hover': { opacity: 0.8 },
+                }}
+              />
+            </IconButton>
+
+            {getStack(likedBlogs, cardPage)}
+
+            <IconButton
+              size="large"
+              sx={{
+                height: '10%',
+                zIndex: 100,
+                backgroundColor: 'white',
+                boxShadow: '3px 3px 5px #CCCCCC',
+                '&:hover': {
+                  backgroundColor: '#f5f5f5',
+                },
+              }}
+              onClick={() => changePageCard('next')}
+            >
+              <ArrowForwardIcon
+                fontSize="large"
+                sx={{ color: '#ff8a00', '&:hover': { opacity: 0.8 } }}
+              />
+            </IconButton>
+          </Stack>
         ) : (
-          //   <StackCard Blogs={likedBlogs} />
           <Loading />
         )}
       </Container>
