@@ -10,6 +10,8 @@ import {
   Avatar,
   Badge,
   Box,
+  Grid,
+  CircularProgress as Loading,
 } from '@mui/material';
 
 import styled from '@emotion/styled';
@@ -27,6 +29,7 @@ import axios from 'axios';
 import BlockCard from '../components/BlogCard/BlogCard';
 import { BlogPreview as mockBlogPreview } from '../mocks/BlogPreview';
 import type { BlogPreview } from '../types/blog';
+import StackCard from '../components/StackCard/StackCard';
 
 interface IValues {
   firstName: {
@@ -354,6 +357,7 @@ const Profile: React.FC = () => {
     //   .catch((err) => {
     //     console.error(err);
     //   });
+
     setLikedBlogs(mockBlogPreview);
     setDidFetchData(true);
   };
@@ -427,6 +431,19 @@ const Profile: React.FC = () => {
   const Input = styled('input')({
     display: 'none',
   });
+
+  const getStack = (receivedBlogs: BlogPreview[]) => {
+    const allEle: any[] = [];
+    const chunkSize = 5;
+
+    for (let i = 0; i < receivedBlogs.length; i += chunkSize) {
+      const chunkBlogs: BlogPreview[] = receivedBlogs.slice(i, i + chunkSize);
+      allEle.push(<StackCard Blogs={chunkBlogs} />);
+    }
+
+    return allEle;
+  };
+
   return (
     <Stack>
       <Container
@@ -436,8 +453,9 @@ const Profile: React.FC = () => {
           justifyContent: 'center',
           alignItems: 'center',
           width: '70vw',
-          height: '50vh',
+          height: '40vh',
           boxShadow: '3px 3px 6px #EEEEEE',
+          marginBottom: '3%',
         }}
       >
         <Box
@@ -466,6 +484,7 @@ const Profile: React.FC = () => {
             position: 'relative',
             top: ['-5%', '-5%', '50%', '50%', '50%'],
             left: ['-5%', '-5%', '-25%', '-25%', '-25%'],
+
             backgroundColor: 'white',
             // border: '0.3px solid black',
             boxShadow: '2px 2px 4px #EEEEEE',
@@ -476,8 +495,7 @@ const Profile: React.FC = () => {
         >
           <AddPhotoAlternateIcon
             fontSize="large"
-            color="primary"
-            sx={{ '&:hover': { opacity: 0.8 } }}
+            sx={{ color: '#ff8a00', '&:hover': { opacity: 0.8 } }}
           />
         </IconButton>
         <Box
@@ -522,11 +540,7 @@ const Profile: React.FC = () => {
                       )}
                       edge="end"
                     >
-                      {values.firstName.status ? (
-                        <CreateIcon />
-                      ) : (
-                        <SaveIcon sx={{ color: 'green' }} />
-                      )}
+                      {values.firstName.status ? <CreateIcon /> : <SaveIcon />}
                     </IconButton>
                   </InputAdornment>
                 }
@@ -562,11 +576,7 @@ const Profile: React.FC = () => {
                       )}
                       edge="end"
                     >
-                      {values.lastName.status ? (
-                        <CreateIcon />
-                      ) : (
-                        <CheckIcon sx={{ color: 'green' }} />
-                      )}
+                      {values.lastName.status ? <CreateIcon /> : <SaveIcon />}
                     </IconButton>
                   </InputAdornment>
                 }
@@ -575,13 +585,34 @@ const Profile: React.FC = () => {
           </Box>
         </Box>
       </Container>
-      <Container>
-        {/* likedBlogs.map((blog)=>
-      <BlockCard id={blog.id}  { image, title, author, likes }/>
-      ) */}
+      <Container sx={{ width: '100vw' }}>
+        {didFetchData && likedBlogs ? (
+          getStack(likedBlogs)
+        ) : (
+          //   <StackCard Blogs={likedBlogs} />
+          <Loading />
+        )}
       </Container>
     </Stack>
   );
 };
 
 export default Profile;
+{
+  /* {didFetchData && likedBlogs ? (
+              likedBlogs.map((blog) => {
+                <Grid item xs={4}>
+                  <BlockCard
+                    id={blog.id}
+                    image={blog.image}
+                    title={blog.title}
+                    author={blog.author}
+                    likes={blog.likes}
+                  />
+                </Grid>;
+              })
+            ) : (
+              <Loading />
+            )}
+          </Grid> */
+}
