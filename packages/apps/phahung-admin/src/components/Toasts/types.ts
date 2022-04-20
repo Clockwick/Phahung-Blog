@@ -26,4 +26,5 @@ export interface IToastCall {
   createAnnouncementSuccess: (desp: string) => UseToastOptions;
   editAnnouncementSuccess: (desp: string) => UseToastOptions;
   deleteAnnouncementSuccess: () => UseToastOptions;
+  deleteAnnouncementFail: () => UseToastOptions;
 }

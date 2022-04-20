@@ -203,6 +203,14 @@ const ToastCall: IToastCall = {
     isClosable: true,
     position: 'bottom-right',
   }),
+  deleteAnnouncementFail: () => ({
+    title: 'ลบประกาศไม่สำเร็จ',
+    description: 'เกิดข้อผิดพลาดในการลบประกาศ',
+    status: 'success',
+    duration: 5000,
+    isClosable: true,
+    position: 'bottom-right',
+  }),
 };
 
 export default ToastCall;

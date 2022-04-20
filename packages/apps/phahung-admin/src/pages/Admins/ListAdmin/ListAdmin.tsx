@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 // import { Box, Button, useModal } from '@chan-chala/uikit';
 import { Button, useModal } from '@chan-chala/uikit';
-import { DeleteUserModal } from '../UserModal';
+import { DeleteAdminModal, AddAdminModal } from '../AdminModal';
 import { User } from './types';
 import { Pagination } from './components';
 
@@ -11,7 +11,10 @@ const ListUser: React.FC = () => {
   const [totalAdmin, setTotalAdmin] = useState<number>(0);
   const [deleteId, setDeleteId] = useState<string>('');
   const [handleDeleteModalPresent] = useModal(
-    <DeleteUserModal deleteHandler={{ deleteId, setDidFetchUsers }} />,
+    <DeleteAdminModal deleteHandler={{ deleteId, setDidFetchUsers }} />,
+  );
+  const [handleAddModalPresent] = useModal(
+    <AddAdminModal setDidFetchUsers={setDidFetchUsers} />,
   );
 
   useEffect(() => {
@@ -36,7 +39,12 @@ const ListUser: React.FC = () => {
     <div className="w-full h-full">
       <div className="flex flex-row justify-between mb-4">
         <div className="text-4xl font-bold">
-          รายชื่อผู้ใช้ ({renderedTotalUsers})
+          รายชื่อผู้ดูแล ({renderedTotalUsers})
+        </div>
+        <div>
+          <Button color="white" onClick={handleAddModalPresent}>
+            เพิ่มผู้ดูแล
+          </Button>
         </div>
       </div>
       <div className="flex flex-row flex-wrap items-start space-y-4">

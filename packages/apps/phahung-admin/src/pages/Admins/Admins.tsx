@@ -5,18 +5,18 @@ import { ProtectedRoute, Menu } from 'components/.';
 
 import { ACCEPT_ROLES } from 'config/.';
 
-const ListUser = React.lazy(() => import('./ListUser'));
+const ListAdmin = React.lazy(() => import('./ListAdmin'));
 const NotFound = React.lazy(() => import('pages/NotFound'));
 
-const Users: React.FC = () => {
+const Admins: React.FC = () => {
   return (
     <Menu>
       <React.Suspense fallback={<></>}>
         <Switch>
           <ProtectedRoute
             exact
-            path="/users"
-            component={ListUser}
+            path="/admins"
+            component={ListAdmin}
             acceptRoles={ACCEPT_ROLES.users}
           />
           <Route component={NotFound} />
@@ -26,4 +26,4 @@ const Users: React.FC = () => {
   );
 };
 
-export default Users;
+export default Admins;

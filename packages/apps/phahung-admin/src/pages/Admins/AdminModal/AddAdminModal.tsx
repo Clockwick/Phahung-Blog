@@ -1,3 +1,4 @@
+/* eslint-disable import/extensions */
 import { Button, Modal, Input } from '@chan-chala/uikit';
 import React, { useState } from 'react';
 import { useToast } from '@chakra-ui/react';

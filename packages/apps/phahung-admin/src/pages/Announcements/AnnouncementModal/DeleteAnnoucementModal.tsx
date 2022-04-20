@@ -4,6 +4,7 @@ import { useToast } from '@chakra-ui/react';
 import { ToastTrigger } from 'components/Toasts';
 import { blogApiCall } from '../../../api';
 import { IDeleteAnnouncementResponse } from './types';
+import announcementApiCall from 'api/Announcement/announcement';
 
 type Props = {
   announcementHandler: {
@@ -24,23 +25,23 @@ const DeleteAnnouncementModal: React.FC<Props> = ({
   const toast = useToast();
   const handleDelete = async (): Promise<void> => {
     if (announcementHandler.deleteAnnouncementId.length > 0) {
-      blogApiCall
-        .deleteBlog(announcementHandler.deleteAnnouncementId)
+      announcementApiCall
+        .deleteAnnouncement(announcementHandler.deleteAnnouncementId)
         .then((res) => {
           const responseData = res.data as IDeleteAnnouncementResponse;
           if (responseData.success === 1) {
             announcementHandler.setIsFetchingDocs(false);
-            toast(ToastTrigger.deleteBlogSuccess());
+            toast(ToastTrigger.deleteAnnouncementSuccess());
             handleDismiss();
           }
         })
-        .catch(() => toast(ToastTrigger.deleteBlogFail()));
+        .catch(() => toast(ToastTrigger.deleteAnnouncementFail()));
     }
   };
 
   return (
     <Modal
-      title="คุณต้องการที่จะลบบทความนี้จริงๆหรือไม่?"
+      title="คุณต้องการที่จะลบประกาศนี้จริงๆหรือไม่?"
       handleDismiss={handleDismiss}
     >
       <div className="flex justify-center items-center space-x-10">
@@ -60,7 +61,7 @@ const DeleteAnnouncementModal: React.FC<Props> = ({
           border={false}
           onClick={handleDelete}
         >
-          ลบบทความนี้
+          ลบประกาศนี้
         </Button>
       </div>
     </Modal>
