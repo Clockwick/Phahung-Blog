@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 // import { Box, Button, useModal } from '@chan-chala/uikit';
 import { Button, useModal } from '@chan-chala/uikit';
-import { DeleteUserModal } from '../UserModal';
+import { BanUserModal, DeleteUserModal } from '../UserModal';
 import { User } from './types';
 import { Pagination } from './components';
 
@@ -48,16 +48,23 @@ const ListUser: React.FC = () => {
 
   const [totalAdmin, setTotalAdmin] = useState<number>(0);
   const [deleteId, setDeleteId] = useState<string>('');
+  const [banId, setBanId] = useState<string>('');
   const [handleDeleteModalPresent] = useModal(
     <DeleteUserModal deleteHandler={{ deleteId, setDidFetchUsers }} />,
+  );
+  const [handleBanModalPresent] = useModal(
+    <BanUserModal banHandler={{ banId, setDidFetchUsers }} />,
   );
 
   useEffect(() => {
     if (deleteId.length > 0) {
       setDeleteId('');
       handleDeleteModalPresent();
+    } else if (banId.length > 0) {
+      setBanId('');
+      handleBanModalPresent();
     }
-  }, [deleteId, handleDeleteModalPresent]);
+  }, [deleteId, banId, handleDeleteModalPresent, handleBanModalPresent]);
 
   /* eslint-disable */
   const renderedUsers = useMemo(
@@ -110,7 +117,7 @@ const ListUser: React.FC = () => {
                       type="button"
                       border={false}
                       onClick={() => {
-                        setDeleteId(user.id);
+                        setBanId(user.id);
                       }}
                     >
                       แบนผู้ใช้
