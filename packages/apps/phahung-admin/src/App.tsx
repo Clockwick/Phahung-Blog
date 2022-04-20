@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
@@ -5,7 +6,6 @@ import { ProtectedRoute } from 'components/.';
 
 import { ACCEPT_ROLES } from 'config/.';
 import Announcements from 'pages/Announcements/Announcements';
-import Admins from 'pages/Admins';
 
 const Home = React.lazy(() => import('pages/Home'));
 const Login = React.lazy(() => import('pages/Login'));
@@ -30,11 +30,6 @@ const App: React.FC = () => {
             path="/blogs"
             component={Blogs}
             acceptRoles={ACCEPT_ROLES.blogs}
-          />
-          <ProtectedRoute
-            path="/admins"
-            component={Admins}
-            acceptRoles={ACCEPT_ROLES.users}
           />
           <ProtectedRoute
             path="/users"

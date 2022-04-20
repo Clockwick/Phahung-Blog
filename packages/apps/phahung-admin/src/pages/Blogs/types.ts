@@ -20,7 +20,7 @@ export interface ITagResponse {
 }
 
 export type Tag = {
-  _id: string;
+  id: string;
   tag?: string;
   status: boolean;
 };

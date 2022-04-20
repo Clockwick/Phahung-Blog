@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Editor } from 'components/.';
@@ -43,28 +44,43 @@ const NewBlog: React.FC = () => {
 
   const deleteStatusFromTags = (inputTags: Array<Tag>): Array<string> => {
     /* eslint no-underscore-dangle: 0 */
-    return inputTags.map((tag) => tag._id);
+    return inputTags.map((tag) => tag.id);
   };
 
   useEffect(() => {
-    if (!didFetchTags)
-      blogApiCall.getAllTags().then((res) => {
-        if (res.status === 200) {
-          const responseData: ITags = res.data as ITags;
-          const initialTagsWithStatus = convertToTagsWithStatus(
-            responseData.tags,
-          );
-          saveSessionImagePath(imagePath);
-          setTags(initialTagsWithStatus);
-          setDidFetchTags(true);
-        }
-      });
-  }, [didFetchTags, imagePath]);
+    const responseData: ITags = {
+      success: 1,
+      tags: [
+        { id: '1', tag: 'จุดเติมบุญ', status: false },
+        { id: '2', tag: 'โพสต์ธรรมะ', status: false },
+        { id: '3', tag: 'บอกทางบุญ', status: false },
+        { id: '4', tag: 'ชีวประวัติ', status: false },
+        { id: '5', tag: 'บทสวดน่ารู้', status: false },
+        { id: '6', tag: 'สถานที่เที่ยว', status: false },
+      ],
+    };
+    const init = convertToTagsWithStatus(responseData.tags);
+    setTags(init);
+  }, []);
+  // useEffect(() => {
+  //   if (!didFetchTags)
+  //     blogApiCall.getAllTags().then((res) => {
+  //       if (res.status === 200) {
+  //         const responseData: ITags = res.data as ITags;
+  //         const initialTagsWithStatus = convertToTagsWithStatus(
+  //           responseData.tags,
+  //         );
+  //         saveSessionImagePath(imagePath);
+  //         setTags(initialTagsWithStatus);
+  //         setDidFetchTags(true);
+  //       }
+  //     });
+  // }, [didFetchTags, imagePath]);
 
-  useEffect(() => {
-    // Update Tag UI when tapping
-    setIsTagsLoading(false);
-  }, [tags, isTagsLoading]);
+  // useEffect(() => {
+  //   // Update Tag UI when tapping
+  //   setIsTagsLoading(false);
+  // }, [tags, isTagsLoading]);
 
   const handleTagsChange = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -162,17 +178,27 @@ const NewBlog: React.FC = () => {
         </div>
         <div className="flex flex-wrap justify-center items-center my-4 space-x-4 w-full">
           <div className="font-bold min-w-[70px] h-6">หมวดหมู่ :</div>
-          {didFetchTags &&
+          {/* {didFetchTags &&
             tags.map((tag, index) => (
               <Chip
                 id={index.toString()}
                 status={tag.status}
-                key={tag._id}
+                key={tag.id}
                 onClick={(e) => handleTagsChange(e, tag.status)}
               >
                 {tag.tag}
               </Chip>
-            ))}
+            ))} */}
+          {tags.map((tag, index) => (
+            <Chip
+              id={index.toString()}
+              status={tag.status}
+              key={tag.id}
+              onClick={(e) => handleTagsChange(e, tag.status)}
+            >
+              {tag.tag}
+            </Chip>
+          ))}
         </div>
         <div className="flex flex-wrap justify-center items-center my-4 space-x-4 w-full">
           <div className="font-bold min-w-[70px] h-6">
