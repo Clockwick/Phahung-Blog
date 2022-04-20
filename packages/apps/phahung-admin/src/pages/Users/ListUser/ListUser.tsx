@@ -1,28 +1,70 @@
 import React, { useEffect, useMemo, useState } from 'react';
 // import { Box, Button, useModal } from '@chan-chala/uikit';
 import { Button, useModal } from '@chan-chala/uikit';
-import { DeleteUserModal, AddUserModal } from '../UserModal';
+import { BanUserModal, DeleteUserModal } from '../UserModal';
 import { User } from './types';
 import { Pagination } from './components';
 
 const ListUser: React.FC = () => {
   const [didFetchUsers, setDidFetchUsers] = useState<boolean>(false);
-  const [users, setUsers] = useState<Array<User>>([]);
+  const [users, setUsers] = useState<Array<User>>([
+    {
+      id: 'asdasd',
+      firstName: 'Pim',
+      lastName: 'Piyajiranan',
+      email: 'pimpiyajiranan@gmail.com',
+      picture:
+        'https://images.unsplash.com/photo-1648667516809-54e1dada3927?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=954&q=80',
+      role: 'user',
+    },
+    {
+      id: 'asdasd',
+      firstName: 'Pim',
+      lastName: 'Piyajiranan',
+      email: 'pimpiyajiranan@gmail.com',
+      picture:
+        'https://images.unsplash.com/photo-1648667516809-54e1dada3927?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=954&q=80',
+      role: 'user',
+    },
+    {
+      id: 'asdasd',
+      firstName: 'Pim',
+      lastName: 'Piyajiranan',
+      email: 'pimpiyajiranan@gmail.com',
+      picture:
+        'https://images.unsplash.com/photo-1648667516809-54e1dada3927?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=954&q=80',
+      role: 'user',
+    },
+    {
+      id: 'asdasd',
+      firstName: 'Pim',
+      lastName: 'Piyajiranan',
+      email: 'pimpiyajiranan@gmail.com',
+      picture:
+        'https://images.unsplash.com/photo-1648667516809-54e1dada3927?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=954&q=80',
+      role: 'user',
+    },
+  ]);
+
   const [totalAdmin, setTotalAdmin] = useState<number>(0);
   const [deleteId, setDeleteId] = useState<string>('');
+  const [banId, setBanId] = useState<string>('');
   const [handleDeleteModalPresent] = useModal(
     <DeleteUserModal deleteHandler={{ deleteId, setDidFetchUsers }} />,
   );
-  const [handleAddModalPresent] = useModal(
-    <AddUserModal setDidFetchUsers={setDidFetchUsers} />,
+  const [handleBanModalPresent] = useModal(
+    <BanUserModal banHandler={{ banId, setDidFetchUsers }} />,
   );
 
   useEffect(() => {
     if (deleteId.length > 0) {
       setDeleteId('');
       handleDeleteModalPresent();
+    } else if (banId.length > 0) {
+      setBanId('');
+      handleBanModalPresent();
     }
-  }, [deleteId, handleDeleteModalPresent]);
+  }, [deleteId, banId, handleDeleteModalPresent, handleBanModalPresent]);
 
   /* eslint-disable */
   const renderedUsers = useMemo(
@@ -39,15 +81,10 @@ const ListUser: React.FC = () => {
     <div className="w-full h-full">
       <div className="flex flex-row justify-between mb-4">
         <div className="text-4xl font-bold">
-          รายชื่อผู้ดูแล ({renderedTotalUsers})
-        </div>
-        <div>
-          <Button color="white" onClick={handleAddModalPresent}>
-            เพิ่มผู้ดูแล
-          </Button>
+          รายชื่อผู้ใช้ ({renderedTotalUsers})
         </div>
       </div>
-      <div className="flex flex-row flex-wrap items-start space-y-4">
+      <div className="flex flex-row flex-wrap items-start ">
         {/* Draft Component Outline */}
         {renderedUsers && renderedUsers.length > 0 ? (
           renderedUsers.map((user) => {
@@ -60,12 +97,12 @@ const ListUser: React.FC = () => {
                   <img
                     className="object-cover object-center w-36 h-36 rounded-full"
                     src={user.picture}
-                    alt={user.name}
+                    alt={user.firstName}
                   />
                 </div>
                 <div className="text-center">
                   <div className="w-full text-xl font-bold text-black break-normal">
-                    {user.name}
+                    {user.firstName}
                   </div>
                   <div className="w-full text-base font-normal text-gray-800">
                     {user.email}
@@ -73,17 +110,30 @@ const ListUser: React.FC = () => {
                   <div className="mb-3 w-full text-base font-normal text-red-500">
                     {user.role}
                   </div>
-                  <Button
-                    size="md"
-                    color="red"
-                    type="button"
-                    border={false}
-                    onClick={() => {
-                      setDeleteId(user.id);
-                    }}
-                  >
-                    ลบผู้ดูแล
-                  </Button>
+                  <div className="flex justify-center space-x-4">
+                    <Button
+                      size="md"
+                      color="red"
+                      type="button"
+                      border={false}
+                      onClick={() => {
+                        setBanId(user.id);
+                      }}
+                    >
+                      แบนผู้ใช้
+                    </Button>
+                    <Button
+                      size="md"
+                      color="red"
+                      type="button"
+                      border={false}
+                      onClick={() => {
+                        setDeleteId(user.id);
+                      }}
+                    >
+                      ลบผู้ใช้
+                    </Button>
+                  </div>
                 </div>
               </div>
             );

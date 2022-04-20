@@ -43,10 +43,10 @@ const DeleteUserModal: React.FC<Props> = ({
 
   return (
     <Modal
-      title="คุณต้องการที่จะลบผู้ใช้จริงๆหรือไม่?"
+      title="คุณต้องการที่จะลบผู้ดูแลจริงๆหรือไม่?"
       handleDismiss={handleDismiss}
     >
-      <div className="flex justify-between items-center p-4 ">
+      <div className="flex justify-between items-center space-x-10">
         <Button
           size="md"
           color="gray"
@@ -63,7 +63,7 @@ const DeleteUserModal: React.FC<Props> = ({
           border={false}
           onClick={handleDelete}
         >
-          ฉันต้องการที่จะลบผู้ใช้
+          ฉันต้องการที่จะลบผู้ดูแล
         </Button>
       </div>
     </Modal>

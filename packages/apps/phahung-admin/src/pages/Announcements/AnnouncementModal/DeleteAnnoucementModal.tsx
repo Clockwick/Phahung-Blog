@@ -3,11 +3,12 @@ import { Button, Modal } from '@chan-chala/uikit';
 import { useToast } from '@chakra-ui/react';
 import { ToastTrigger } from 'components/Toasts';
 import { blogApiCall } from '../../../api';
-import { IDeleteBlogResponse } from './types';
+import { IDeleteAnnouncementResponse } from './types';
+import announcementApiCall from 'api/Announcement/announcement';
 
 type Props = {
   announcementHandler: {
-    deleteBlogId: string;
+    deleteAnnouncementId: string;
     setIsFetchingDocs: React.Dispatch<React.SetStateAction<boolean>>;
   };
   handleDismiss?: () => void;
@@ -17,30 +18,30 @@ const defaultProps = {
   handleDismiss: undefined,
 };
 
-const DeleteBlogModal: React.FC<Props> = ({
+const DeleteAnnouncementModal: React.FC<Props> = ({
   announcementHandler,
   handleDismiss = () => undefined,
 }) => {
   const toast = useToast();
   const handleDelete = async (): Promise<void> => {
-    if (announcementHandler.deleteBlogId.length > 0) {
-      blogApiCall
-        .deleteBlog(announcementHandler.deleteBlogId)
+    if (announcementHandler.deleteAnnouncementId.length > 0) {
+      announcementApiCall
+        .deleteAnnouncement(announcementHandler.deleteAnnouncementId)
         .then((res) => {
-          const responseData = res.data as IDeleteBlogResponse;
+          const responseData = res.data as IDeleteAnnouncementResponse;
           if (responseData.success === 1) {
             announcementHandler.setIsFetchingDocs(false);
-            toast(ToastTrigger.deleteBlogSuccess());
+            toast(ToastTrigger.deleteAnnouncementSuccess());
             handleDismiss();
           }
         })
-        .catch(() => toast(ToastTrigger.deleteBlogFail()));
+        .catch(() => toast(ToastTrigger.deleteAnnouncementFail()));
     }
   };
 
   return (
     <Modal
-      title="คุณต้องการที่จะลบบทความนี้จริงๆหรือไม่?"
+      title="คุณต้องการที่จะลบประกาศนี้จริงๆหรือไม่?"
       handleDismiss={handleDismiss}
     >
       <div className="flex justify-center items-center space-x-10">
@@ -60,13 +61,13 @@ const DeleteBlogModal: React.FC<Props> = ({
           border={false}
           onClick={handleDelete}
         >
-          ลบบทความนี้
+          ลบประกาศนี้
         </Button>
       </div>
     </Modal>
   );
 };
 
-DeleteBlogModal.defaultProps = defaultProps;
+DeleteAnnouncementModal.defaultProps = defaultProps;
 
-export default DeleteBlogModal;
+export default DeleteAnnouncementModal;

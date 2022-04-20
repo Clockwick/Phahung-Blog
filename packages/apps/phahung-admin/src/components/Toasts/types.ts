@@ -17,6 +17,7 @@ export interface IToastCall {
   addUserSuccess: (desp: string) => UseToastOptions;
   addUserFailed: (desp: string) => UseToastOptions;
   deleteUserSuccess: () => UseToastOptions;
+  banUserSuccess: () => UseToastOptions;
   deleteUserFailed: (desp: string) => UseToastOptions;
   renameSuccess: (desp: string) => UseToastOptions;
   renameFailed: (desp: string) => UseToastOptions;
@@ -25,4 +26,6 @@ export interface IToastCall {
   uploadImageFail: () => UseToastOptions;
   createAnnouncementSuccess: (desp: string) => UseToastOptions;
   editAnnouncementSuccess: (desp: string) => UseToastOptions;
+  deleteAnnouncementSuccess: () => UseToastOptions;
+  deleteAnnouncementFail: () => UseToastOptions;
 }

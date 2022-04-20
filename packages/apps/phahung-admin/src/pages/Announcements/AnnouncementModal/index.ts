@@ -1,1 +1,1 @@
-export { default as DeleteBlogModal } from './DeleteAnnoucementModal';
+export { default as DeleteAnnouncementModal } from './DeleteAnnoucementModal';

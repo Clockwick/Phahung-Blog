@@ -139,6 +139,14 @@ const ToastCall: IToastCall = {
     isClosable: true,
     position: 'bottom-right',
   }),
+  banUserSuccess: () => ({
+    title: 'แบนผู้ใช้สำเร็จ',
+    description: 'แบนผู้ใช้สำเร็จ',
+    status: 'success',
+    duration: 5000,
+    isClosable: true,
+    position: 'bottom-right',
+  }),
   renameSuccess: (description) => ({
     title: 'เปลี่ยนชื่อผู้ใช้สำเร็จ',
     description,
@@ -190,6 +198,22 @@ const ToastCall: IToastCall = {
   editAnnouncementSuccess: (description) => ({
     title: 'แก้ไขประกาศสำเร็จ',
     description,
+    status: 'success',
+    duration: 5000,
+    isClosable: true,
+    position: 'bottom-right',
+  }),
+  deleteAnnouncementSuccess: () => ({
+    title: 'ลบประกาศสำเร็จ',
+    description: 'ประกาศได้ถูกลบ',
+    status: 'success',
+    duration: 5000,
+    isClosable: true,
+    position: 'bottom-right',
+  }),
+  deleteAnnouncementFail: () => ({
+    title: 'ลบประกาศไม่สำเร็จ',
+    description: 'เกิดข้อผิดพลาดในการลบประกาศ',
     status: 'success',
     duration: 5000,
     isClosable: true,
