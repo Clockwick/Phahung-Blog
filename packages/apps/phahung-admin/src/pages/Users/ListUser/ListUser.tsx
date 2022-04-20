@@ -7,7 +7,45 @@ import { Pagination } from './components';
 
 const ListUser: React.FC = () => {
   const [didFetchUsers, setDidFetchUsers] = useState<boolean>(false);
-  const [users, setUsers] = useState<Array<User>>([]);
+  const [users, setUsers] = useState<Array<User>>([
+    {
+      id: 'asdasd',
+      firstName: 'Pim',
+      lastName: 'Piyajiranan',
+      email: 'pimpiyajiranan@gmail.com',
+      picture:
+        'https://images.unsplash.com/photo-1648667516809-54e1dada3927?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=954&q=80',
+      role: 'user',
+    },
+    {
+      id: 'asdasd',
+      firstName: 'Pim',
+      lastName: 'Piyajiranan',
+      email: 'pimpiyajiranan@gmail.com',
+      picture:
+        'https://images.unsplash.com/photo-1648667516809-54e1dada3927?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=954&q=80',
+      role: 'user',
+    },
+    {
+      id: 'asdasd',
+      firstName: 'Pim',
+      lastName: 'Piyajiranan',
+      email: 'pimpiyajiranan@gmail.com',
+      picture:
+        'https://images.unsplash.com/photo-1648667516809-54e1dada3927?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=954&q=80',
+      role: 'user',
+    },
+    {
+      id: 'asdasd',
+      firstName: 'Pim',
+      lastName: 'Piyajiranan',
+      email: 'pimpiyajiranan@gmail.com',
+      picture:
+        'https://images.unsplash.com/photo-1648667516809-54e1dada3927?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=954&q=80',
+      role: 'user',
+    },
+  ]);
+
   const [totalAdmin, setTotalAdmin] = useState<number>(0);
   const [deleteId, setDeleteId] = useState<string>('');
   const [handleDeleteModalPresent] = useModal(
@@ -39,7 +77,7 @@ const ListUser: React.FC = () => {
           รายชื่อผู้ใช้ ({renderedTotalUsers})
         </div>
       </div>
-      <div className="flex flex-row flex-wrap items-start space-y-4">
+      <div className="flex flex-row flex-wrap items-start ">
         {/* Draft Component Outline */}
         {renderedUsers && renderedUsers.length > 0 ? (
           renderedUsers.map((user) => {
@@ -52,12 +90,12 @@ const ListUser: React.FC = () => {
                   <img
                     className="object-cover object-center w-36 h-36 rounded-full"
                     src={user.picture}
-                    alt={user.name}
+                    alt={user.firstName}
                   />
                 </div>
                 <div className="text-center">
                   <div className="w-full text-xl font-bold text-black break-normal">
-                    {user.name}
+                    {user.firstName}
                   </div>
                   <div className="w-full text-base font-normal text-gray-800">
                     {user.email}
@@ -65,17 +103,30 @@ const ListUser: React.FC = () => {
                   <div className="mb-3 w-full text-base font-normal text-red-500">
                     {user.role}
                   </div>
-                  <Button
-                    size="md"
-                    color="red"
-                    type="button"
-                    border={false}
-                    onClick={() => {
-                      setDeleteId(user.id);
-                    }}
-                  >
-                    ลบผู้ดูแล
-                  </Button>
+                  <div className="flex justify-center space-x-4">
+                    <Button
+                      size="md"
+                      color="red"
+                      type="button"
+                      border={false}
+                      onClick={() => {
+                        setDeleteId(user.id);
+                      }}
+                    >
+                      แบนผู้ใช้
+                    </Button>
+                    <Button
+                      size="md"
+                      color="red"
+                      type="button"
+                      border={false}
+                      onClick={() => {
+                        setDeleteId(user.id);
+                      }}
+                    >
+                      ลบผู้ใช้
+                    </Button>
+                  </div>
                 </div>
               </div>
             );

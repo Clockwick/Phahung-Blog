@@ -17,7 +17,8 @@ export interface IUsersResponse {
 export type User = {
   id: string;
   email: string;
-  name: string;
+  firstName: string;
+  lastName: string;
   picture: string;
   role: string;
 };

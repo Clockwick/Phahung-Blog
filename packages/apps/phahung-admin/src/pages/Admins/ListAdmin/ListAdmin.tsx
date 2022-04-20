@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
-// import { Box, Button, useModal } from '@chan-chala/uikit';
+
 import { Button, useModal } from '@chan-chala/uikit';
-import { DeleteAdminModal, AddAdminModal } from '../AdminModal';
+import { DeleteAdminModal } from '../AdminModal';
 import { User } from './types';
 import { Pagination } from './components';
 
@@ -12,9 +12,6 @@ const ListUser: React.FC = () => {
   const [deleteId, setDeleteId] = useState<string>('');
   const [handleDeleteModalPresent] = useModal(
     <DeleteAdminModal deleteHandler={{ deleteId, setDidFetchUsers }} />,
-  );
-  const [handleAddModalPresent] = useModal(
-    <AddAdminModal setDidFetchUsers={setDidFetchUsers} />,
   );
 
   useEffect(() => {
@@ -40,11 +37,6 @@ const ListUser: React.FC = () => {
       <div className="flex flex-row justify-between mb-4">
         <div className="text-4xl font-bold">
           รายชื่อผู้ดูแล ({renderedTotalUsers})
-        </div>
-        <div>
-          <Button color="white" onClick={handleAddModalPresent}>
-            เพิ่มผู้ดูแล
-          </Button>
         </div>
       </div>
       <div className="flex flex-row flex-wrap items-start space-y-4">
