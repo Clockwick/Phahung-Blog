@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { ProtectedRoute } from 'components/.';
 
 import { ACCEPT_ROLES } from 'config/.';
+import Announcements from 'pages/Announcements/Announcements';
 
 const Home = React.lazy(() => import('pages/Home'));
 const Login = React.lazy(() => import('pages/Login'));
@@ -32,6 +33,11 @@ const App: React.FC = () => {
           <ProtectedRoute
             path="/users"
             component={Users}
+            acceptRoles={ACCEPT_ROLES.users}
+          />
+          <ProtectedRoute
+            path="/announcements"
+            component={Announcements}
             acceptRoles={ACCEPT_ROLES.users}
           />
           <ProtectedRoute
