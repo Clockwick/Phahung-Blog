@@ -25,4 +25,5 @@ export interface IToastCall {
   uploadImageFail: () => UseToastOptions;
   createAnnouncementSuccess: (desp: string) => UseToastOptions;
   editAnnouncementSuccess: (desp: string) => UseToastOptions;
+  deleteAnnouncementSuccess: () => UseToastOptions;
 }

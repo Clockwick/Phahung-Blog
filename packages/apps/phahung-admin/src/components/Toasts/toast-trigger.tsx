@@ -195,6 +195,14 @@ const ToastCall: IToastCall = {
     isClosable: true,
     position: 'bottom-right',
   }),
+  deleteAnnouncementSuccess: () => ({
+    title: 'ลบประกาศสำเร็จ',
+    description: 'ประกาศได้ถูกลบ',
+    status: 'success',
+    duration: 5000,
+    isClosable: true,
+    position: 'bottom-right',
+  }),
 };
 
 export default ToastCall;

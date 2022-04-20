@@ -1,4 +1,3 @@
-export interface IDeleteBlogResponse {
+export interface IDeleteAnnouncementResponse {
   success: number;
-  imageDeleted: number;
 }

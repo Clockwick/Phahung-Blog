@@ -3,11 +3,11 @@ import { Button, Modal } from '@chan-chala/uikit';
 import { useToast } from '@chakra-ui/react';
 import { ToastTrigger } from 'components/Toasts';
 import { blogApiCall } from '../../../api';
-import { IDeleteBlogResponse } from './types';
+import { IDeleteAnnouncementResponse } from './types';
 
 type Props = {
   announcementHandler: {
-    deleteBlogId: string;
+    deleteAnnouncementId: string;
     setIsFetchingDocs: React.Dispatch<React.SetStateAction<boolean>>;
   };
   handleDismiss?: () => void;
@@ -17,17 +17,17 @@ const defaultProps = {
   handleDismiss: undefined,
 };
 
-const DeleteBlogModal: React.FC<Props> = ({
+const DeleteAnnouncementModal: React.FC<Props> = ({
   announcementHandler,
   handleDismiss = () => undefined,
 }) => {
   const toast = useToast();
   const handleDelete = async (): Promise<void> => {
-    if (announcementHandler.deleteBlogId.length > 0) {
+    if (announcementHandler.deleteAnnouncementId.length > 0) {
       blogApiCall
-        .deleteBlog(announcementHandler.deleteBlogId)
+        .deleteBlog(announcementHandler.deleteAnnouncementId)
         .then((res) => {
-          const responseData = res.data as IDeleteBlogResponse;
+          const responseData = res.data as IDeleteAnnouncementResponse;
           if (responseData.success === 1) {
             announcementHandler.setIsFetchingDocs(false);
             toast(ToastTrigger.deleteBlogSuccess());
@@ -67,6 +67,6 @@ const DeleteBlogModal: React.FC<Props> = ({
   );
 };
 
-DeleteBlogModal.defaultProps = defaultProps;
+DeleteAnnouncementModal.defaultProps = defaultProps;
 
-export default DeleteBlogModal;
+export default DeleteAnnouncementModal;

@@ -1,13 +1,26 @@
-import React from 'react';
-import { Box, Button } from '@chan-chala/uikit';
+import React, { useEffect, useState } from 'react';
+import { Box, Button, useModal } from '@chan-chala/uikit';
 import { useHistory } from 'react-router-dom';
 // import { Pagination } from './components';
 import mockAnnouncements from 'mock/announcements';
 import moment from 'moment';
+import { DeleteAnnouncementModal } from '../AnnouncementModal';
 
 const ListAnnouncements: React.FC = () => {
   const history = useHistory();
-
+  const [deleteAnnouncementId, setDeleteAnnouncementId] = useState<string>('');
+  const [isFetchingDocs, setIsFetchingDocs] = useState<boolean>(false);
+  const [handleDeleteBlogPresent] = useModal(
+    <DeleteAnnouncementModal
+      announcementHandler={{ deleteAnnouncementId, setIsFetchingDocs }}
+    />,
+  );
+  useEffect(() => {
+    if (deleteAnnouncementId.length > 0) {
+      setDeleteAnnouncementId('');
+      handleDeleteBlogPresent();
+    }
+  }, [deleteAnnouncementId]);
   return (
     <div className="w-full h-full">
       <div className="relative">
@@ -65,7 +78,9 @@ const ListAnnouncements: React.FC = () => {
                         </Button>
                         <Button
                           color="red"
-                          // onClick={() => setDeleteBlogId(bannoucementlog.id)}
+                          onClick={() =>
+                            setDeleteAnnouncementId(annoucement.id)
+                          }
                         >
                           ลบประกาศ
                         </Button>
