@@ -9,20 +9,20 @@ export default <T>(config: AxiosRequestConfig): Promise<AxiosResponse<T>> => {
     (response) => {
       return response;
     },
-    (error) => {
-      if (error.response.status === 401) {
-        const localAdminJson =
-          localStorage.getItem('persist:chan-chara-admin') ?? '';
-        if (localAdminJson.length > 0) {
-          const { isLoggedIn } = JSON.parse(JSON.parse(localAdminJson).user);
-          if (isLoggedIn) {
-            localStorage.removeItem('persist:chan-chara-admin');
-            localStorage.removeItem('idToken');
-            window.location.reload();
-          }
-        }
-      }
-      return error;
+    () => {
+      // if (error.response.status === 401) {
+      //   const localAdminJson =
+      //     localStorage.getItem('persist:chan-chara-admin') ?? '';
+      //   if (localAdminJson.length > 0) {
+      //     const { isLoggedIn } = JSON.parse(JSON.parse(localAdminJson).user);
+      //     if (isLoggedIn) {
+      //       localStorage.removeItem('persist:chan-chara-admin');
+      //       localStorage.removeItem('idToken');
+      //       window.location.reload();
+      //     }
+      //   }
+      // }
+      // return error;
     },
   );
 
