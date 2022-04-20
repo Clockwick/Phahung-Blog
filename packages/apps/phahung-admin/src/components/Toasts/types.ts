@@ -24,4 +24,5 @@ export interface IToastCall {
   sessionTimeOut: () => UseToastOptions;
   uploadImageFail: () => UseToastOptions;
   createAnnouncementSuccess: (desp: string) => UseToastOptions;
+  editAnnouncementSuccess: (desp: string) => UseToastOptions;
 }

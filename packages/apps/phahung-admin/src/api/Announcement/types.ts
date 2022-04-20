@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { IEditBlogPayload } from 'pages/Blogs/EditBlog/types';
+import { IEditAnnouncementPayload } from 'pages/Announcements/EditAnnouncement/types';
 import { INewAnnouncementPayload } from '../../pages/Announcements/NewAnnouncement/types';
 
 export interface IAnnouncementAPICall {
@@ -7,7 +7,7 @@ export interface IAnnouncementAPICall {
     payload: INewAnnouncementPayload,
   ) => Promise<AxiosResponse>;
   editAnnouncement: (
-    payload: IEditBlogPayload,
+    payload: IEditAnnouncementPayload,
     announcementId: string,
   ) => Promise<AxiosResponse>;
   deleteAnnouncement: (announcementId: string) => Promise<AxiosResponse>;

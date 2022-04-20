@@ -3,13 +3,18 @@ import { Button, Input } from '@chan-chala/uikit';
 import React, { useEffect, useState } from 'react';
 import mockAnnouncement from 'mock/announcements';
 import { IEditAnnouncementPayload } from './types';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
+import announcementApiCall from 'api/Announcement/announcement';
+import { useToast } from '@chakra-ui/react';
+import { ToastTrigger } from 'components/Toasts';
 // import announcementApiCall from 'api/Announcement/announcement';
 
 interface Params {
   announcementId: string;
 }
 const EditAnnouncement: React.FC = () => {
+  const history = useHistory();
+  const toast = useToast();
   const { announcementId } = useParams<Params>();
   const response = mockAnnouncement[parseInt(announcementId, 10) - 1];
   const [title, setTitle] = useState<string>(response.title);
@@ -21,6 +26,14 @@ const EditAnnouncement: React.FC = () => {
       description,
     };
     console.log('payload', payload);
+    announcementApiCall.editAnnouncement(payload, announcementId).then(() => {
+      history.push('/announcements');
+      toast(
+        ToastTrigger.editAnnouncementSuccess(
+          `แก้ไขประกาศชื่อ "${title}" สำเร็จ`,
+        ),
+      );
+    });
   };
 
   // useEffect(() => {
