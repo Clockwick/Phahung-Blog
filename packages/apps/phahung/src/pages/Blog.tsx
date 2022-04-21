@@ -5,7 +5,7 @@ import TextareaAutosize from '@mui/material/TextareaAutosize';
 import { Button, Container, Stack, Typography } from '@mui/material';
 import Blocks from 'editorjs-blocks-react-renderer';
 import { makeStyles } from '@mui/styles';
-import BlogContent from '../mocks/ฺBlogContent';
+import BlogContent from '../mocks/BlogContent';
 import mockComments from '../mocks/Comments';
 import BlogCard from '../components/BlogCard/BlogCard';
 

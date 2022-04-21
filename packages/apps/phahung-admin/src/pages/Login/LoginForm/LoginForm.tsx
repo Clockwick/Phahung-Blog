@@ -1,41 +1,37 @@
 import React, { useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
-import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
-import { auth } from 'config/firebase';
+import { Link, useHistory } from 'react-router-dom';
 
-import { Button } from '@chan-chala/uikit';
-import { Google } from 'icons/.';
+import { Button, Input } from '@chan-chala/uikit';
 
 import { useUser } from 'store/hooks/userHook';
+import {
+  Formik,
+  FormikHelpers,
+  FormikProps,
+  Form,
+  Field,
+  FieldProps,
+} from 'formik';
+import api from 'utils/api';
+import { AxiosResponse } from 'axios';
+
+interface MyFormValues {
+  email: string;
+  password: string;
+}
 
 const LoginCallback: React.FC = () => {
   const history = useHistory();
 
   const { isLoggedIn, fetchSessionHandler } = useUser();
-
-  // const openAuthWindow = (url: string, width: number, height: number): void => {
-  //   const top = (window.screen.height - height) / 4;
-  //   const left = (window.screen.width - width) / 2;
-
-  //   const oauthWindow = window.open(
-  //     url,
-  //     '_blank',
-  //     `location=0,status=0,width=${width},height=${height},top=${top},left=${left}`,
-  //   );
-
-  //   if (oauthWindow) {
-  //     const oauthInterval = window.setInterval(() => {
-  //       if (oauthWindow.closed) {
-  //         fetchSessionHandler();
-  //         window.clearInterval(oauthInterval);
-  //       }
-  //     }, 1000);
-  //   }
-  // };
+  const initialValues: MyFormValues = {
+    email: '',
+    password: '',
+  };
 
   useEffect(() => {
     if (isLoggedIn) {
-      history.push('/blogs');
+      history.push('/');
     }
   }, [isLoggedIn, history]);
 
@@ -52,14 +48,88 @@ const LoginCallback: React.FC = () => {
             />
           </div>
           <div className="flex flex-col justify-center items-center space-y-4">
-            <Button
-              size="lg"
-              color="white"
-              type="button"
-              onClick={fetchSessionHandler}
+            <Formik
+              initialValues={initialValues}
+              onSubmit={(values, actions) => {
+                const { email, password } = values;
+                api({
+                  method: 'POST',
+                  url: '/signin',
+                  data: {
+                    email,
+                    password,
+                  },
+                })
+                  .then((res) => {
+                    if (res.status === 200) {
+                      localStorage.setItem('idToken', res.data as string);
+                      fetchSessionHandler();
+                    }
+                  })
+                  .catch((err: AxiosResponse<MyFormValues>) => {
+                    actions.setSubmitting(false);
+                    actions.setErrors(err.data);
+                  });
+              }}
             >
-              เข้าสู่ระบบ
-            </Button>
+              {(props: FormikProps<MyFormValues>) => {
+                const { email, password } = props.values;
+                const { setValues } = props;
+                return (
+                  <Form className="flex flex-col justify-center items-center space-y-4">
+                    {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+                    <div>
+                      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+                      <label className="block text-gray-700 text-sm font-bold mb-2">
+                        อีเมล
+                      </label>
+                      <Input
+                        id="email"
+                        name="email"
+                        type="email"
+                        placeholder="อีเมล"
+                        onChange={(e) =>
+                          setValues({
+                            ...props.values,
+                            email: e.target.value,
+                          })
+                        }
+                        value={email}
+                      />
+                    </div>
+
+                    <div>
+                      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+                      <label className="block text-gray-700 text-sm font-bold mb-2">
+                        รหัสผ่าน
+                      </label>
+                      <Input
+                        id="password"
+                        name="password"
+                        placeholder="รหัสผ่าน"
+                        value={password}
+                        onChange={(e) =>
+                          setValues({
+                            ...props.values,
+                            password: e.target.value,
+                          })
+                        }
+                        type="password"
+                      />
+                    </div>
+                    <Button size="lg" color="white" type="submit">
+                      เข้าสู่ระบบ
+                    </Button>
+                  </Form>
+                );
+              }}
+            </Formik>
+            <Link
+              to="/register"
+              className="text-gray-700 text-sm font-bold hover:underline hover:cursor-pointer"
+            >
+              สมัครสมาชิก
+            </Link>
           </div>
         </div>
       </div>

@@ -51,14 +51,14 @@ const NewBlog: React.FC = () => {
       blogApiCall.getAllTags().then((res) => {
         console.log('res', res);
         if (res.status === 200) {
-          const responseData: Tag[] = res.data as Tag[];
-          // console.log('responseData', responseData);
-          // const initialTagsWithStatus = convertToTagsWithStatus(
-          //   responseData.name,
-          // );
-          // saveSessionImagePath(imagePath);
-          // setTags(initialTagsWithStatus);
-          // setDidFetchTags(true);
+          console.log(res.data);
+          const responseData: ITags = res.data as ITags;
+          const initialTagsWithStatus = convertToTagsWithStatus(
+            responseData.tags,
+          );
+          saveSessionImagePath(imagePath);
+          setTags(initialTagsWithStatus);
+          setDidFetchTags(true);
         }
       });
     }

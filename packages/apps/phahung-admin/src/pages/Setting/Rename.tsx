@@ -5,8 +5,8 @@ import { useToast } from '@chakra-ui/react';
 import { ToastTrigger } from 'components/Toasts';
 import axios from 'axios';
 import { useUser } from 'store/hooks/userHook';
-import { INamePayload } from './types';
 import { User } from 'store/types';
+import { INamePayload } from './types';
 
 interface UserProps {
   user: User;

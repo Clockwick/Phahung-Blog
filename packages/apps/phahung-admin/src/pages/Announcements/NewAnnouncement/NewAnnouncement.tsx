@@ -2,10 +2,10 @@
 import { Button, Input } from '@chan-chala/uikit';
 import announcementApiCall from 'api/Announcement/announcement';
 import React, { useState } from 'react';
-import { INewAnnouncementPayload } from './types';
 import { ToastTrigger } from 'components/Toasts';
 import { useToast } from '@chakra-ui/react';
 import { useHistory } from 'react-router-dom';
+import { INewAnnouncementPayload } from './types';
 
 const NewAnnouncement: React.FC = () => {
   const history = useHistory();
