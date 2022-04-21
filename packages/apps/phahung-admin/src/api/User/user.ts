@@ -22,10 +22,11 @@ const userApiCall: IUserAPICall = {
       withCredentials: true,
     });
   },
-  getAdmin: (page, perPage) => {
+  getUser: (page, perPage) => {
     return api({
       method: 'get',
-      url: `/auth/admin?page=${page}&perPage=${perPage}`,
+      // url: `/auth/admin?page=${page}&perPage=${perPage}`,
+      url: `/users`,
       headers: {
         authorization: `Bearer ${localStorage.getItem('idToken')}`,
       },

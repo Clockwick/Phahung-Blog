@@ -10,7 +10,6 @@ export interface IBlog {
 }
 
 export interface ITags {
-  success: number;
   tags: Array<Tag>;
 }
 
@@ -21,7 +20,7 @@ export interface ITagResponse {
 
 export type Tag = {
   id: string;
-  tag?: string;
+  name: string;
   status: boolean;
 };
 
