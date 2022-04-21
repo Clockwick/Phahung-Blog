@@ -50,6 +50,7 @@ const NewBlog: React.FC = () => {
     if (!didFetchTags)
       blogApiCall.getAllTags().then((res) => {
         if (res.status === 200) {
+          console.log(res.data);
           const responseData: ITags = res.data as ITags;
           const initialTagsWithStatus = convertToTagsWithStatus(
             responseData.tags,

@@ -16,17 +16,18 @@ interface IUser {
 
 export const fetchSession = createAsyncThunk('user/fetchSession', async () => {
   /* for production */
-  // const res = await userApiCall.getSession();
+  const res = await userApiCall.getSession();
+  return res.data;
   // const { user } = res.data as IUser;
-  const user: User = {
-    id: '111',
-    firstName: 'Phan',
-    lastName: 'Hung',
-    email: 'phahung@gmail.com',
-    image: '/assets/image/Avatar.png',
-    role: 'Admin',
-  };
-  return user;
+  // const user: User = {
+  //   id: '111',
+  //   firstName: 'Phan',
+  //   lastName: 'Hung',
+  //   email: 'phahung@gmail.com',
+  //   image: '/assets/image/Avatar.png',
+  //   role: 'Admin',
+  // };
+  // return user;
 });
 
 export const fetchLogout = createAsyncThunk('user/fetchLogout', async () => {

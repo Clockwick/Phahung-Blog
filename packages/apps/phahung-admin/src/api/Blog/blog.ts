@@ -60,7 +60,7 @@ const blogApiCall: IBlogAPICall = {
   getAllTags: () => {
     return api({
       method: 'get',
-      url: '/blog/tag/all',
+      url: '/categories',
       headers: {
         authorization: `Bearer ${localStorage.getItem('idToken')}`,
       },

@@ -2,11 +2,11 @@
 import { Button, Input } from '@chan-chala/uikit';
 import React, { useEffect, useState } from 'react';
 import mockAnnouncement from 'mock/announcements';
-import { IEditAnnouncementPayload } from './types';
 import { useParams, useHistory } from 'react-router-dom';
 import announcementApiCall from 'api/Announcement/announcement';
 import { useToast } from '@chakra-ui/react';
 import { ToastTrigger } from 'components/Toasts';
+import { IEditAnnouncementPayload } from './types';
 // import announcementApiCall from 'api/Announcement/announcement';
 
 interface Params {
