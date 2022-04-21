@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import api from 'utils/api';
 
 import type { IAnnouncementAPICall } from './types';

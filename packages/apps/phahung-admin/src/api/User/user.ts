@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import api from 'utils/api';
 
 import type { IUserAPICall } from './types';
@@ -34,7 +35,25 @@ const userApiCall: IUserAPICall = {
   delete: (adminId) => {
     return api({
       method: 'delete',
-      url: `/auth/remove/${adminId}`,
+      url: `/unsubscription/${adminId}`,
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('idToken')}`,
+      },
+    });
+  },
+  banUser: (adminId) => {
+    return api({
+      method: 'delete',
+      url: `/users/${adminId}/ban`,
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('idToken')}`,
+      },
+    });
+  },
+  unBanUser: (adminId) => {
+    return api({
+      method: 'delete',
+      url: `/users/${adminId}/unban`,
       headers: {
         authorization: `Bearer ${localStorage.getItem('idToken')}`,
       },

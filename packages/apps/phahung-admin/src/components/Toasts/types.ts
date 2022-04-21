@@ -18,6 +18,7 @@ export interface IToastCall {
   addUserFailed: (desp: string) => UseToastOptions;
   deleteUserSuccess: () => UseToastOptions;
   banUserSuccess: () => UseToastOptions;
+  unBanUserSuccess: () => UseToastOptions;
   deleteUserFailed: (desp: string) => UseToastOptions;
   renameSuccess: (desp: string) => UseToastOptions;
   renameFailed: (desp: string) => UseToastOptions;

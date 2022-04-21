@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import React from 'react';
 import { Button, Modal } from '@chan-chala/uikit';
 import { useToast } from '@chakra-ui/react';

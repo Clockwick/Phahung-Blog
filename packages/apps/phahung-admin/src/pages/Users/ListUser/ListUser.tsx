@@ -1,33 +1,45 @@
 import React, { useEffect, useMemo, useState } from 'react';
 // import { Box, Button, useModal } from '@chan-chala/uikit';
 import { Button, useModal } from '@chan-chala/uikit';
-import { BanUserModal, DeleteUserModal } from '../UserModal';
+import { BanUserModal, DeleteUserModal, UnBanUserModal } from '../UserModal';
 import { User } from './types';
 import { Pagination } from './components';
 
 const ListUser: React.FC = () => {
   const [didFetchUsers, setDidFetchUsers] = useState<boolean>(false);
   const [users, setUsers] = useState<Array<User>>([]);
-
   const [totalUser, setTotalUser] = useState<number>(0);
   const [deleteId, setDeleteId] = useState<string>('');
   const [banId, setBanId] = useState<string>('');
+  const [unBanId, setUnBanId] = useState<string>('');
   const [handleDeleteModalPresent] = useModal(
     <DeleteUserModal deleteHandler={{ deleteId, setDidFetchUsers }} />,
   );
   const [handleBanModalPresent] = useModal(
     <BanUserModal banHandler={{ banId, setDidFetchUsers }} />,
   );
-
+  const [handleUnBanModalPresent] = useModal(
+    <UnBanUserModal unBanHandler={{ unBanId, setDidFetchUsers }} />,
+  );
   useEffect(() => {
     if (deleteId.length > 0) {
       setDeleteId('');
       handleDeleteModalPresent();
-    } else if (banId.length > 0) {
+    } else if (banId.length > 0 && unBanId.length === 0) {
       setBanId('');
       handleBanModalPresent();
+    } else if (unBanId.length > 0 && banId.length === 0) {
+      setUnBanId('');
+      handleUnBanModalPresent();
     }
-  }, [deleteId, banId, handleDeleteModalPresent, handleBanModalPresent]);
+  }, [
+    deleteId,
+    banId,
+    handleDeleteModalPresent,
+    handleBanModalPresent,
+    handleUnBanModalPresent,
+    unBanId,
+  ]);
 
   /* eslint-disable */
   const renderedUsers = useMemo(
@@ -73,18 +85,34 @@ const ListUser: React.FC = () => {
                   <div className="mb-3 w-full text-base font-normal text-red-500">
                     {user.role}
                   </div>
-                  <div className="flex justify-center space-x-4">
-                    <Button
-                      size="md"
-                      color="red"
-                      type="button"
-                      border={false}
-                      onClick={() => {
-                        setBanId(user.uid);
-                      }}
-                    >
-                      แบนผู้ใช้
-                    </Button>
+                  <div className="flex justify-center space-x-4 ">
+                    {user.isBan ? (
+                      <Button
+                        size="md"
+                        color="red"
+                        type="button"
+                        border={false}
+                        onClick={() => {
+                          setUnBanId(user.uid);
+                          console.log('unban');
+                        }}
+                      >
+                        ยกเลิกแบน
+                      </Button>
+                    ) : (
+                      <Button
+                        size="md"
+                        color="red"
+                        type="button"
+                        border={false}
+                        onClick={() => {
+                          setBanId(user.uid);
+                        }}
+                      >
+                        แบนผู้ใช้
+                      </Button>
+                    )}
+
                     <Button
                       size="md"
                       color="red"

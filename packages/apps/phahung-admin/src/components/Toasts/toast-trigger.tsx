@@ -147,6 +147,14 @@ const ToastCall: IToastCall = {
     isClosable: true,
     position: 'bottom-right',
   }),
+  unBanUserSuccess: () => ({
+    title: 'ยกเลิกแบนผู้ใช้สำเร็จ',
+    description: 'ยกเลิกแบนผู้ใช้สำเร็จ',
+    status: 'success',
+    duration: 5000,
+    isClosable: true,
+    position: 'bottom-right',
+  }),
   renameSuccess: (description) => ({
     title: 'เปลี่ยนชื่อผู้ใช้สำเร็จ',
     description,

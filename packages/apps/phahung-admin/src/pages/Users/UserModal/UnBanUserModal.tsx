@@ -7,8 +7,8 @@ import { ToastTrigger } from 'components/Toasts';
 import { userApiCall } from '../../../api';
 
 type Props = {
-  banHandler: {
-    banId: string;
+  unBanHandler: {
+    unBanId: string;
     setDidFetchUsers: React.Dispatch<React.SetStateAction<boolean>>;
   };
   handleDismiss?: () => void | undefined;
@@ -18,19 +18,20 @@ const defaultProps = {
   handleDismiss: undefined,
 };
 
-const BanUserModal: React.FC<Props> = ({
-  banHandler,
+const UnBanUserModal: React.FC<Props> = ({
+  unBanHandler,
   handleDismiss = () => undefined,
 }) => {
   const toast = useToast();
 
-  const handleBan = async (): Promise<void> => {
+  const handleUnBan = async (): Promise<void> => {
     userApiCall
-      .banUser(banHandler.banId)
+      .unBanUser(unBanHandler.unBanId)
       .then((res) => {
+        console.log('resUnban', res);
         // if (res.status === 200) {
-        toast(ToastTrigger.banUserSuccess());
-        banHandler.setDidFetchUsers(false);
+        toast(ToastTrigger.unBanUserSuccess());
+        unBanHandler.setDidFetchUsers(false);
         handleDismiss();
         // } else {
         //   toast(ToastTrigger.deleteUserFailed(`${res.statusText}`));
@@ -44,7 +45,7 @@ const BanUserModal: React.FC<Props> = ({
 
   return (
     <Modal
-      title="คุณต้องการที่จะแบนผู้ใช้จริงหรือไม่?"
+      title="คุณต้องการที่จะยกเลิกแบนผู้ใช้จริงๆหรือไม่?"
       handleDismiss={handleDismiss}
     >
       <div className="flex justify-between items-center p-4 ">
@@ -62,15 +63,15 @@ const BanUserModal: React.FC<Props> = ({
           color="red"
           type="button"
           border={false}
-          onClick={handleBan}
+          onClick={handleUnBan}
         >
-          ฉันต้องการที่จะแบนผู้ใช้
+          ฉันต้องการยกเลิกแบนผู้ใช้
         </Button>
       </div>
     </Modal>
   );
 };
 
-BanUserModal.defaultProps = defaultProps;
+UnBanUserModal.defaultProps = defaultProps;
 
-export default BanUserModal;
+export default UnBanUserModal;

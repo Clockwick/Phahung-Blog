@@ -72,7 +72,7 @@ const Button: React.FC<ButtonProps> = ({
       /* eslint-disable react/button-has-type */
       type={type}
       className={classNames(
-        'font-normal transition-all ease-in-out duration-100',
+        'font-normal transition-all ease-in-out duration-100 ',
         active && 'active:scale-95',
         border && 'border',
         getRound(round),
