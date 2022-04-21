@@ -7,46 +7,9 @@ import { Pagination } from './components';
 
 const ListUser: React.FC = () => {
   const [didFetchUsers, setDidFetchUsers] = useState<boolean>(false);
-  const [users, setUsers] = useState<Array<User>>([
-    {
-      id: 'asdasd',
-      firstName: 'Pim',
-      lastName: 'Piyajiranan',
-      email: 'pimpiyajiranan@gmail.com',
-      picture:
-        'https://images.unsplash.com/photo-1648667516809-54e1dada3927?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=954&q=80',
-      role: 'user',
-    },
-    {
-      id: 'asdasd',
-      firstName: 'Pim',
-      lastName: 'Piyajiranan',
-      email: 'pimpiyajiranan@gmail.com',
-      picture:
-        'https://images.unsplash.com/photo-1648667516809-54e1dada3927?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=954&q=80',
-      role: 'user',
-    },
-    {
-      id: 'asdasd',
-      firstName: 'Pim',
-      lastName: 'Piyajiranan',
-      email: 'pimpiyajiranan@gmail.com',
-      picture:
-        'https://images.unsplash.com/photo-1648667516809-54e1dada3927?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=954&q=80',
-      role: 'user',
-    },
-    {
-      id: 'asdasd',
-      firstName: 'Pim',
-      lastName: 'Piyajiranan',
-      email: 'pimpiyajiranan@gmail.com',
-      picture:
-        'https://images.unsplash.com/photo-1648667516809-54e1dada3927?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=954&q=80',
-      role: 'user',
-    },
-  ]);
+  const [users, setUsers] = useState<Array<User>>([]);
 
-  const [totalAdmin, setTotalAdmin] = useState<number>(0);
+  const [totalUser, setTotalUser] = useState<number>(0);
   const [deleteId, setDeleteId] = useState<string>('');
   const [banId, setBanId] = useState<string>('');
   const [handleDeleteModalPresent] = useModal(
@@ -72,8 +35,8 @@ const ListUser: React.FC = () => {
     [didFetchUsers, setDidFetchUsers, users],
   );
   const renderedTotalUsers = useMemo(
-    () => totalAdmin,
-    [didFetchUsers, setDidFetchUsers, totalAdmin],
+    () => totalUser,
+    [didFetchUsers, setDidFetchUsers, totalUser],
   );
   /* eslint-enable */
 
@@ -144,7 +107,7 @@ const ListUser: React.FC = () => {
         {/* Draft Component Outline */}
       </div>
       <Pagination
-        usersHandler={{ setUsers, setTotalAdmin }}
+        usersHandler={{ setUsers, setTotalUser }}
         fetchHandler={{ didFetchUsers, setDidFetchUsers }}
       />
     </div>

@@ -1,13 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { PageBox } from '@chan-chala/uikit';
 import { userApiCall } from '../../../../api';
-import { User, IUsersResponse } from '../types';
+import { User } from '../types';
 import config from './config';
 
 type PaginationProps = {
   usersHandler: {
     setUsers: React.Dispatch<React.SetStateAction<User[]>>;
-    setTotalAdmin: React.Dispatch<React.SetStateAction<number>>;
+    setTotalUser: React.Dispatch<React.SetStateAction<number>>;
   };
   fetchHandler: {
     didFetchUsers: boolean;
@@ -36,14 +36,17 @@ const Pagination: React.FC<PaginationProps> = ({
   useEffect(() => {
     if (!didFetchUsers) {
       userApiCall
-        .getAdmin(currentPage, config.perPage)
+        .getUser(currentPage, config.perPage)
         .then((res) => {
+          console.log('res', res);
           if (res.status === 200) {
-            const responseData = res.data as IUsersResponse;
-            setMaxPage(responseData.admins.totalPages);
-            usersHandler.setUsers(responseData.admins.docs);
-            usersHandler.setTotalAdmin(responseData.admins.totalDocs);
-            setNextPage(responseData.admins.hasNextPage);
+            const responseData = res.data as User[];
+            console.log('responseData', responseData);
+            // setMaxPage(responseData.admins.totalPages);
+            // usersHandler.setUsers(responseData.admins.docs);
+            usersHandler.setUsers(responseData);
+            // usersHandler.setTotalUser(responseData.admins.totalDocs);
+            // setNextPage(responseData.admins.hasNextPage);
             setDidFetchUsers(true);
           }
         })

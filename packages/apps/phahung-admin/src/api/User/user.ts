@@ -25,8 +25,8 @@ const userApiCall: IUserAPICall = {
   getUser: (page, perPage) => {
     return api({
       method: 'get',
-      // url: `/auth/admin?page=${page}&perPage=${perPage}`,
-      url: `/users`,
+      url: `/users?page=${page}&perPage=${perPage}`,
+
       headers: {
         authorization: `Bearer ${localStorage.getItem('idToken')}`,
       },
