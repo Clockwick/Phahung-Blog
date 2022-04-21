@@ -183,7 +183,7 @@ const NewBlog: React.FC = () => {
               key={tag.id}
               onClick={(e) => handleTagsChange(e, tag.status)}
             >
-              {tag.tag}
+              {tag.name}
             </Chip>
           ))}
         </div>
