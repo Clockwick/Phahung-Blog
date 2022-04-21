@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Editor } from 'components/.';
@@ -43,13 +44,14 @@ const NewBlog: React.FC = () => {
 
   const deleteStatusFromTags = (inputTags: Array<Tag>): Array<string> => {
     /* eslint no-underscore-dangle: 0 */
-    return inputTags.map((tag) => tag._id);
+    return inputTags.map((tag) => tag.id);
   };
-
   useEffect(() => {
-    if (!didFetchTags)
+    if (!didFetchTags) {
       blogApiCall.getAllTags().then((res) => {
+        console.log('res', res);
         if (res.status === 200) {
+          console.log(res.data);
           const responseData: ITags = res.data as ITags;
           const initialTagsWithStatus = convertToTagsWithStatus(
             responseData.tags,
@@ -59,6 +61,7 @@ const NewBlog: React.FC = () => {
           setDidFetchTags(true);
         }
       });
+    }
   }, [didFetchTags, imagePath]);
 
   useEffect(() => {
@@ -162,17 +165,27 @@ const NewBlog: React.FC = () => {
         </div>
         <div className="flex flex-wrap justify-center items-center my-4 space-x-4 w-full">
           <div className="font-bold min-w-[70px] h-6">หมวดหมู่ :</div>
-          {didFetchTags &&
+          {/* {didFetchTags &&
             tags.map((tag, index) => (
               <Chip
                 id={index.toString()}
                 status={tag.status}
-                key={tag._id}
+                key={tag.id}
                 onClick={(e) => handleTagsChange(e, tag.status)}
               >
                 {tag.tag}
               </Chip>
-            ))}
+            ))} */}
+          {tags.map((tag, index) => (
+            <Chip
+              id={index.toString()}
+              status={tag.status}
+              key={tag.id}
+              onClick={(e) => handleTagsChange(e, tag.status)}
+            >
+              {tag.name}
+            </Chip>
+          ))}
         </div>
         <div className="flex flex-wrap justify-center items-center my-4 space-x-4 w-full">
           <div className="font-bold min-w-[70px] h-6">

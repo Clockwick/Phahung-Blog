@@ -5,8 +5,8 @@ import type { IUserAPICall } from './types';
 const userApiCall: IUserAPICall = {
   getSession: () =>
     api({
-      method: 'get',
-      url: '/auth/info',
+      method: 'post',
+      url: '/get-session',
       headers: {
         authorization: `Bearer ${localStorage.getItem('idToken')}`,
       },
@@ -14,18 +14,18 @@ const userApiCall: IUserAPICall = {
     }),
   logout: () => {
     return api({
-      method: 'get',
-      url: '/auth/logout',
+      method: 'post',
+      url: '/logout',
       headers: {
         authorization: `Bearer ${localStorage.getItem('idToken')}`,
       },
       withCredentials: true,
     });
   },
-  getAdmin: (page, perPage) => {
+  getUser: (page, perPage) => {
     return api({
       method: 'get',
-      url: `/auth/admin?page=${page}&perPage=${perPage}`,
+      url: `/users?page=${page}&perPage=${perPage}`,
       headers: {
         authorization: `Bearer ${localStorage.getItem('idToken')}`,
       },

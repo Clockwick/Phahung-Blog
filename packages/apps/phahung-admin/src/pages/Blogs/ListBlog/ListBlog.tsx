@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Box, Button, useModal } from '@chan-chala/uikit';
@@ -12,7 +13,6 @@ import { DeleteBlogModal } from '../BlogModal';
 import { Pagination } from './components';
 import { Blog, BlogStatusResponse, IBlogStatus } from './types';
 import config from './config';
-import { AddTagModal, DeleteTagModal } from '../TagModal';
 
 moment.locale('th');
 
@@ -25,8 +25,6 @@ const ListBlog: React.FC = () => {
   const [handleDeleteBlogPresent] = useModal(
     <DeleteBlogModal blogHandler={{ deleteBlogId, setIsFetchingDocs }} />,
   );
-  const [handleCreateTagsPresent] = useModal(<AddTagModal />);
-  const [handledeleteTagsPresent] = useModal(<DeleteTagModal />);
 
   const [blogs, setBlogs] = useState<Array<Blog>>([]);
   const [blogStatus, setBlogStatus] = useState<Array<IBlogStatus>>([]);
@@ -122,12 +120,6 @@ const ListBlog: React.FC = () => {
         </div>
         <span className="absolute top-0 right-4 space-x-2">
           <>
-            <Button onClick={() => handleCreateTagsPresent()}>
-              เพิ่มหมวดหมู่
-            </Button>
-            <Button onClick={() => handledeleteTagsPresent()}>
-              ลบหมวดหมู่
-            </Button>
             <Button
               onClick={() => {
                 history.push('blogs/new');

@@ -1,11 +1,12 @@
+/* eslint-disable import/no-unresolved */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { Button, Input } from '@chan-chala/uikit';
 import announcementApiCall from 'api/Announcement/announcement';
 import React, { useState } from 'react';
-import { INewAnnouncementPayload } from './types';
 import { ToastTrigger } from 'components/Toasts';
 import { useToast } from '@chakra-ui/react';
 import { useHistory } from 'react-router-dom';
+import { INewAnnouncementPayload } from './types';
 
 const NewAnnouncement: React.FC = () => {
   const history = useHistory();
@@ -18,7 +19,6 @@ const NewAnnouncement: React.FC = () => {
   };
   const handleOnClick = () => {
     announcementApiCall.createNewAnnouncement(payload).then((res) => {
-      console.log('res', res);
       toast(
         ToastTrigger.createAnnouncementSuccess(
           `ประกาศชื่อ "${title}" ได้ถูกสร้างขึ้น`,

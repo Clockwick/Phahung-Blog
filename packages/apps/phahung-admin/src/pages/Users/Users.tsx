@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
@@ -8,7 +9,7 @@ import { ACCEPT_ROLES } from 'config/.';
 const ListUser = React.lazy(() => import('./ListUser'));
 const NotFound = React.lazy(() => import('pages/NotFound'));
 
-const Blogs: React.FC = () => {
+const Users: React.FC = () => {
   return (
     <Menu>
       <React.Suspense fallback={<></>}>
@@ -26,4 +27,4 @@ const Blogs: React.FC = () => {
   );
 };
 
-export default Blogs;
+export default Users;

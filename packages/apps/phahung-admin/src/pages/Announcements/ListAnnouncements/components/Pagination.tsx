@@ -1,30 +1,28 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { PageBox } from '@chan-chala/uikit';
-import { userApiCall } from '../../../../api';
-import { User } from '../types';
+import { Announcement, IAnnouncementsResponse } from '../types';
 import config from './config';
+import announcementApiCall from 'api/Announcement/announcement';
 
 type PaginationProps = {
-  usersHandler: {
-    setUsers: React.Dispatch<React.SetStateAction<User[]>>;
-    setTotalUser: React.Dispatch<React.SetStateAction<number>>;
+  announcementsHandler: {
+    setAnnouncements: React.Dispatch<React.SetStateAction<Announcement[]>>;
   };
   fetchHandler: {
-    didFetchUsers: boolean;
-    setDidFetchUsers: React.Dispatch<React.SetStateAction<boolean>>;
+    isFetchingDocs: boolean;
+    setIsFetchingDocs: React.Dispatch<React.SetStateAction<boolean>>;
   };
 };
 
 const Pagination: React.FC<PaginationProps> = ({
-  usersHandler,
+  announcementsHandler,
   fetchHandler,
 }) => {
   const [startPage, setStartPage] = useState<number>(1);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [maxPage, setMaxPage] = useState<number>(1);
-  const { didFetchUsers, setDidFetchUsers } = fetchHandler;
+  const { isFetchingDocs, setIsFetchingDocs } = fetchHandler;
   const [configPage, setConfigPage] = useState<number>(config.page);
-  const [nextPage, setNextPage] = useState<boolean>(false);
 
   const roundToNextConfigPage = (pageNum: number): number => {
     for (let i = 0; i <= config.page; i += 1) {
@@ -33,27 +31,25 @@ const Pagination: React.FC<PaginationProps> = ({
     return -1;
   };
 
+  const isNextEmpty =
+    currentPage + config.page > maxPage + roundToNextConfigPage(maxPage);
+
   useEffect(() => {
-    if (!didFetchUsers) {
-      userApiCall
-        .getUser(currentPage, config.perPage)
+    if (!isFetchingDocs) {
+      announcementApiCall
+        .getAnnouncements(currentPage, config.perPage)
         .then((res) => {
           console.log('res', res);
           if (res.status === 200) {
-            const responseData = res.data as User[];
+            const responseData = res.data as Announcement[];
             console.log('responseData', responseData);
-            // setMaxPage(responseData.admins.totalPages);
-            // usersHandler.setUsers(responseData.admins.docs);
-            usersHandler.setUsers(responseData);
-            // usersHandler.setTotalUser(responseData.admins.totalDocs);
-            // setNextPage(responseData.admins.hasNextPage);
-            setDidFetchUsers(true);
+            // setMaxPage(responseData.blogs.totalPages);
+            announcementsHandler.setAnnouncements(responseData);
+            setIsFetchingDocs(true);
           }
-        })
-        // eslint-disable-next-line no-console
-        .catch((error) => console.error(error.responseData.data.Error));
+        });
     }
-  }, [didFetchUsers, currentPage, usersHandler, setDidFetchUsers]);
+  }, [isFetchingDocs, currentPage, announcementsHandler, setIsFetchingDocs]);
 
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement>,
@@ -61,7 +57,7 @@ const Pagination: React.FC<PaginationProps> = ({
     event.preventDefault();
     const id = parseInt(event.currentTarget.id, 10);
     setCurrentPage(id);
-    setDidFetchUsers(false);
+    setIsFetchingDocs(false);
   };
 
   const handleNext = useCallback(() => {
@@ -69,15 +65,15 @@ const Pagination: React.FC<PaginationProps> = ({
       currentPage + config.page - 1 <=
       maxPage + roundToNextConfigPage(maxPage)
     ) {
-      setDidFetchUsers(false);
+      setIsFetchingDocs(false);
       setCurrentPage(configPage + 1);
       setStartPage(configPage + 1);
       setConfigPage((page) => page + config.page);
     }
-  }, [currentPage, configPage, setDidFetchUsers, maxPage]);
+  }, [currentPage, configPage, maxPage, setIsFetchingDocs]);
 
   const handlePrev = useCallback(() => {
-    setDidFetchUsers(false);
+    setIsFetchingDocs(false);
     if (currentPage - config.page > 0) {
       setCurrentPage(startPage - config.page);
       setStartPage(startPage - config.page);
@@ -87,7 +83,7 @@ const Pagination: React.FC<PaginationProps> = ({
       setStartPage(1);
       setConfigPage(config.page);
     }
-  }, [currentPage, setConfigPage, setDidFetchUsers, startPage]);
+  }, [currentPage, setConfigPage, startPage, setIsFetchingDocs]);
 
   return (
     <div className="flex justify-center items-center my-8 space-x-4">
@@ -114,7 +110,7 @@ const Pagination: React.FC<PaginationProps> = ({
             ),
         )}
       </div>
-      {nextPage && (
+      {!isNextEmpty && (
         <PageBox className="cursor-pointer" clickHandler={handleNext}>
           Next
         </PageBox>

@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 /* eslint-disable import/extensions */
 import React from 'react';
 import { ProtectedRoute, Menu } from 'components/.';

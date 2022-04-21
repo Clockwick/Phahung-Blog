@@ -1,8 +1,50 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { Button, Input } from '@chan-chala/uikit';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import mockAnnouncement from 'mock/announcements';
+import { useParams, useHistory } from 'react-router-dom';
+import announcementApiCall from 'api/Announcement/announcement';
+import { useToast } from '@chakra-ui/react';
+import { ToastTrigger } from 'components/Toasts';
+import { IEditAnnouncementPayload } from './types';
+// import announcementApiCall from 'api/Announcement/announcement';
 
-const AnnouncementForm: React.FC = () => {
+interface Params {
+  announcementId: string;
+}
+const EditAnnouncement: React.FC = () => {
+  const history = useHistory();
+  const toast = useToast();
+
+  const { announcementId } = useParams<Params>();
+
+  const [title, setTitle] = useState<string>('');
+  const [description, setDescription] = useState<string>('');
+
+  useEffect(() => {
+    announcementApiCall.getAnnouncementById(announcementId).then((res) => {
+      console.log('res', res);
+      const initialDataAnnouncement: IEditAnnouncementPayload =
+        res.data as IEditAnnouncementPayload;
+      console.log(initialDataAnnouncement.title);
+      setTitle(initialDataAnnouncement.title);
+      setDescription(initialDataAnnouncement?.description);
+    });
+  }, [announcementId]);
+  const handleOnClick = () => {
+    const payload: IEditAnnouncementPayload = {
+      title,
+      description,
+    };
+    announcementApiCall.editAnnouncement(payload, announcementId).then(() => {
+      history.push('/announcements');
+      toast(
+        ToastTrigger.editAnnouncementSuccess(
+          `แก้ไขประกาศชื่อ "${title}" สำเร็จ`,
+        ),
+      );
+    });
+  };
   return (
     <>
       <div className="w-full h-full">
@@ -11,13 +53,12 @@ const AnnouncementForm: React.FC = () => {
         </div>
         <div className="flex flex-col justify-center items-center ">
           <div className="flex flex-wrap justify-center items-center my-4 space-x-4 w-full ">
-            <div className="font-bold min-w-[70px] h-6">
-              ชื่อประกาศ (จำเป็น*) :{' '}
-            </div>
+            <div className="font-bold min-w-[70px] h-6">ชื่อประกาศ : </div>
             <Input
               placeholder="ใส่ชื่อหัวข้อประกาศ..."
               size="md"
-              // onChange={handleOnChange}
+              onChange={(e) => setTitle(e.target.value)}
+              value={title}
             />
           </div>
           <div className="flex justify-center  my-4 space-x-4 w-full ">
@@ -33,6 +74,8 @@ const AnnouncementForm: React.FC = () => {
                 id="exampleFormControlTextarea1"
                 rows={3}
                 placeholder="ใส่รายละเอียดประกาศ..."
+                onChange={(e) => setDescription(e.target.value)}
+                value={description}
               />
             </div>
           </div>
@@ -43,6 +86,9 @@ const AnnouncementForm: React.FC = () => {
               type="button"
               border={false}
               // onClick={() => onClick('publish')}
+              onClick={() => {
+                handleOnClick();
+              }}
             >
               โพสประกาศ
             </Button>
@@ -53,4 +99,4 @@ const AnnouncementForm: React.FC = () => {
   );
 };
 
-export default AnnouncementForm;
+export default EditAnnouncement;

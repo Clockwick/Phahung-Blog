@@ -1,10 +1,10 @@
+/* eslint-disable import/no-unresolved */
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import { ProtectedRoute } from 'components/.';
 
 import { ACCEPT_ROLES } from 'config/.';
-import Announcements from 'pages/Announcements/Announcements';
 
 const Home = React.lazy(() => import('pages/Home'));
 const Login = React.lazy(() => import('pages/Login'));
@@ -13,6 +13,8 @@ const Setting = React.lazy(() => import('pages/Setting'));
 const Users = React.lazy(() => import('pages/Users'));
 const PreviewBlog = React.lazy(() => import('pages/Blogs/PreviewBlog'));
 const NotFound = React.lazy(() => import('pages/NotFound'));
+const Signup = React.lazy(() => import('pages/Signup'));
+const Announcements = React.lazy(() => import('pages/Announcements'));
 
 const App: React.FC = () => {
   return (
@@ -51,6 +53,7 @@ const App: React.FC = () => {
             acceptRoles={ACCEPT_ROLES.blogs}
           />
           <Route path="/login" component={Login} />
+          <Route path="/register" component={Signup} />
 
           <Route component={NotFound} />
         </Switch>

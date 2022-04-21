@@ -1,4 +1,4 @@
-import { tag } from './tag';
+import { Tag } from './tag';
 
 export type BlogPreview = {
   id: string;
@@ -7,6 +7,17 @@ export type BlogPreview = {
   likes: number;
   createdAt: number;
   image: string;
-  tag: tag;
+  tag: Tag;
+};
+
+export type Blog = {
+  id: string;
+  title: string;
+  content: string[];
+  author: string;
+  likes: number;
+  createdAt: number;
+  image: string;
+  tag: Tag;
 };
 
