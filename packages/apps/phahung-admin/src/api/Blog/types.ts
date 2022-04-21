@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import { AxiosResponse } from 'axios';
 import { IEditBlogPayload } from 'pages/Blogs/EditBlog/types';
 import { INewBlogPayload } from '../../pages/Blogs/NewBlog/types';

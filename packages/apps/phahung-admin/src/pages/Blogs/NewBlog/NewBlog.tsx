@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Editor } from 'components/.';
@@ -43,12 +44,33 @@ const NewBlog: React.FC = () => {
 
   const deleteStatusFromTags = (inputTags: Array<Tag>): Array<string> => {
     /* eslint no-underscore-dangle: 0 */
-    return inputTags.map((tag) => tag._id);
+    return inputTags.map((tag) => tag.id);
   };
 
+  // useEffect(() => {
+  //   const responseData: ITags = {
+  //     success: 1,
+  //     tags: [
+  //       { id: '1', tag: 'จุดเติมบุญ', status: false },
+  //       { id: '2', tag: 'โพสต์ธรรมะ', status: false },
+  //       { id: '3', tag: 'บอกทางบุญ', status: false },
+  //       { id: '4', tag: 'ชีวประวัติ', status: false },
+  //       { id: '5', tag: 'บทสวดน่ารู้', status: false },
+  //       { id: '6', tag: 'สถานที่เที่ยว', status: false },
+  //     ],
+  //   };
+  //   const init = convertToTagsWithStatus(responseData.tags);
+  //   setTags(init);
+  // }, []);
+
   useEffect(() => {
-    if (!didFetchTags)
+    if (!didFetchTags) {
+      // localStorage.setItem(
+      //   'idToken',
+      //   'eyJhbGciOiJSUzI1NiIsImtpZCI6ImFhZmE4MTJiMTY5NzkxODBmYzc4MjA5ZWE3Y2NhYjkxZTY4NDM2NTkiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vcGhhaHVuZy1kYiIsImF1ZCI6InBoYWh1bmctZGIiLCJhdXRoX3RpbWUiOjE2NTA0ODAzOTUsInVzZXJfaWQiOiIwRjl0bTlJVk0zUGJXanNCYmtYNldsdkJ4WmcyIiwic3ViIjoiMEY5dG05SVZNM1BiV2pzQmJrWDZXbHZCeFpnMiIsImlhdCI6MTY1MDQ4MDM5NSwiZXhwIjoxNjUwNDgzOTk1LCJlbWFpbCI6ImpvaG5AZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7ImVtYWlsIjpbImpvaG5AZ21haWwuY29tIl19LCJzaWduX2luX3Byb3ZpZGVyIjoicGFzc3dvcmQifX0.PJNcJOdfgIDbA0SbTom1fzVhaLZIXDOMr4vI6mBmAMmSsgq1G_yCNCl5V6r3TjvxVm3gH7xyso7Jc0NsqbTK9gdm2i8FtO-KEsnx9V41dS4R_F-czj9Skk2rLJdc7mD8RNAoET9XXJtw3oFqSxAv0UxpdXA6dqVPYR51A4e5soBBT6jxd3Dn_y1SCLW8thpXAf-wO0SBDk04lbs7yoiijkNMQfQHrseWulXkSJUEM9ZBi1lYh5fB2A4_7Mne6128xV5yoZY_oTFeaiF6tx2-XOFc3zQDs2d_RrAs-qW2LZ59WmRJ1f0H-wLf5zr_1vhtF093Jui7giB7tw_DZdRz2w',
+      // );
       blogApiCall.getAllTags().then((res) => {
+        console.log('res', res);
         if (res.status === 200) {
           const responseData: ITags = res.data as ITags;
           const initialTagsWithStatus = convertToTagsWithStatus(
@@ -59,6 +81,7 @@ const NewBlog: React.FC = () => {
           setDidFetchTags(true);
         }
       });
+    }
   }, [didFetchTags, imagePath]);
 
   useEffect(() => {
@@ -162,17 +185,27 @@ const NewBlog: React.FC = () => {
         </div>
         <div className="flex flex-wrap justify-center items-center my-4 space-x-4 w-full">
           <div className="font-bold min-w-[70px] h-6">หมวดหมู่ :</div>
-          {didFetchTags &&
+          {/* {didFetchTags &&
             tags.map((tag, index) => (
               <Chip
                 id={index.toString()}
                 status={tag.status}
-                key={tag._id}
+                key={tag.id}
                 onClick={(e) => handleTagsChange(e, tag.status)}
               >
                 {tag.tag}
               </Chip>
-            ))}
+            ))} */}
+          {tags.map((tag, index) => (
+            <Chip
+              id={index.toString()}
+              status={tag.status}
+              key={tag.id}
+              onClick={(e) => handleTagsChange(e, tag.status)}
+            >
+              {tag.tag}
+            </Chip>
+          ))}
         </div>
         <div className="flex flex-wrap justify-center items-center my-4 space-x-4 w-full">
           <div className="font-bold min-w-[70px] h-6">

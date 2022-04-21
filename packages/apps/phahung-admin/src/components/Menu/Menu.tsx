@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import React from 'react';
 import { Menu as MenuUI } from '@chan-chala/uikit';

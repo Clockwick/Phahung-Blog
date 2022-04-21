@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import api from 'utils/api';
 
 import type { IBlogAPICall } from './types';
@@ -60,10 +61,10 @@ const blogApiCall: IBlogAPICall = {
   getAllTags: () => {
     return api({
       method: 'get',
-      url: '/blog/tag/all',
-      headers: {
-        authorization: `Bearer ${localStorage.getItem('idToken')}`,
-      },
+      url: '/categories',
+      // headers: {
+      //   authorization: `Bearer ${localStorage.getItem('idToken')}`,
+      // },
     });
   },
 
