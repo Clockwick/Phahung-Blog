@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
 // eslint-disable-next-line import/no-unresolved
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import Comment from 'components/Comment';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 import { Button, Container, Stack, Typography } from '@mui/material';
@@ -7,8 +8,8 @@ import Blocks from 'editorjs-blocks-react-renderer';
 import { makeStyles } from '@mui/styles';
 import BlogContent from '../mocks/ฺBlogContent';
 import mockComments from '../mocks/Comments';
-import axios from 'axios';
 import BlogCard from '../components/BlogCard/BlogCard';
+import feedApiCall from '../api/feedApiCall';
 
 interface IComment {
   hide: boolean;
@@ -30,8 +31,12 @@ const useStyles = makeStyles(() => ({
     width: '100px',
   },
 }));
+// interface Iparam {
+//   id: string;
+// }
 const Blog = () => {
   const classes = useStyles();
+  // let blogId = useParams<Iparam>();
   // const [comments, setComments] = useState<IComment[]>([]);
   const [comments, setComments] = useState<IComment[]>(mockComments);
   const [newComment, setNewComment] = useState<string>('');
@@ -42,16 +47,23 @@ const Blog = () => {
   const [didFetchData, setDidFetchData] = useState(false);
 
   const fetchData = async (): Promise<void> => {
-    axios
-      .get('https://localhost:5001/blogs/3SvKPAotte5DsKqZXypK') // edit this
-      .then((response) => {
-        console.log('response: ', response);
-        // do something about response
-        // setValues();
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    // axios
+    //   .get('https://localhost:5001/blogs/3SvKPAotte5DsKqZXypK') // edit this
+    //   .then((response) => {
+    //     console.log('response: ', response);
+    //     // do something about response
+    //     // setValues();
+    //   })
+    //   .catch((err) => {
+    //     console.error(err);
+    //   });
+    // feedApiCall.getBlogById(blogId).then((res: any) => {
+    //   if (res.status === 200) {
+    // const responseData = res.data as BlogPreview;
+    // setBlogs(responseData);
+    // setDidFetchBlogsData(true);
+    // }
+    // });
     setDidFetchData(true);
   };
 
@@ -125,7 +137,7 @@ const Blog = () => {
           author={author}
           likes={likes}
         /> */}
-        {/* <Typography sx={{ maxWidth: '100%' }}>
+        <Typography sx={{ maxWidth: '100%' }}>
           <Blocks
             data={BlogContent}
             config={{
@@ -155,7 +167,7 @@ const Blog = () => {
           >
             เพิ่มความคิดเห็น
           </Button>
-        </Stack> */}
+        </Stack>
         {/* ----------------------------------------- read block content from local json file ------------------------ */}
         <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
           รีวิวจากผู้อ่าน

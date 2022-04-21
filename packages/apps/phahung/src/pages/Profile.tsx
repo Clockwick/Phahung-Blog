@@ -437,14 +437,10 @@ const Profile: React.FC = () => {
 
   const getStack = (receivedBlogs: BlogPreview[], page: number) => {
     const chunkSize = 5;
-
-    // for (let i = 0; i < receivedBlogs.length; i += chunkSize) {
     const chunkBlogs: BlogPreview[] = receivedBlogs.slice(
       page * chunkSize,
       page * chunkSize + chunkSize,
     );
-
-    // }
 
     return <StackCard Blogs={chunkBlogs} />;
   };
@@ -606,16 +602,7 @@ const Profile: React.FC = () => {
       {/* Card */}
       <Container sx={{ width: '100vw' }}>
         {didFetchData && likedBlogs ? (
-          <Stack
-            direction="row"
-            justifyContent="center"
-            alignItems="center"
-            sx={
-              {
-                // marginLeft: '-5%'
-              }
-            }
-          >
+          <Stack direction="row" justifyContent="center" alignItems="center">
             <IconButton
               size="large"
               sx={{
@@ -668,21 +655,3 @@ const Profile: React.FC = () => {
 };
 
 export default Profile;
-{
-  /* {didFetchData && likedBlogs ? (
-              likedBlogs.map((blog) => {
-                <Grid item xs={4}>
-                  <BlockCard
-                    id={blog.id}
-                    image={blog.image}
-                    title={blog.title}
-                    author={blog.author}
-                    likes={blog.likes}
-                  />
-                </Grid>;
-              })
-            ) : (
-              <Loading />
-            )}
-          </Grid> */
-}

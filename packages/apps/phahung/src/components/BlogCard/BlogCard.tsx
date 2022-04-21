@@ -33,8 +33,8 @@ const BlogCard: React.FC<BlogCardProps> = ({
         // backgroundColor: 'yellow',
       }}
       onClick={() => {
-        // history.push(`blog/${id}`);
-        history.push(`blog/1`);
+        history.push(`blog/${id}`);
+        // history.push(`blog/1`);
       }}
     >
       <Box
@@ -54,7 +54,7 @@ const BlogCard: React.FC<BlogCardProps> = ({
       >
         <img
           src={image}
-          alt="Logo"
+          alt="about this blog"
           style={{
             // height: '100%',
             minWidth: '100%',
