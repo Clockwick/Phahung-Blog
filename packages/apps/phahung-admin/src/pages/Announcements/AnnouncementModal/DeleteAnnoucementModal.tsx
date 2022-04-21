@@ -2,9 +2,9 @@ import React from 'react';
 import { Button, Modal } from '@chan-chala/uikit';
 import { useToast } from '@chakra-ui/react';
 import { ToastTrigger } from 'components/Toasts';
+import announcementApiCall from 'api/Announcement/announcement';
 import { blogApiCall } from '../../../api';
 import { IDeleteAnnouncementResponse } from './types';
-import announcementApiCall from 'api/Announcement/announcement';
 
 type Props = {
   announcementHandler: {
