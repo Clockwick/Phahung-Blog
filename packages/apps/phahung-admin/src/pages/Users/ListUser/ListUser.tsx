@@ -54,12 +54,12 @@ const ListUser: React.FC = () => {
             return (
               <div
                 className="flex flex-col justify-start items-center p-12 m-2 w-full h-96 bg-pink-50 rounded-lg shadow-lg sm:w-full md:w-64"
-                key={user.id}
+                key={user.uid}
               >
                 <div className="mb-6">
                   <img
                     className="object-cover object-center w-36 h-36 rounded-full"
-                    src={user.picture}
+                    src={user.imageURL}
                     alt={user.firstName}
                   />
                 </div>
@@ -80,7 +80,7 @@ const ListUser: React.FC = () => {
                       type="button"
                       border={false}
                       onClick={() => {
-                        setBanId(user.id);
+                        setBanId(user.uid);
                       }}
                     >
                       แบนผู้ใช้
@@ -91,7 +91,7 @@ const ListUser: React.FC = () => {
                       type="button"
                       border={false}
                       onClick={() => {
-                        setDeleteId(user.id);
+                        setDeleteId(user.uid);
                       }}
                     >
                       ลบผู้ใช้

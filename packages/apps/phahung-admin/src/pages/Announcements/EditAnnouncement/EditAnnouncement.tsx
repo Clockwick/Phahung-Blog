@@ -15,17 +15,27 @@ interface Params {
 const EditAnnouncement: React.FC = () => {
   const history = useHistory();
   const toast = useToast();
+
   const { announcementId } = useParams<Params>();
-  const response = mockAnnouncement[parseInt(announcementId, 10) - 1];
-  const [title, setTitle] = useState<string>(response.title);
-  const [description, setDescription] = useState<string>(response.description);
+
+  const [title, setTitle] = useState<string>('');
+  const [description, setDescription] = useState<string>('');
+
+  useEffect(() => {
+    announcementApiCall.getAnnouncementById(announcementId).then((res) => {
+      console.log('res', res);
+      const initialDataAnnouncement: IEditAnnouncementPayload =
+        res.data as IEditAnnouncementPayload;
+      console.log(initialDataAnnouncement.title);
+      setTitle(initialDataAnnouncement.title);
+      setDescription(initialDataAnnouncement?.description);
+    });
+  }, [announcementId]);
   const handleOnClick = () => {
     const payload: IEditAnnouncementPayload = {
-      id: response.id,
       title,
       description,
     };
-    console.log('payload', payload);
     announcementApiCall.editAnnouncement(payload, announcementId).then(() => {
       history.push('/announcements');
       toast(
@@ -35,13 +45,6 @@ const EditAnnouncement: React.FC = () => {
       );
     });
   };
-
-  // useEffect(() => {
-  //   announcementApiCall.getAnnouncementById(announcementId).then((res) => {
-  //     initialDataAnnouncement = res.data;
-  //   });
-  // });
-
   return (
     <>
       <div className="w-full h-full">

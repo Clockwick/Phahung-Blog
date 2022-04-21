@@ -11,10 +11,6 @@ export interface IAnnouncementAPICall {
     announcementId: string,
   ) => Promise<AxiosResponse>;
   deleteAnnouncement: (announcementId: string) => Promise<AxiosResponse>;
-  getAnnouncements: (
-    page: number,
-    perPage: number,
-    q: string,
-  ) => Promise<AxiosResponse>;
+  getAnnouncements: (page: number, perPage: number) => Promise<AxiosResponse>;
   getAnnouncementById: (announcementId: string) => Promise<AxiosResponse>;
 }

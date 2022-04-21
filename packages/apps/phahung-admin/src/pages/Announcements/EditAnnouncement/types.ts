@@ -6,7 +6,6 @@ export interface IAnnouncementResponse {
 }
 
 export interface IEditAnnouncementPayload {
-  id: string;
   title: string;
   description: string;
 }

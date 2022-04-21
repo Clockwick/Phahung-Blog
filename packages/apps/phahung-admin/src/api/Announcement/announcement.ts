@@ -16,7 +16,7 @@ const announcementApiCall: IAnnouncementAPICall = {
   editAnnouncement: (payload, announcementId) => {
     return api({
       method: 'put',
-      url: `/announcement/update/${announcementId}`,
+      url: `/announcement/${announcementId}/update`,
       data: payload,
       headers: {
         authorization: `Bearer ${localStorage.getItem('idToken')}`,
@@ -48,7 +48,7 @@ const announcementApiCall: IAnnouncementAPICall = {
   getAnnouncementById: (announcementId) => {
     return api({
       method: 'get',
-      url: `/announcement/edit/${announcementId}`,
+      url: `/announcement/${announcementId}`,
       headers: {
         authorization: `Bearer ${localStorage.getItem('idToken')}`,
       },

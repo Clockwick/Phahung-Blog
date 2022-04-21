@@ -26,7 +26,6 @@ const userApiCall: IUserAPICall = {
     return api({
       method: 'get',
       url: `/users?page=${page}&perPage=${perPage}`,
-
       headers: {
         authorization: `Bearer ${localStorage.getItem('idToken')}`,
       },

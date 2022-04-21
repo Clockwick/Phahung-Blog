@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Box, Button, useModal } from '@chan-chala/uikit';
 import { useHistory } from 'react-router-dom';
-// import { Pagination } from './components';
-import mockAnnouncements from 'mock/announcements';
 import moment from 'moment';
+import { Pagination } from './components';
 import { DeleteAnnouncementModal } from '../AnnouncementModal';
+import { Announcement } from './types';
 
 const ListAnnouncements: React.FC = () => {
   const history = useHistory();
   const [deleteAnnouncementId, setDeleteAnnouncementId] = useState<string>('');
   const [isFetchingDocs, setIsFetchingDocs] = useState<boolean>(false);
-  const [handleDeleteBlogPresent] = useModal(
+  const [announcements, setAnnouncements] = useState<Array<Announcement>>([]);
+  const [handleDeleteAnnouncementPresent] = useModal(
     <DeleteAnnouncementModal
       announcementHandler={{ deleteAnnouncementId, setIsFetchingDocs }}
     />,
@@ -18,9 +19,15 @@ const ListAnnouncements: React.FC = () => {
   useEffect(() => {
     if (deleteAnnouncementId.length > 0) {
       setDeleteAnnouncementId('');
-      handleDeleteBlogPresent();
+      handleDeleteAnnouncementPresent();
     }
   }, [deleteAnnouncementId]);
+
+  const renderedAnnouncements = useMemo(
+    () => announcements,
+    [isFetchingDocs, setIsFetchingDocs, announcements],
+  );
+
   return (
     <div className="w-full h-full">
       <div className="relative">
@@ -41,8 +48,9 @@ const ListAnnouncements: React.FC = () => {
       </div>
       <div className="h-[670px]">
         <div className="flex flex-col space-y-4">
-          {mockAnnouncements && mockAnnouncements.length > 0 ? (
-            mockAnnouncements.map((annoucement) => {
+          {renderedAnnouncements && renderedAnnouncements.length > 0 ? (
+            renderedAnnouncements.map((annoucement) => {
+              console.log('annoucement', annoucement);
               return (
                 <Box className="h-full" key={annoucement.id}>
                   <div className="flex justify-between items-center 4xl:justify-start">
@@ -95,11 +103,11 @@ const ListAnnouncements: React.FC = () => {
           )}
         </div>
       </div>
-      {/* <Pagination
-        blogsHandler={setBlogs}
+      <Pagination
+        announcementsHandler={{ setAnnouncements }}
         fetchHandler={{ isFetchingDocs, setIsFetchingDocs }}
-        searchVal={searchVal}
-      /> */}
+        // searchVal={''}        // searchVal={searchVal}
+      />
     </div>
   );
 };
