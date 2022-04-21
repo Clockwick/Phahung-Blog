@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { Button, Input } from '@chan-chala/uikit';
 import announcementApiCall from 'api/Announcement/announcement';
@@ -18,7 +19,6 @@ const NewAnnouncement: React.FC = () => {
   };
   const handleOnClick = () => {
     announcementApiCall.createNewAnnouncement(payload).then((res) => {
-      console.log('res', res);
       toast(
         ToastTrigger.createAnnouncementSuccess(
           `ประกาศชื่อ "${title}" ได้ถูกสร้างขึ้น`,

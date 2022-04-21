@@ -1,9 +1,9 @@
+/* eslint-disable import/no-unresolved */
 import React from 'react';
 import { Button, Modal } from '@chan-chala/uikit';
 import { useToast } from '@chakra-ui/react';
 import { ToastTrigger } from 'components/Toasts';
 import announcementApiCall from 'api/Announcement/announcement';
-import { blogApiCall } from '../../../api';
 import { IDeleteAnnouncementResponse } from './types';
 
 type Props = {
@@ -28,12 +28,12 @@ const DeleteAnnouncementModal: React.FC<Props> = ({
       announcementApiCall
         .deleteAnnouncement(announcementHandler.deleteAnnouncementId)
         .then((res) => {
-          const responseData = res.data as IDeleteAnnouncementResponse;
-          if (responseData.success === 1) {
-            announcementHandler.setIsFetchingDocs(false);
-            toast(ToastTrigger.deleteAnnouncementSuccess());
-            handleDismiss();
-          }
+          // const responseData = res.data as IDeleteAnnouncementResponse;
+          // if (responseData.success === 1) {
+          announcementHandler.setIsFetchingDocs(false);
+          toast(ToastTrigger.deleteAnnouncementSuccess());
+          handleDismiss();
+          // }
         })
         .catch(() => toast(ToastTrigger.deleteAnnouncementFail()));
     }

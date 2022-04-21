@@ -50,7 +50,6 @@ const ListAnnouncements: React.FC = () => {
         <div className="flex flex-col space-y-4">
           {renderedAnnouncements && renderedAnnouncements.length > 0 ? (
             renderedAnnouncements.map((annoucement) => {
-              console.log('annoucement', annoucement);
               return (
                 <Box className="h-full" key={annoucement.id}>
                   <div className="flex justify-between items-center 4xl:justify-start">
