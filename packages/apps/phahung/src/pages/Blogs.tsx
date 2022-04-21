@@ -17,6 +17,7 @@ type GridLayout = '4-4-4' | '6-6' | '12' | '8-4' | '4-8';
 const Blogs = () => {
   const [didFetchBlogsData, setDidFetchBlogsData] = useState(false);
   const [blogs, setBlogs] = useState<BlogPreview[]>([]);
+  const [queryTag, setQueryTag] = useState<string>('');
 
   console.log('Blogs : ', blogs);
 
@@ -24,14 +25,18 @@ const Blogs = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const fetchBlogsData = async (): Promise<void> => {
     await setTimeout(() => {
-      feedApiCall.getBlogs().then((res: any) => {
+      feedApiCall.getBlogsByTag(queryTag).then((res) => {
         if (res.status === 200) {
-          const responseData = res.data as BlogPreview[];
+          const responseData = res.data;
           setBlogs(responseData);
           setDidFetchBlogsData(true);
         }
       });
     }, 250);
+  };
+  const changeQueryTag = (newTag: string) => {
+    setQueryTag(newTag);
+    setDidFetchBlogsData(false);
   };
 
   useEffect(() => {
@@ -263,7 +268,7 @@ const Blogs = () => {
         alignItems="center"
         sx={{ width: '100%', paddingBottom: 3 }}
       >
-        <ListCategory />
+        <ListCategory changeQueryTag={changeQueryTag} />
       </Stack>
       <Grid container direction="row" alignItems="center">
         {blogs && didFetchBlogsData ? getBlogs(blogs) : <Loading />}

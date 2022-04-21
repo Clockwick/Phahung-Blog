@@ -3,13 +3,20 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Comment from 'components/Comment';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
-import { Button, Container, Stack, Typography } from '@mui/material';
+import {
+  Button,
+  Container,
+  Stack,
+  Typography,
+  CircularProgress as Loading,
+} from '@mui/material';
 import Blocks from 'editorjs-blocks-react-renderer';
 import { makeStyles } from '@mui/styles';
-import BlogContent from '../mocks/BlogContent';
+// import BlogContent from '../mocks/BlogContent';
 import mockComments from '../mocks/Comments';
 import BlogCard from '../components/BlogCard/BlogCard';
 import feedApiCall from '../api/feedApiCall';
+import type { Blog as BlogType } from '../types/blog';
 
 interface IComment {
   hide: boolean;
@@ -31,40 +38,27 @@ const useStyles = makeStyles(() => ({
     width: '100px',
   },
 }));
-// interface Iparam {
-//   id: string;
-// }
+
 const Blog = () => {
   const classes = useStyles();
-  // let blogId = useParams<Iparam>();
+  const { id: blogId } = useParams<{ id: string }>();
   // const [comments, setComments] = useState<IComment[]>([]);
   const [comments, setComments] = useState<IComment[]>(mockComments);
   const [newComment, setNewComment] = useState<string>('');
   // const [state, setState] = useState<boolean>(false);
   // const [didFetchComment, setDidFetchComment] = useState(false);
 
-  const [blogCardData, setBlogCardData] = useState(null);
+  const [BlogContent, setBlogContent] = useState<BlogType | null>(null);
   const [didFetchData, setDidFetchData] = useState(false);
 
   const fetchData = async (): Promise<void> => {
-    // axios
-    //   .get('https://localhost:5001/blogs/3SvKPAotte5DsKqZXypK') // edit this
-    //   .then((response) => {
-    //     console.log('response: ', response);
-    //     // do something about response
-    //     // setValues();
-    //   })
-    //   .catch((err) => {
-    //     console.error(err);
-    //   });
-    // feedApiCall.getBlogById(blogId).then((res: any) => {
-    //   if (res.status === 200) {
-    // const responseData = res.data as BlogPreview;
-    // setBlogs(responseData);
-    // setDidFetchBlogsData(true);
-    // }
-    // });
-    setDidFetchData(true);
+    feedApiCall.getBlogById(blogId).then((res) => {
+      if (res.status === 200) {
+        const responseData = res.data;
+        setBlogContent(responseData);
+        setDidFetchData(true);
+      }
+    });
   };
 
   useEffect(() => {
@@ -128,25 +122,29 @@ const Blog = () => {
   return (
     <Container>
       <Stack spacing={3}>
+        {BlogContent && didFetchData ? (
+          <BlogCard
+            id={BlogContent.id}
+            image={BlogContent.image}
+            title={BlogContent.title}
+            author={BlogContent.author}
+            likes={BlogContent.likes}
+          />
+        ) : (
+          <Loading />
+        )}
         {/* ----------------------------------------- read block content from local json file ------------------------ */}
         {/* <Typography sx={{ maxWidth: '100%' }}>
-        {/* <BlogCard
-          id={id}
-          image={image}
-          title={title}
-          author={author}
-          likes={likes}
-        /> */}
-        <Typography sx={{ maxWidth: '100%' }}>
-          <Blocks
-            data={BlogContent}
-            config={{
-              header: { className: classes.header },
-              image: { className: classes.image },
-              paragraph: { className: classes.paragraph },
-            }}
-          />
-        </Typography>
+          {/* <Typography sx={{ maxWidth: '100%' }}>
+            <Blocks
+              data={BlogContent}
+              config={{
+                header: { className: classes.header },
+                image: { className: classes.image },
+                paragraph: { className: classes.paragraph },
+              }}
+            />
+        </Typography> */}
         <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
           แสดงความคิดเห็น
         </Typography>
