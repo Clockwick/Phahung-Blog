@@ -1,13 +1,22 @@
-import React, { useEffect, useState } from 'react';
 // eslint-disable-next-line import/no-unresolved
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import Comment from 'components/Comment';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
-import { Button, Container, Stack, Typography } from '@mui/material';
+import {
+  Button,
+  Container,
+  Stack,
+  Typography,
+  CircularProgress as Loading,
+} from '@mui/material';
 import Blocks from 'editorjs-blocks-react-renderer';
 import { makeStyles } from '@mui/styles';
-import BlogContent from '../mocks/BlogContent';
+// import BlogContent from '../mocks/BlogContent';
 import mockComments from '../mocks/Comments';
 import BlogCard from '../components/BlogCard/BlogCard';
+import feedApiCall from '../api/feedApiCall';
+import type { Blog as BlogType } from '../types/blog';
 
 interface IComment {
   hide: boolean;
@@ -29,13 +38,35 @@ const useStyles = makeStyles(() => ({
     width: '100px',
   },
 }));
+
 const Blog = () => {
   const classes = useStyles();
+  const { id: blogId } = useParams<{ id: string }>();
   // const [comments, setComments] = useState<IComment[]>([]);
   const [comments, setComments] = useState<IComment[]>(mockComments);
   const [newComment, setNewComment] = useState<string>('');
   // const [state, setState] = useState<boolean>(false);
   // const [didFetchComment, setDidFetchComment] = useState(false);
+
+  const [BlogContent, setBlogContent] = useState<BlogType | null>(null);
+  const [didFetchData, setDidFetchData] = useState(false);
+
+  const fetchData = async (): Promise<void> => {
+    feedApiCall.getBlogById(blogId).then((res) => {
+      if (res.status === 200) {
+        const responseData = res.data;
+        setBlogContent(responseData);
+        setDidFetchData(true);
+      }
+    });
+  };
+
+  useEffect(() => {
+    if (!didFetchData) {
+      fetchData();
+    }
+  }, [didFetchData, fetchData]);
+
   const handleOnClick = () => {
     // setDidFetchComment(true);
     // await axios.post
@@ -91,25 +122,29 @@ const Blog = () => {
   return (
     <Container>
       <Stack spacing={3}>
+        {BlogContent && didFetchData ? (
+          <BlogCard
+            id={BlogContent.id}
+            image={BlogContent.image}
+            title={BlogContent.title}
+            author={BlogContent.author}
+            likes={BlogContent.likes}
+          />
+        ) : (
+          <Loading />
+        )}
         {/* ----------------------------------------- read block content from local json file ------------------------ */}
         {/* <Typography sx={{ maxWidth: '100%' }}>
-        {/* <BlogCard
-          id={id}
-          image={image}
-          title={title}
-          author={author}
-          likes={likes}
-        /> */}
-        {/* <Typography sx={{ maxWidth: '100%' }}>
-          <Blocks
-            data={BlogContent}
-            config={{
-              header: { className: classes.header },
-              image: { className: classes.image },
-              paragraph: { className: classes.paragraph },
-            }}
-          />
-        </Typography>
+          {/* <Typography sx={{ maxWidth: '100%' }}>
+            <Blocks
+              data={BlogContent}
+              config={{
+                header: { className: classes.header },
+                image: { className: classes.image },
+                paragraph: { className: classes.paragraph },
+              }}
+            />
+        </Typography> */}
         <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
           แสดงความคิดเห็น
         </Typography>
@@ -130,7 +165,7 @@ const Blog = () => {
           >
             เพิ่มความคิดเห็น
           </Button>
-        </Stack> */}
+        </Stack>
         {/* ----------------------------------------- read block content from local json file ------------------------ */}
         <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
           รีวิวจากผู้อ่าน

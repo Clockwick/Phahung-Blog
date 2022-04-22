@@ -3,12 +3,16 @@ import React, { useState } from 'react';
 import { Button, Stack } from '@mui/material';
 import categories from './config';
 
-const ListCategory = (): JSX.Element => {
+interface Iprop {
+  changeQueryTag: (newQuery: string) => void;
+}
+
+const ListCategory = ({ changeQueryTag }: Iprop): JSX.Element => {
   const [query, setQuery] = useState<string>('');
   const handleOnClick = (categoryName: string) => {
     // fetch data axios post query
     setQuery(categoryName);
-
+    changeQueryTag(categoryName);
     console.log('onclick');
   };
   console.log('categories', categories);
