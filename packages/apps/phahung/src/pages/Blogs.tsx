@@ -28,6 +28,7 @@ const Blogs = () => {
       feedApiCall.getBlogsByTag(queryTag).then((res) => {
         if (res.status === 200) {
           const responseData = res.data;
+          console.log('responseDataTag', responseData);
           setBlogs(responseData);
           setDidFetchBlogsData(true);
         }

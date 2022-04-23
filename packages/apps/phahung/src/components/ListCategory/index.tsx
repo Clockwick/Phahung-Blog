@@ -13,9 +13,8 @@ const ListCategory = ({ changeQueryTag }: Iprop): JSX.Element => {
     // fetch data axios post query
     setQuery(categoryName);
     changeQueryTag(categoryName);
-    console.log('onclick');
   };
-  console.log('categories', categories);
+  console.log('query', query);
   return (
     <Stack direction="row" spacing={3} justifyContent="space-around">
       {categories.map((category, index) => (
