@@ -10,7 +10,7 @@ import { useToast } from '@chakra-ui/react';
 import { ToastTrigger } from 'components/Toasts';
 import { blogApiCall } from '../../../api';
 import { IBlogResponse, IEditBlogPayload } from './types';
-import { ITags, Tag } from '../types';
+import { ITags, NonStatusTag, Tag } from '../types';
 import ImageGuideLine from './config';
 
 interface Params {
@@ -28,26 +28,22 @@ const EditBlog: React.FC = () => {
   const [imagePath, setImagePath] = useState<string>('');
   const history = useHistory();
   const [tags, setTags] = useState<Array<Tag>>([]);
-  const [didFetchTags, setDidFetchTags] = useState(false as boolean);
-  const [tagsWithStatus, setTagsWithStatus] = useState<Tag[]>([]);
+  const [didFetchTags, setDidFetchTags] = useState(true);
+  const [tagsWithStatus, setTagsWithStatus] = useState<string[]>([]);
   const [isTagsLoading, setIsTagsLoading] = useState(false);
 
-  const updateTagsStatus = useCallback(() => {
-    tags.forEach((tag) => {
-      tagsWithStatus.forEach((tagWithStatus) => {
-        if (tagWithStatus._id === tag._id) {
-          const targetTag = tags.filter(
-            (cTag) => cTag._id === tag._id,
-          )[0] as Tag;
-          targetTag.status = true;
-          const leftedTags = tags.filter(
-            (cTag) => cTag._id !== tag._id,
-          ) as Tag[];
-          setTags([targetTag, ...leftedTags]);
-        }
-      });
-    });
-  }, [tags, tagsWithStatus]);
+  // const updateTagsStatus = useCallback(() => {
+  //   tags.forEach((tag) => {
+  //     tagsWithStatus.forEach((tagWithStatus) => {
+  //       if (tagWithStatus.name === tag.name) {
+  //         const targetTag = tags.filter((cTag) => cTag.id === tag.id)[0] as Tag;
+  //         targetTag.status = true;
+  //         const leftedTags = tags.filter((cTag) => cTag.id !== tag.id) as Tag[];
+  //         setTags([targetTag, ...leftedTags]);
+  //       }
+  //     });
+  //   });
+  // }, [tags, tagsWithStatus]);
 
   const saveSessionImagePath = (newImagePath: string): void => {
     sessionStorage.setItem('imagePath', newImagePath);
@@ -61,23 +57,24 @@ const EditBlog: React.FC = () => {
     if (!didFetchContent) {
       blogApiCall.getBlogById(blogId).then((res) => {
         if (res.status === 200) {
-          const responseData = res.data as IBlogResponse;
-          setImagePath(responseData.blog.imagePath);
-          saveSessionImagePath(responseData.blog.imagePath);
-          setTagsWithStatus(responseData.blog.tags);
-          setContent(responseData.blog.content);
+          const responseData = res.data;
+          // setImagePath(responseData.blog.imagePath);
+          // saveSessionImagePath(responseData.blog.imagePath);
+          setTagsWithStatus(responseData.tags);
+          setContent(responseData.content);
           setDidFetchContent(true);
+          setDidFetchTags(false);
         }
       });
     }
   }, [didFetchContent, blogId]);
 
   /* eslint-disable */
-  useEffect(() => {
-    if (didFetchContent && didFetchTags) {
-      updateTagsStatus();
-    }
-  }, [didFetchContent, didFetchTags]);
+  // useEffect(() => {
+  //   if (didFetchContent && didFetchTags) {
+  //     updateTagsStatus();
+  //   }
+  // }, [didFetchContent, didFetchTags]);
   /* eslint-enable */
 
   /* Update Tag UI when tapping */
@@ -85,30 +82,37 @@ const EditBlog: React.FC = () => {
     setIsTagsLoading(false);
   }, [tags, isTagsLoading]);
 
-  const convertToTagsWithStatus = (inputTags: Array<Tag>): Array<Tag> =>
-    inputTags.map((tag) => ({
-      ...tag,
-      status: false,
-    }));
+  const convertToTagsWithStatus = (inputTags: Array<Tag>): Array<Tag> => {
+    return inputTags.map((tag) => {
+      if (tagsWithStatus.includes(tag.name)) {
+        return {
+          ...tag,
+          status: true,
+        };
+      }
+      return {
+        ...tag,
+        status: false,
+      };
+    });
+  };
 
   const deleteStatusFromTags = (inputTags: Array<Tag>): Array<string> => {
     /* eslint no-underscore-dangle: 0 */
-    return inputTags.map((tag) => tag._id);
+    return inputTags.map((tag) => tag.name);
   };
 
   useEffect(() => {
     if (!didFetchTags)
       blogApiCall.getAllTags().then((res) => {
         if (res.status === 200) {
-          const responseData: ITags = res.data as ITags;
-          const initialTagsWithStatus = convertToTagsWithStatus(
-            responseData.tags,
-          );
+          const responseTags = res.data;
+          const initialTagsWithStatus = convertToTagsWithStatus(responseTags);
           setTags(initialTagsWithStatus);
           setDidFetchTags(true);
         }
       });
-  }, [didFetchTags]);
+  }, [setTagsWithStatus, tagsWithStatus, didFetchTags]);
 
   const handleOnClick = (status: string): void => {
     /**
@@ -138,16 +142,21 @@ const EditBlog: React.FC = () => {
         tags: rawTags,
         status,
         _id: blogId,
-        author: user!.id,
+        author: user!.firstName,
         __v: 0,
         imagePath,
       };
 
+      console.log('payload', payload);
       blogApiCall
         .editBlog(payload, blogId)
-        .then(() => {
-          deleteSessionImagePath();
-          history.push('/blogs');
+        .then((res) => {
+          console.log('res.data', res.data);
+          if (res.status === 200) {
+            console.log('Jeeyyy');
+          }
+          // deleteSessionImagePath();
+          // history.push('/blogs');
           toast(
             ToastTrigger.editBlogSuccess(`แก้ไขบทความชื่อ "${keyword}" สำเร็จ`),
           );
@@ -198,10 +207,10 @@ const EditBlog: React.FC = () => {
             <Chip
               id={index.toString()}
               status={tag.status}
-              key={tag._id}
+              key={tag.id}
               onClick={(e) => handleTagsChange(e, tag.status)}
             >
-              {tag.tag}
+              {tag.name}
             </Chip>
           ))}
       </div>

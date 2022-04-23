@@ -7,7 +7,7 @@ const blogApiCall: IBlogAPICall = {
   createNewBlog: (payload) => {
     return api({
       method: 'post',
-      url: '/blog/new',
+      url: '/blogs',
       data: payload,
       headers: {
         authorization: `Bearer ${localStorage.getItem('idToken')}`,
@@ -18,7 +18,7 @@ const blogApiCall: IBlogAPICall = {
   editBlog: (payload, blogId) => {
     return api({
       method: 'put',
-      url: `/blog/update/${blogId}`,
+      url: `/blogs/${blogId}`,
       data: payload,
       headers: {
         authorization: `Bearer ${localStorage.getItem('idToken')}`,
@@ -28,7 +28,7 @@ const blogApiCall: IBlogAPICall = {
 
   deleteBlog: (blogId) => {
     return api({
-      url: `/blog/${blogId}`,
+      url: `/blogs/${blogId}`,
       method: 'delete',
       headers: {
         authorization: `Bearer ${localStorage.getItem('idToken')}`,
@@ -39,7 +39,7 @@ const blogApiCall: IBlogAPICall = {
   getBlogs: (page: number, perPage: number, q = '') => {
     return api({
       method: 'get',
-      url: `/blog/all?page=${page}&perPage=${perPage}${
+      url: `/blogs?page=${page}&perPage=${perPage}${
         q.length > 0 ? `&q=${q}` : ''
       }`,
       headers: {
@@ -51,7 +51,7 @@ const blogApiCall: IBlogAPICall = {
   getBlogById: (blogId) => {
     return api({
       method: 'get',
-      url: `/blog/edit/${blogId}`,
+      url: `/blogs/${blogId}`,
       headers: {
         authorization: `Bearer ${localStorage.getItem('idToken')}`,
       },
@@ -70,13 +70,13 @@ const blogApiCall: IBlogAPICall = {
 
   uploadByFile: (file) => {
     // eslint-disable-next-line
-    const imagePath = sessionStorage.getItem('imagePath')!;
+    // const imagePath = sessionStorage.getItem('imagePath')!;
     const formData = new FormData();
-    formData.append('imagePath', imagePath);
-    formData.append('image', file);
+    // formData.append('imagePath', imagePath);
+    formData.append('file', file);
     return api({
       method: 'post',
-      url: '/image/upload/byFile',
+      url: '/blogs/upload-image-by-file',
       data: formData,
       headers: {
         authorization: `Bearer ${localStorage.getItem('idToken')}`,
@@ -100,9 +100,12 @@ const blogApiCall: IBlogAPICall = {
   updateBlogStatus: (blogId, status) => {
     return api({
       method: 'put',
-      url: `/blog/${blogId}/${status}`,
+      url: `/blogs/${blogId}/status`,
       headers: {
         authorization: `Bearer ${localStorage.getItem('idToken')}`,
+      },
+      data: {
+        status,
       },
     });
   },

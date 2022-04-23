@@ -3,7 +3,7 @@ import type EditorJS from '@editorjs/editorjs';
 export interface IBlog {
   _id: string;
   content: EditorJS.OutputData;
-  tags: Array<Tag>;
+  tags: Array<string>;
   status: string;
   imagePath: string;
   keyword: string;
@@ -25,8 +25,7 @@ export type Tag = {
 };
 
 export type NonStatusTag = {
-  _id: string;
-  tag: string;
+  name: string;
 };
 
 export type Author = {

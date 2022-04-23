@@ -40,9 +40,10 @@ const Pagination: React.FC<PaginationProps> = ({
         .getBlogs(currentPage, config.perPage, searchVal)
         .then((res) => {
           if (res.status === 200) {
-            const responseData = res.data as IBlogsResponse;
-            setMaxPage(responseData.blogs.totalPages);
-            blogsHandler(responseData.blogs.docs);
+            const responseData = res.data as Blog[];
+            console.log('responseData blog', responseData);
+            // setMaxPage(5);
+            blogsHandler(responseData);
             setIsFetchingDocs(true);
           }
         });
