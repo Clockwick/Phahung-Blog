@@ -17,6 +17,7 @@ export const SearchProvider: React.FC = ({
   const parseHTML = (s: string): string => {
     return s.replace(new RegExp('\\\\', 'g'), '\\\\');
   };
+
   const [inputSearch, _setInputSearch] = useState('');
   const [valueSearch, setValueSearch] = useState('');
   const setInputSearch = (s: string): void => {

@@ -13,10 +13,10 @@ const feedApiCall: IFeedApiCall = {
       method: 'get',
       url: `/blogs/${id}`,
     }),
-  getBlogsByTag: (tagName) =>
+  getBlogsByTag: (tagName, q) =>
     api({
       method: 'get',
-      url: `/blogs?tagName=${tagName}`,
+      url: `/blogs?tagName=${tagName}?search=${q}`,
     }),
 };
 
