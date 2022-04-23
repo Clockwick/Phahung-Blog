@@ -27,8 +27,7 @@ const DeleteBlogModal: React.FC<Props> = ({
       blogApiCall
         .deleteBlog(blogHandler.deleteBlogId)
         .then((res) => {
-          const responseData = res.data as IDeleteBlogResponse;
-          if (responseData.success === 1) {
+          if (res.status === 200) {
             blogHandler.setIsFetchingDocs(false);
             toast(ToastTrigger.deleteBlogSuccess());
             handleDismiss();

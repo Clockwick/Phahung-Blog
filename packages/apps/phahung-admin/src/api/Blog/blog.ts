@@ -18,7 +18,7 @@ const blogApiCall: IBlogAPICall = {
   editBlog: (payload, blogId) => {
     return api({
       method: 'put',
-      url: `/blog/update/${blogId}`,
+      url: `/blogs/${blogId}`,
       data: payload,
       headers: {
         authorization: `Bearer ${localStorage.getItem('idToken')}`,
@@ -28,7 +28,7 @@ const blogApiCall: IBlogAPICall = {
 
   deleteBlog: (blogId) => {
     return api({
-      url: `/blog/${blogId}`,
+      url: `/blogs/${blogId}`,
       method: 'delete',
       headers: {
         authorization: `Bearer ${localStorage.getItem('idToken')}`,
@@ -51,7 +51,7 @@ const blogApiCall: IBlogAPICall = {
   getBlogById: (blogId) => {
     return api({
       method: 'get',
-      url: `/blog/edit/${blogId}`,
+      url: `/blogs/${blogId}`,
       headers: {
         authorization: `Bearer ${localStorage.getItem('idToken')}`,
       },

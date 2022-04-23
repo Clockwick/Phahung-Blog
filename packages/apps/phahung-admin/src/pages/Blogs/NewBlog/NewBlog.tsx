@@ -42,14 +42,11 @@ const NewBlog: React.FC = () => {
     return result;
   };
 
-  const deleteStatusFromTags = (inputTags: Array<Tag>): Array<NonStatusTag> => {
+  const deleteStatusFromTags = (inputTags: Array<Tag>): Array<string> => {
     /* eslint no-underscore-dangle: 0 */
     return inputTags.map((tag) => {
-      const { id, name } = tag;
-      return {
-        id,
-        name,
-      };
+      const { name } = tag;
+      return name;
     });
   };
   useEffect(() => {

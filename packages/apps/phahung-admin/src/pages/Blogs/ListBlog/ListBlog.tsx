@@ -49,12 +49,11 @@ const ListBlog: React.FC = () => {
       .then((res) => {
         if (res.status === 200) {
           const responseData = res.data as BlogStatusResponse;
-          // console.log('responseData', responseData);
-          updateBlogStatusById(id, responseData.status === 'publish');
+          updateBlogStatusById(id, responseData.status === 'draft');
           if (responseData.success === 1) {
-            if (responseData.status === 'publish') {
+            if (responseData.status === 'draft') {
               toast(ToastTrigger.publishBlogStatus());
-            } else if (responseData.status === 'draft') {
+            } else if (responseData.status === 'publish') {
               toast(ToastTrigger.draftBlogStatus());
             }
           } else {

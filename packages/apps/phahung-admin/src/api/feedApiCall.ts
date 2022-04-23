@@ -22,7 +22,7 @@ const feedApiCall: IFeedApiCall = {
   getBlog: (id) =>
     api({
       method: 'get',
-      url: `/blog/${id}`,
+      url: `/blogs/${id}`,
       headers: {
         authorization: `Bearer ${localStorage.getItem('idToken')}`,
       },

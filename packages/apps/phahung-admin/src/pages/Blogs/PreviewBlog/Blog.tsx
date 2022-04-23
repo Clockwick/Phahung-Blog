@@ -31,8 +31,8 @@ const Blog: React.FC = () => {
   const [blogData, setBlogData] = useState<IBlog>();
   const fetchDataBlog = useCallback(async (): Promise<void> => {
     const jsonResponse: AxiosResponse = await feedApiCall.getBlog(blogId);
-    const data = jsonResponse.data as IBlogsResponse;
-    setBlogData(data.blog);
+    const data = jsonResponse.data as IBlog;
+    setBlogData(data);
   }, [setBlogData, blogId]);
 
   useEffect(() => {
