@@ -7,13 +7,12 @@ export interface IBlogResponse {
 }
 
 export interface IEditBlogPayload {
-  keyword: string;
-  titleImage: string;
+  title: string;
+  image: string;
   content: EditorJS.OutputData;
   tags: Array<string>;
   status: string;
   _id: string;
   author: string;
   __v: number;
-  imagePath: string;
 }

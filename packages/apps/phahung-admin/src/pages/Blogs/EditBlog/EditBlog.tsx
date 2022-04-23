@@ -124,7 +124,7 @@ const EditBlog: React.FC = () => {
     /* eslint-disable */
     try {
       /* Filter keyword from first seen header or paragraph and also convert to plain text. */
-      const keyword = content.blocks
+      const title = content.blocks
         .find((block) => block.type === 'header' || block.type === 'paragraph')
         ?.data.text.replace(/<[^>]+>/g, '')!;
 
@@ -132,19 +132,18 @@ const EditBlog: React.FC = () => {
       const rawTags = deleteStatusFromTags(tags.filter((tag) => tag.status));
 
       /* Filter titleImage from first seen image */
-      const titleImage = content.blocks.find((block) => block.type === 'image')
-        ?.data.file.url!;
+      const image = content.blocks.find((block) => block.type === 'image')?.data
+        .file.url!;
 
       const payload: IEditBlogPayload = {
-        keyword,
-        titleImage,
+        title,
+        image,
         content,
         tags: rawTags,
         status,
         _id: blogId,
         author: user!.firstName,
         __v: 0,
-        imagePath,
       };
 
       blogApiCall
@@ -156,14 +155,14 @@ const EditBlog: React.FC = () => {
           // deleteSessionImagePath();
           // history.push('/blogs');
           toast(
-            ToastTrigger.editBlogSuccess(`แก้ไขบทความชื่อ "${keyword}" สำเร็จ`),
+            ToastTrigger.editBlogSuccess(`แก้ไขบทความชื่อ "${title}" สำเร็จ`),
           );
           // if (res.status === 201) history.push('/blogs');
         })
         .catch(() => {
           toast(
             ToastTrigger.editBlogFail(
-              `เกิดข้อผิดพลาดในการแก้ไขบทความชื่อ "${keyword}"`,
+              `เกิดข้อผิดพลาดในการแก้ไขบทความชื่อ "${title}"`,
             ),
           );
         });
