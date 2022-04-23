@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import {
   Container,
   Grid,
@@ -11,10 +11,12 @@ import { BlogPreview as mockBlogPreview } from '../mocks/BlogPreview';
 import ListCategory from '../components/ListCategory';
 import Slogan from '../components/Slogan';
 import feedApiCall from '../api/feedApiCall';
+import { SearchContext } from 'src/contexts/SearchContext';
 
 type GridLayout = '4-4-4' | '6-6' | '12' | '8-4' | '4-8';
 
 const Blogs = () => {
+  const { inputSearch } = useContext(SearchContext);
   const [didFetchBlogsData, setDidFetchBlogsData] = useState(false);
   const [blogs, setBlogs] = useState<BlogPreview[]>([]);
   const [queryTag, setQueryTag] = useState<string>('');
@@ -25,7 +27,7 @@ const Blogs = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const fetchBlogsData = async (): Promise<void> => {
     await setTimeout(() => {
-      feedApiCall.getBlogsByTag(queryTag).then((res) => {
+      feedApiCall.getBlogsByTag(queryTag, inputSearch).then((res) => {
         if (res.status === 200) {
           const responseData = res.data;
           console.log('responseDataTag', responseData);
@@ -39,13 +41,15 @@ const Blogs = () => {
     setQueryTag(newTag);
     setDidFetchBlogsData(false);
   };
-
+  useEffect(() => {
+    fetchBlogsData();
+  }, [inputSearch]);
   useEffect(() => {
     if (!didFetchBlogsData) {
       fetchBlogsData();
     }
-  }, [didFetchBlogsData, fetchBlogsData]);
-
+  }, [didFetchBlogsData, fetchBlogsData, changeQueryTag]);
+  console.log('inputSearchASDASDASDAsd', inputSearch);
   const renderLayout = (
     gridLayout: GridLayout,
     receivedBlogs: BlogPreview[],

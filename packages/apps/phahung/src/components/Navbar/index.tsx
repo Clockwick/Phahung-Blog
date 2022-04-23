@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React from 'react';
+import React, { useContext } from 'react';
 import SearchBar from 'components/SearchBar';
 import { Link } from 'react-router-dom';
 import {
@@ -13,17 +13,17 @@ import {
 } from '@mui/material';
 import { useUser } from 'store/hooks/userHook';
 import PopperBlog from 'components/Popper/PopperBlog';
+import { SearchContext } from 'src/contexts/SearchContext';
 // const pages = ['Blog', 'Annoucement'];
 // const settings = ['Profile', 'Logout'];
 
 const Navbar = () => {
   const { user, isLoggedIn, logoutHandler } = useUser();
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-    null,
-  );
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-    null,
-  );
+  const { setInputSearch } = useContext(SearchContext);
+  const [anchorElNav, setAnchorElNav] =
+    React.useState<null | HTMLElement>(null);
+  const [anchorElUser, setAnchorElUser] =
+    React.useState<null | HTMLElement>(null);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -34,11 +34,12 @@ const Navbar = () => {
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
+    setInputSearch('');
   };
 
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
+  // const handleCloseUserMenu = () => {
+  //   setAnchorElUser(null);
+  // };
   const handleLogout = () => {
     logoutHandler();
     window.location.href = '/signin';
@@ -59,6 +60,7 @@ const Navbar = () => {
               noWrap
               component="div"
               sx={{ mr: 2, display: { xs: 'none', md: 'flex' }, pr: 2 }}
+              onClick={() => setInputSearch('')}
             >
               <Link href="/" to="/">
                 <img
