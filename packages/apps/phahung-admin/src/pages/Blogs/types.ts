@@ -25,8 +25,8 @@ export type Tag = {
 };
 
 export type NonStatusTag = {
-  _id: string;
-  tag: string;
+  id: string;
+  name: string;
 };
 
 export type Author = {

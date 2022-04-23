@@ -88,17 +88,7 @@ export const EDITOR_JS_TOOLS: EditorJS.ToolConfig = {
         async uploadByFile(file: File) {
           return blogApiCall.uploadByFile(file).then((res) => {
             const responseData: IUploadResponse = res.data as IUploadResponse;
-            return {
-              success: responseData.success,
-              file: {
-                url: responseData.file.url,
-              },
-            };
-          });
-        },
-        async uploadByUrl(url: URL) {
-          return blogApiCall.uploadByURL(url).then((res) => {
-            const responseData: IUploadResponse = res.data as IUploadResponse;
+            console.log('Response Data : ', responseData);
             return {
               success: responseData.success,
               file: {

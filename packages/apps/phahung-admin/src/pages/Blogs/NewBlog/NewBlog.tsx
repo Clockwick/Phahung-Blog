@@ -11,7 +11,7 @@ import { ToastTrigger } from 'components/Toasts';
 import { useToast } from '@chakra-ui/react';
 import { useUser } from 'store/hooks/userHook';
 import { blogApiCall } from '../../../api';
-import { ITags, Tag } from '../types';
+import { ITags, NonStatusTag, Tag } from '../types';
 import { INewBlogPayload } from './types';
 import ImageGuideLine from '../EditBlog/config';
 
@@ -42,27 +42,32 @@ const NewBlog: React.FC = () => {
     return result;
   };
 
-  const deleteStatusFromTags = (inputTags: Array<Tag>): Array<string> => {
+  const deleteStatusFromTags = (inputTags: Array<Tag>): Array<NonStatusTag> => {
     /* eslint no-underscore-dangle: 0 */
-    return inputTags.map((tag) => tag.id);
+    return inputTags.map((tag) => {
+      const { id, name } = tag;
+      return {
+        id,
+        name,
+      };
+    });
   };
   useEffect(() => {
     if (!didFetchTags) {
       blogApiCall.getAllTags().then((res) => {
-        console.log('res', res);
         if (res.status === 200) {
-          console.log(res.data);
-          const responseData: ITags = res.data as ITags;
-          const initialTagsWithStatus = convertToTagsWithStatus(
-            responseData.tags,
-          );
-          saveSessionImagePath(imagePath);
-          setTags(initialTagsWithStatus);
+          const responseTags: Tag[] = res.data as Tag[];
+          // const initialTagsWithStatus = convertToTagsWithStatus(
+          //   responseData.tags,
+          // );
+          // saveSessionImagePath(imagePath);
+          // setTags(initialTagsWithStatus);
+          setTags(responseTags);
           setDidFetchTags(true);
         }
       });
     }
-  }, [didFetchTags, imagePath]);
+  }, [didFetchTags]);
 
   useEffect(() => {
     // Update Tag UI when tapping
@@ -102,7 +107,7 @@ const NewBlog: React.FC = () => {
     /* eslint-disable */
     try {
       /* Filter keyword from first seen header or paragraph and also convert to plain text. */
-      const keyword = content.blocks
+      const title = content.blocks
         .find((block) => block.type === 'header' || block.type === 'paragraph')
         ?.data.text.replace(/<[^>]+>/g, '')!;
 
@@ -110,30 +115,31 @@ const NewBlog: React.FC = () => {
       const rawTags = deleteStatusFromTags(tags.filter((tag) => tag.status));
 
       /* Filter titleImage from first seen image */
-      const titleImage = content.blocks.find((block) => block.type === 'image')
-        ?.data.file.url!;
+      const image = content.blocks.find((block) => block.type === 'image')?.data
+        .file.url!;
 
       if (!validateAuthorName(author)) {
         throw new Error('Author name is not valid');
       }
 
       const payload: INewBlogPayload = {
-        keyword,
-        titleImage,
+        title,
+        image,
         content,
         tags: rawTags,
         status,
-        imagePath: uuidv4(),
+        // imagePath: uuidv4(),
         author,
       };
+      console.log(payload);
       blogApiCall
         .createNewBlog(payload)
         .then((res) => {
           if (res.status === 201) {
-            deleteSessionImagePath();
+            // deleteSessionImagePath();
             toast(
               ToastTrigger.createBlogSuccess(
-                `บทความชื่อ "${keyword}" ได้ถูกสร้างขึ้น`,
+                `บทความชื่อ "${title}" ได้ถูกสร้างขึ้น`,
               ),
             );
             history.push('/blogs');
@@ -142,7 +148,7 @@ const NewBlog: React.FC = () => {
         .catch(() => {
           toast(
             ToastTrigger.createBlogFail(
-              `เกิดข้อผิดพลาดในการสร้างบทความชื่อ "${keyword}"`,
+              `เกิดข้อผิดพลาดในการสร้างบทความชื่อ "${title}"`,
             ),
           );
         });

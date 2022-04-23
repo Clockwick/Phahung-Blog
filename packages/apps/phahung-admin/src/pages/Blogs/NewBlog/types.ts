@@ -1,11 +1,12 @@
 import type EditorJS from '@editorjs/editorjs';
+import { NonStatusTag } from '../types';
 
 export interface INewBlogPayload {
-  keyword: string;
-  titleImage: string;
+  title: string;
+  image: string;
   content: EditorJS.OutputData;
-  tags: Array<string>;
+  tags: Array<NonStatusTag>;
   status: string;
-  imagePath: string;
+  // imagePath: string;
   author: string;
 }
