@@ -147,13 +147,11 @@ const EditBlog: React.FC = () => {
         imagePath,
       };
 
-      console.log('payload', payload);
       blogApiCall
         .editBlog(payload, blogId)
         .then((res) => {
-          console.log('res.data', res.data);
           if (res.status === 200) {
-            console.log('Jeeyyy');
+            history.push(`/blogs`);
           }
           // deleteSessionImagePath();
           // history.push('/blogs');
