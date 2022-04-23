@@ -1,9 +1,13 @@
+/* eslint-disable no-nested-ternary */
+/* eslint-disable */
+
 import React, { useEffect, useMemo, useState } from 'react';
 // import { Box, Button, useModal } from '@chan-chala/uikit';
 import { Button, useModal } from '@chan-chala/uikit';
 import { BanUserModal, DeleteUserModal, UnBanUserModal } from '../UserModal';
 import { User } from './types';
 import { Pagination } from './components';
+import { flatMap } from 'lodash';
 
 const ListUser: React.FC = () => {
   const [didFetchUsers, setDidFetchUsers] = useState<boolean>(false);
@@ -12,6 +16,9 @@ const ListUser: React.FC = () => {
   const [deleteId, setDeleteId] = useState<string>('');
   const [banId, setBanId] = useState<string>('');
   const [unBanId, setUnBanId] = useState<string>('');
+  const [filterBan, setFilterBan] = useState<boolean>(false);
+  const [filterUnBan, setFilterUnBan] = useState<boolean>(false);
+  const [query, setQuery] = useState<string>('');
   const [handleDeleteModalPresent] = useModal(
     <DeleteUserModal deleteHandler={{ deleteId, setDidFetchUsers }} />,
   );
@@ -44,12 +51,27 @@ const ListUser: React.FC = () => {
   /* eslint-disable */
   const renderedUsers = useMemo(
     () => users.filter((user) => user.role === 1),
-    [didFetchUsers, setDidFetchUsers, users],
+    [didFetchUsers, setDidFetchUsers, users, query],
   );
   const renderedTotalUsers = useMemo(
     () => totalUser,
-    [didFetchUsers, setDidFetchUsers, totalUser],
+    [didFetchUsers, setDidFetchUsers, totalUser, filterUnBan, filterBan],
   );
+  const handleOnClickFilterBan = () => {
+    console.log('Ban', filterBan, filterUnBan);
+    setFilterUnBan(false);
+    setFilterBan(true);
+    setQuery('true');
+    setDidFetchUsers(false);
+  };
+  const handleOnClickFilterUnBan = () => {
+    console.log('unBan', filterBan, filterUnBan);
+    setFilterBan(false);
+    setFilterUnBan(true);
+    setQuery('false');
+    setDidFetchUsers(false);
+  };
+
   /* eslint-enable */
   console.log('renderedUsers', renderedUsers);
   return (
@@ -58,6 +80,22 @@ const ListUser: React.FC = () => {
         <div className="text-4xl font-bold">
           รายชื่อผู้ใช้ ({renderedTotalUsers})
         </div>
+      </div>
+      <div className="flex">
+        <Button
+          size="lg"
+          color={filterBan ? 'blue' : 'white'}
+          onClick={() => handleOnClickFilterBan()}
+        >
+          แบน
+        </Button>
+        <Button
+          size="lg"
+          color={filterUnBan ? 'blue' : 'white'}
+          onClick={() => handleOnClickFilterUnBan()}
+        >
+          ไม่แบน
+        </Button>
       </div>
       <div className="flex flex-row flex-wrap items-start ">
         {/* Draft Component Outline */}
@@ -140,6 +178,7 @@ const ListUser: React.FC = () => {
       <Pagination
         usersHandler={{ setUsers, setTotalUser }}
         fetchHandler={{ didFetchUsers, setDidFetchUsers }}
+        q={query}
       />
     </div>
   );

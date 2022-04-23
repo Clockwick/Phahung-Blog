@@ -23,10 +23,10 @@ const userApiCall: IUserAPICall = {
       withCredentials: true,
     });
   },
-  getUser: (page, perPage) => {
+  getUser: (page, perPage, isBan) => {
     return api({
       method: 'get',
-      url: `/users?page=${page}&perPage=${perPage}`,
+      url: `/users?page=${page}&perPage=${perPage}&isBan=${isBan}`,
       headers: {
         authorization: `Bearer ${localStorage.getItem('idToken')}`,
       },
