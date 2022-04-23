@@ -36,11 +36,11 @@ const blogApiCall: IBlogAPICall = {
     });
   },
 
-  getBlogs: (page: number, perPage: number, q = '') => {
+  getBlogs: (page: number, perPage: number, search = '') => {
     return api({
       method: 'get',
       url: `/blogs?page=${page}&perPage=${perPage}${
-        q.length > 0 ? `&q=${q}` : ''
+        search.length > 0 ? `&search=${search}` : ''
       }`,
       headers: {
         authorization: `Bearer ${localStorage.getItem('idToken')}`,

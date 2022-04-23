@@ -17,7 +17,7 @@ export interface IBlogAPICall {
   getBlogs: (
     page: number,
     perPage: number,
-    q: string,
+    search: string,
   ) => Promise<AxiosResponse>;
   getBlogById: (blogId: string) => Promise<AxiosResponse<IBlog>>;
   updateBlogStatus: (blogId: string, status: string) => Promise<AxiosResponse>;
