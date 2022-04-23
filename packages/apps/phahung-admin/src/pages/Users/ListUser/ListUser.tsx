@@ -43,7 +43,7 @@ const ListUser: React.FC = () => {
 
   /* eslint-disable */
   const renderedUsers = useMemo(
-    () => users,
+    () => users.filter((user) => user.role === 1),
     [didFetchUsers, setDidFetchUsers, users],
   );
   const renderedTotalUsers = useMemo(
@@ -51,7 +51,7 @@ const ListUser: React.FC = () => {
     [didFetchUsers, setDidFetchUsers, totalUser],
   );
   /* eslint-enable */
-
+  console.log('renderedUsers', renderedUsers);
   return (
     <div className="w-full h-full">
       <div className="flex flex-row justify-between mb-4">
@@ -79,11 +79,14 @@ const ListUser: React.FC = () => {
                   <div className="w-full text-xl font-bold text-black break-normal">
                     {user.firstName}
                   </div>
+                  <div className="w-full text-xl font-bold text-black break-normal">
+                    {user.lastName}
+                  </div>
                   <div className="w-full text-base font-normal text-gray-800">
                     {user.email}
                   </div>
                   <div className="mb-3 w-full text-base font-normal text-red-500">
-                    {user.role}
+                    User
                   </div>
                   <div className="flex justify-center space-x-4 ">
                     {user.isBan ? (

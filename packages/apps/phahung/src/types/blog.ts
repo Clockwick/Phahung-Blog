@@ -20,4 +20,3 @@ export type Blog = {
   image: string;
   tag: Tag;
 };
-
