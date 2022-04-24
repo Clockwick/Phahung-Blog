@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 /* eslint-disable */
-import React, { useEffect, useState } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
 import {
   Grid,
   Typography,
@@ -14,6 +14,7 @@ import {
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { useHistory } from 'react-router';
 import { useUser } from '../store/hooks/userHook';
+import api from 'src/utils/api';
 
 const Signin: React.FC = () => {
   // use state constants for the the form inputs
@@ -21,21 +22,60 @@ const Signin: React.FC = () => {
   const { fetchSessionHandler, isLoggedIn } = useUser();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+
   const loginToApp = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     fetchSessionHandler();
   };
 
   // A quick check on the name field to make it mandatory
-  const handleSubmit = () => {
-    console.log('submit');
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
+    e.preventDefault();
+    let validate = true;
+    if (email === '') {
+      setEmailError('Email is required');
+      validate = false;
+    } else {
+      setEmailError('');
+    }
+    if (password === '') {
+      setPasswordError('Password is required');
+      validate = false;
+    } else {
+      setPasswordError('');
+    }
+
+    if (!validate) return;
+
+    api({
+      url: '/signin',
+      method: 'POST',
+      data: {
+        email,
+        password,
+      },
+    })
+      .then((res) => {
+        if (res.status === 200) {
+          const idToken = res.data as string;
+          localStorage.setItem('idToken', idToken);
+          fetchSessionHandler();
+        }
+      })
+      .catch(() => {
+        setPasswordError('Invalid email or password');
+      });
   };
-  console.log(isLoggedIn);
+
   useEffect(() => {
     if (isLoggedIn) {
       history.push('/');
     }
   }, [isLoggedIn, history]);
+
   return (
     <>
       <Grid
@@ -94,6 +134,8 @@ const Signin: React.FC = () => {
                 autoFocus
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                error={emailError.length > 0}
+                helperText={emailError}
               />
               <TextField
                 margin="normal"
@@ -106,13 +148,14 @@ const Signin: React.FC = () => {
                 autoComplete="current-password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                error={passwordError.length > 0}
+                helperText={passwordError}
               />
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
-                onClick={loginToApp}
               >
                 Sign In
               </Button>

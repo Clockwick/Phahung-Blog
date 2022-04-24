@@ -13,16 +13,14 @@ import { useUser } from 'store/hooks/userHook';
 const PopperBlog: React.FC = () => {
   const { user, isLoggedIn, logoutHandler } = useUser();
   const history = useHistory();
-  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
-    null,
-  );
+  const [anchorEl, setAnchorEl] =
+    React.useState<HTMLButtonElement | null>(null);
   const [open, setOpen] = React.useState(false);
   const [placement, setPlacement] = React.useState<PopperPlacementType>();
 
   const handleLogout = (): void => {
-    console.log('logout');
     logoutHandler();
-    window.location.href = '/signin';
+    history.push('/signin');
   };
 
   const handleClick =
