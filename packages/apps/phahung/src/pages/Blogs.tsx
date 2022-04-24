@@ -49,7 +49,6 @@ const Blogs = () => {
       fetchBlogsData();
     }
   }, [didFetchBlogsData, fetchBlogsData, changeQueryTag]);
-  console.log('inputSearchASDASDASDAsd', inputSearch);
   const renderLayout = (
     gridLayout: GridLayout,
     receivedBlogs: BlogPreview[],

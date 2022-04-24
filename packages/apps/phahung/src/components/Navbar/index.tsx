@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React, { useContext } from 'react';
 import SearchBar from 'components/SearchBar';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useHistory } from 'react-router-dom';
 import {
   Stack,
   AppBar,
@@ -18,6 +18,8 @@ import { SearchContext } from 'src/contexts/SearchContext';
 // const settings = ['Profile', 'Logout'];
 
 const Navbar = () => {
+  const location = useLocation();
+  const { push } = useHistory();
   const { user, isLoggedIn, logoutHandler } = useUser();
   const { setInputSearch } = useContext(SearchContext);
   const [anchorElNav, setAnchorElNav] =
@@ -40,14 +42,9 @@ const Navbar = () => {
   // const handleCloseUserMenu = () => {
   //   setAnchorElUser(null);
   // };
-  const handleLogout = () => {
-    logoutHandler();
-    window.location.href = '/signin';
-  };
-  const path = window.location.pathname;
   // console.log('path', path);
   // console.log('user', user);
-  return path !== '/signin' && path !== '/signup' ? (
+  return location.pathname !== '/signin' && location.pathname !== '/signup' ? (
     <>
       <AppBar
         position="static"
@@ -89,7 +86,8 @@ const Navbar = () => {
                     color: 'black',
                     display: 'block',
                     px: 3.5,
-                    borderBottom: path === '/' ? '2px solid #000' : 'none',
+                    borderBottom:
+                      location.pathname === '/' ? '2px solid #000' : 'none',
                     paddingBottom: '9px',
                     paddingX: '5px',
                     letterSpacing: '1.8px',
@@ -109,7 +107,9 @@ const Navbar = () => {
                     display: 'block',
                     px: 3,
                     borderBottom:
-                      path === '/annoucement' ? '2px solid #000' : 'none',
+                      location.pathname === '/annoucement'
+                        ? '2px solid #000'
+                        : 'none',
                     paddingBottom: '9px',
                     letterSpacing: '2.0px',
                     lineHeight: 1.08,

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { FormEvent, useState } from 'react';
 import {
   Grid,
   Typography,
@@ -10,15 +10,80 @@ import {
   Link,
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import api from 'src/utils/api';
+import { useHistory } from 'react-router-dom';
 
 const Signup: React.FC = () => {
+  const history = useHistory();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [confirmPasswordError, setConfirmPasswordError] = useState('');
+  const [firstNameError, setFirstNameError] = useState('');
+  const [lastNameError, setLastNameError] = useState('');
 
-  const handleSubmit = () => {};
+  const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
+    e.preventDefault();
+    let validate = true;
+    if (email === '') {
+      setEmailError('Email is required');
+      validate = false;
+    } else {
+      setEmailError('');
+    }
+    if (password === '') {
+      setPasswordError('Password is required');
+      validate = false;
+    } else {
+      setPasswordError('');
+    }
+
+    if (firstName === '') {
+      setFirstNameError('First name is required');
+      validate = false;
+    } else {
+      setFirstNameError('');
+    }
+
+    if (lastName === '') {
+      setLastNameError('Last name is required');
+      validate = false;
+    } else {
+      setLastNameError('');
+    }
+
+    if (confirmPassword === '') {
+      setConfirmPasswordError('Confirm Password is required');
+      validate = false;
+    } else if (password !== confirmPassword) {
+      setConfirmPasswordError('Password does not match');
+      validate = false;
+    } else {
+      setConfirmPasswordError('');
+    }
+
+    if (!validate) return;
+
+    api({
+      url: '/signup',
+      method: 'POST',
+      data: {
+        email,
+        password,
+        firstName,
+        lastName,
+        role: 1,
+      },
+    }).then((res) => {
+      if (res.status === 200) {
+        history.push('/signin');
+      }
+    });
+  };
 
   return (
     <>
@@ -55,6 +120,8 @@ const Signup: React.FC = () => {
                   autoFocus
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
+                  error={firstNameError.length > 0}
+                  helperText={firstNameError}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -67,6 +134,8 @@ const Signup: React.FC = () => {
                   autoComplete="family-name"
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
+                  error={lastNameError.length > 0}
+                  helperText={lastNameError}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -74,11 +143,14 @@ const Signup: React.FC = () => {
                   required
                   fullWidth
                   id="email"
+                  type="email"
                   label="อีเมล"
                   name="email"
                   autoComplete="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  error={emailError.length > 0}
+                  helperText={emailError}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -92,6 +164,8 @@ const Signup: React.FC = () => {
                   autoComplete="new-password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  error={passwordError.length > 0}
+                  helperText={passwordError}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -105,6 +179,8 @@ const Signup: React.FC = () => {
                   autoComplete="new-password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
+                  error={confirmPasswordError.length > 0}
+                  helperText={confirmPasswordError}
                 />
               </Grid>
             </Grid>
