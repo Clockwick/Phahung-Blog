@@ -1,8 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-// import { userApiCall } from '../../api';
+// import userApiCall from '../api/user/userApiCall';
 
 import { User } from '../types';
+// import { IUser } from '../../types/user';
 
 export const fetchSession = createAsyncThunk('user/fetchSession', async () => {
   /* for production */

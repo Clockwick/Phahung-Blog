@@ -1,9 +1,9 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { Box, Typography, Stack } from '@mui/material';
 import 'styles/stackCard.css';
-import type { BlogPreview } from '../../types/blog';
 import moment from 'moment';
+import { Box, Typography, Stack } from '@mui/material';
+import type { BlogPreview } from '../../types/blog';
 /* referent code from https://codepen.io/natthakiat-khunkaew/pen/dyORgee */
 interface StackCardProp {
   Blogs: BlogPreview[];
