@@ -59,7 +59,6 @@ const Blog = () => {
         const responseData = res.data;
         console.log('responseData', responseData);
         setBlogContent(responseData);
-
         setDidFetchData(true);
       }
     });

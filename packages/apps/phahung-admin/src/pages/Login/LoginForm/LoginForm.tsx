@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import React, { useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
