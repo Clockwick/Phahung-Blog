@@ -113,13 +113,14 @@ const Profile: React.FC = () => {
       const formData = new FormData();
       formData.append('File', event.target.files[0]);
 
-      UserApiCall.uploadImage(formData).then((res) => {
+      UserApiCall.uploadImage(formData).then(async (res) => {
         if (res.status === 200) {
           const responseData = res.data as { url: string } | someResponse;
           if (isSomeResponse(responseData)) {
             console.log(responseData);
             alert('something went wrong');
           } else {
+            await fetchSessionHandler();
             const urlImage: string = responseData.url;
             setUserImage(urlImage);
             alert('upload image success');
