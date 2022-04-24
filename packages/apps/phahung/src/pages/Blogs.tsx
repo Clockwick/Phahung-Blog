@@ -4,6 +4,7 @@ import {
   Grid,
   CircularProgress as Loading,
   Stack,
+  Box,
 } from '@mui/material';
 import BlogCard from '../components/BlogCard/BlogCard';
 import type { BlogPreview } from '../types/blog';
@@ -275,7 +276,13 @@ const Blogs = () => {
         <ListCategory changeQueryTag={changeQueryTag} />
       </Stack>
       <Grid container direction="row" alignItems="center">
-        {blogs && didFetchBlogsData ? getBlogs(blogs) : <Loading />}
+        {blogs && didFetchBlogsData ? (
+          getBlogs(blogs)
+        ) : (
+          <Box className="ErrorBox">
+            <Loading />
+          </Box>
+        )}
       </Grid>
     </Container>
   );

@@ -10,6 +10,7 @@ import {
   Stack,
   Typography,
   CircularProgress as Loading,
+  Box,
 } from '@mui/material';
 import Blocks from 'editorjs-blocks-react-renderer';
 import { makeStyles } from '@mui/styles';
@@ -18,6 +19,7 @@ import mockComments from '../mocks/Comments';
 import BlogCard from '../components/BlogCard/BlogCard';
 import feedApiCall from '../api/feedApiCall';
 import type { Blog as BlogType } from '../types/blog';
+import '../styles/index.css';
 
 interface IComment {
   hide: boolean;
@@ -134,7 +136,9 @@ const Blog = () => {
             likes={BlogContent.likes}
           />
         ) : (
-          <Loading />
+          <Box className="ErrorBox">
+            <Loading />
+          </Box>
         )}
         {/* ----------------------------------------- read block content from local json file ------------------------ */}
 
