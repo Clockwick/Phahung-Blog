@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 // eslint-disable-next-line import/no-unresolved
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -12,7 +13,7 @@ import {
 } from '@mui/material';
 import Blocks from 'editorjs-blocks-react-renderer';
 import { makeStyles } from '@mui/styles';
-// import BlogContent from '../mocks/BlogContent';
+import mockBlogContent from '../mocks/BlogContent';
 import mockComments from '../mocks/Comments';
 import BlogCard from '../components/BlogCard/BlogCard';
 import feedApiCall from '../api/feedApiCall';
@@ -48,19 +49,21 @@ const Blog = () => {
   // const [state, setState] = useState<boolean>(false);
   // const [didFetchComment, setDidFetchComment] = useState(false);
 
-  const [BlogContent, setBlogContent] = useState<BlogType | null>(null);
+  const [BlogContent, setBlogContent] = useState<BlogType>();
   const [didFetchData, setDidFetchData] = useState(false);
-
+  // const [content, setContent] = useState<any>();
+  console.log('BlogContent', BlogContent);
   const fetchData = async (): Promise<void> => {
     feedApiCall.getBlogById(blogId).then((res) => {
       if (res.status === 200) {
         const responseData = res.data;
+        console.log('responseData', responseData);
         setBlogContent(responseData);
+
         setDidFetchData(true);
       }
     });
   };
-
   useEffect(() => {
     if (!didFetchData) {
       fetchData();
@@ -118,7 +121,7 @@ const Blog = () => {
   //     setComments(data);
   //   }
   // }, [didFetchComment]);
-
+  console.log('blogcontent', BlogContent?.content);
   return (
     <Container>
       <Stack spacing={3}>
@@ -134,17 +137,19 @@ const Blog = () => {
           <Loading />
         )}
         {/* ----------------------------------------- read block content from local json file ------------------------ */}
-        {/* <Typography sx={{ maxWidth: '100%' }}>
-          {/* <Typography sx={{ maxWidth: '100%' }}>
+
+        <Typography sx={{ maxWidth: '100%' }}>
+          {BlogContent && (
             <Blocks
-              data={BlogContent}
+              data={BlogContent.content}
               config={{
                 header: { className: classes.header },
                 image: { className: classes.image },
                 paragraph: { className: classes.paragraph },
               }}
             />
-        </Typography> */}
+          )}
+        </Typography>
         <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
           แสดงความคิดเห็น
         </Typography>

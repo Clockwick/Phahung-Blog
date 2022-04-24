@@ -7,6 +7,7 @@ import {
   Avatar,
   Divider,
 } from '@mui/material';
+import moment from 'moment';
 import CampaignIcon from '@mui/icons-material/Campaign';
 
 interface AnnoucementCardProps {
@@ -25,7 +26,13 @@ const AnnouncementCard: React.FC<AnnoucementCardProps> = ({
   return (
     <>
       <Stack direction="row" spacing={10}>
-        <Stack direction="row" alignItems="center" spacing={2}>
+        <Stack
+          direction="row"
+          alignItems="center"
+          spacing={2}
+          justifyContent="space-between"
+          sx={{ width: '75%' }}
+        >
           <Stack spacing={1}>
             <Stack direction="row" spacing={1} alignItems="center">
               <CampaignIcon />
@@ -42,7 +49,9 @@ const AnnouncementCard: React.FC<AnnoucementCardProps> = ({
           <Typography variant="h6" sx={{ mt: 'auto' }}>
             Posted on
           </Typography>
-          <Typography variant="subtitle1">{createdAt}</Typography>
+          <Typography variant="subtitle1">
+            {moment(createdAt).fromNow()}
+          </Typography>
         </Stack>
       </Stack>
       <Divider sx={{ borderBottom: '1.5px solid #bdbdbd', py: 1 }} />
@@ -51,3 +60,14 @@ const AnnouncementCard: React.FC<AnnoucementCardProps> = ({
 };
 
 export default AnnouncementCard;
+
+// {
+//   /* <div className="mr-4 font-bold">
+// <div>{`${moment(annoucement.createdAt).format(
+//   'LLLL',
+// )} น.`}</div>
+// <div>
+//   ({`${moment(annoucement.createdAt).fromNow()}`})
+// </div>
+// </div> */
+// }

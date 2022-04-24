@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 import { InputBase, Stack } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
+import { SearchContext } from 'src/contexts/SearchContext';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -53,11 +54,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 const SearchBar = () => {
-  const [value, setValue] = useState<string>('');
+  const { setInputSearch, setValueSearch, inputSearch } =
+    useContext(SearchContext);
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    console.log(value);
-    setValue('');
+    setInputSearch('');
   };
 
   return (
@@ -84,8 +85,8 @@ const SearchBar = () => {
               placeholder="ค้นหาบทความ..."
               inputProps={{ 'aria-label': 'search' }}
               // onKeyDown={(e) => handleSubmit(e)}
-              onChange={(e: any) => setValue(e.target.value)}
-              value={value}
+              onChange={(e: any) => setInputSearch(e.target.value)}
+              value={inputSearch}
               sx={{ width: '90%' }}
             />
           </Stack>

@@ -1,4 +1,6 @@
+/* eslint-disable import/order */
 import { Tag } from './tag';
+import { DataProp } from 'editorjs-blocks-react-renderer';
 
 export type BlogPreview = {
   id: string;
@@ -13,7 +15,7 @@ export type BlogPreview = {
 export type Blog = {
   id: string;
   title: string;
-  content: string[];
+  content: DataProp;
   author: string;
   likes: number;
   createdAt: number;

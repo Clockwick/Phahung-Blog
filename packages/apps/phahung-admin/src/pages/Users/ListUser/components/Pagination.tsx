@@ -13,11 +13,13 @@ type PaginationProps = {
     didFetchUsers: boolean;
     setDidFetchUsers: React.Dispatch<React.SetStateAction<boolean>>;
   };
+  q: string;
 };
 
 const Pagination: React.FC<PaginationProps> = ({
   usersHandler,
   fetchHandler,
+  q,
 }) => {
   const [startPage, setStartPage] = useState<number>(1);
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -36,7 +38,7 @@ const Pagination: React.FC<PaginationProps> = ({
   useEffect(() => {
     if (!didFetchUsers) {
       userApiCall
-        .getUser(currentPage, config.perPage)
+        .getUser(currentPage, config.perPage, q)
         .then((res) => {
           console.log('res', res);
           if (res.status === 200) {
