@@ -1,14 +1,15 @@
+/* eslint-disable import/order */
 /* eslint-disable import/extensions */
 /* eslint-disable import/no-unresolved */
 import React, { useContext, useEffect } from 'react';
 import { Container } from '@mui/material';
 import AnnouncementCard from 'components/AnnouncementCard';
-import mockAnnoucement from '../mocks/Announcement';
-import announcementApiCall from '../api/Announcement/announcement';
+import announcementApiCall from '../../api/Announcement/announcement';
 import { SearchContext } from 'src/contexts/SearchContext';
-import { announcement } from '../types/announcement';
+import { announcement } from '../../types/announcement';
 
-const Annoucement: React.FC = () => {
+const ListAnnouncement: React.FC = () => {
+  console.log('hello');
   const { inputSearch } = useContext(SearchContext);
   const [announcements, setAnnouncements] = React.useState<announcement[]>([]);
   useEffect(() => {
@@ -52,18 +53,7 @@ const Annoucement: React.FC = () => {
         ))
       )}
     </Container>
-    // <Container maxWidth="lg">
-    //   {announcements &&
-    //     announcements?.map((annoucement: any) => (
-    //       <AnnouncementCard
-    //         id={annoucement.id}
-    //         title={annoucement.title}
-    //         description={annoucement.description}
-    //         createdAt={annoucement.createdAt}
-    //       />
-    //     ))}
-    // </Container>
   );
 };
 
-export default Annoucement;
+export default ListAnnouncement;

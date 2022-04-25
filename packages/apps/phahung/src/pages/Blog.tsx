@@ -55,8 +55,9 @@ const Blog = () => {
   const [didFetchData, setDidFetchData] = useState(false);
 
   const isLikeBlog = useMemo(() => {
-    return !!user?.likedBlogs.find((id) => id === blogId);
+    return !!user?.likedBlogs?.find((id) => id === blogId);
   }, [JSON.stringify(user?.likedBlogs), blogId]);
+
   const fetchData = async (): Promise<void> => {
     feedApiCall.getBlogById(blogId).then((res) => {
       if (res.status === 200) {

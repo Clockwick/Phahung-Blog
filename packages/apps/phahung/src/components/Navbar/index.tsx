@@ -14,6 +14,7 @@ import {
 import { useUser } from 'store/hooks/userHook';
 import PopperBlog from 'components/Popper/PopperBlog';
 import { SearchContext } from 'src/contexts/SearchContext';
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 // const pages = ['Blog', 'Annoucement'];
 // const settings = ['Profile', 'Logout'];
 
@@ -39,11 +40,6 @@ const Navbar = () => {
     setInputSearch('');
   };
 
-  // const handleCloseUserMenu = () => {
-  //   setAnchorElUser(null);
-  // };
-  // console.log('path', path);
-  console.log('user', user);
   return location.pathname !== '/signin' && location.pathname !== '/signup' ? (
     <>
       <AppBar
@@ -97,28 +93,30 @@ const Navbar = () => {
                   Blog
                 </Button>
               </Link>
-              <Link to="/annoucement" style={{ textDecoration: 'none' }}>
-                <Button
-                  key="Annoucement"
-                  onClick={handleCloseNavMenu}
-                  sx={{
-                    my: 2,
-                    color: 'black',
-                    display: 'block',
-                    px: 3,
-                    borderBottom:
-                      location.pathname === '/annoucement'
-                        ? '2px solid #000'
-                        : 'none',
-                    paddingBottom: '9px',
-                    letterSpacing: '2.0px',
-                    lineHeight: 1.08,
-                    paddingX: '4px',
-                  }}
-                >
-                  Announcement
-                </Button>
-              </Link>
+              {user && (
+                <Link to="/annoucement" style={{ textDecoration: 'none' }}>
+                  <Button
+                    key="Annoucement"
+                    onClick={handleCloseNavMenu}
+                    sx={{
+                      my: 2,
+                      color: 'black',
+                      display: 'block',
+                      px: 3,
+                      borderBottom:
+                        location.pathname === '/annoucement'
+                          ? '2px solid #000'
+                          : 'none',
+                      paddingBottom: '9px',
+                      letterSpacing: '2.0px',
+                      lineHeight: 1.08,
+                      paddingX: '4px',
+                    }}
+                  >
+                    Announcement
+                  </Button>
+                </Link>
+              )}
             </Stack>
             <Stack
               direction="row"
@@ -127,7 +125,20 @@ const Navbar = () => {
               alignItems="center"
             >
               <SearchBar />
-              <PopperBlog />
+              {user ? (
+                <PopperBlog />
+              ) : (
+                <Link to="signin" style={{ textDecoration: 'none' }}>
+                  <a>
+                    <Button
+                      variant="outlined"
+                      startIcon={<PersonOutlineIcon />}
+                    >
+                      Sign In
+                    </Button>
+                  </a>
+                </Link>
+              )}
             </Stack>
           </Toolbar>
         </Container>
