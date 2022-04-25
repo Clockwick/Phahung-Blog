@@ -1,6 +1,6 @@
 export interface CommentOwner {
-  id: string;
+  uid: string;
   firstName: string;
   lastName: string;
-  picture: string;
+  picture: string | null;
 }

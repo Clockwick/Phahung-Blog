@@ -9,14 +9,14 @@ import IconButton from '@mui/material/IconButton';
 import { useUser } from 'store/hooks/userHook';
 
 interface PopperCommentProps {
-  id: string;
+  commentId: string;
   handleCanEdit: () => void;
-  handleDelete: (id: string) => void;
+  handleDelete: () => void;
   handleHideComment: (id: string) => void;
 }
 
 const PopperComment: React.FC<PopperCommentProps> = ({
-  id,
+  commentId,
   handleCanEdit,
   handleDelete,
   handleHideComment,
@@ -39,11 +39,11 @@ const PopperComment: React.FC<PopperCommentProps> = ({
     setOpen(false);
   };
   const handleOnClickDeleteComment = () => {
-    handleDelete(id);
+    handleDelete();
     setOpen(false);
   };
   const handleOnClickHideComment = () => {
-    handleHideComment(id);
+    handleHideComment(commentId);
     setOpen(false);
   };
   const isAdmin = user?.role === 0;
@@ -109,7 +109,7 @@ const PopperComment: React.FC<PopperCommentProps> = ({
               </Button>
               <Button
                 sx={{ width: '100%', color: 'red' }}
-                onClick={() => handleDelete(id)}
+                onClick={() => handleDelete()}
               >
                 {' '}
                 Delete Comment

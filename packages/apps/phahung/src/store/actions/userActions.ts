@@ -15,18 +15,7 @@ export const fetchSession = createAsyncThunk('user/fetchSession', async () => {
       authorization: `Bearer ${localStorage.getItem('idToken')}`,
     },
   });
-  // console.log('This is user in useAction', user.data);
   return user.data;
-  // const user: User = {
-  //   id: '61e117bcbb06b63455356b30',
-  //   picture: '/assets/man.png',
-  //   firstName: 'Pims',
-  //   lastName: 'Piyajiranan',
-  //   email: 'test1234@gmail.com',
-  //   role: 'admin',
-  //   isBan: false,
-  // };
-  // return user;
 });
 
 export const fetchLogout = createAsyncThunk('user/fetchLogout', async () => {
