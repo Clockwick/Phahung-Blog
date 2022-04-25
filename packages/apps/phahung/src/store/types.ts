@@ -1,4 +1,3 @@
-import { BlogPreview } from '../types/blog';
 export interface User {
   uid: string;
   firstName: string;
