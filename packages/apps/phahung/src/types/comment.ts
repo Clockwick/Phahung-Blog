@@ -1,8 +1,23 @@
-export type comment = {
+import { CommentOwner } from './user';
+
+export type ParentComment = {
   id: string;
-  createdAt: string;
-  author: string;
-  content: string;
+  createAt: number;
+  owner: CommentOwner;
   likes: number;
-  hide: boolean;
+  content: string;
+  isParent: boolean;
+  visible: boolean;
+  comments: SubComment[];
+};
+
+export type SubComment = {
+  id: string;
+  createAt: number;
+  owner: CommentOwner;
+  likes: number;
+  content: string;
+  parentId: string;
+  visible: boolean;
+  parentOwner: CommentOwner;
 };

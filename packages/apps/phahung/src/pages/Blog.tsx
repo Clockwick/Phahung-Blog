@@ -2,7 +2,7 @@
 // eslint-disable-next-line import/no-unresolved
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import Comment from 'components/Comment';
+import Comment from 'components/Comment/v1';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 import {
   Button,
@@ -18,6 +18,8 @@ import mockComments from '../mocks/Comments';
 import BlogCard from '../components/BlogCard/BlogCard';
 import feedApiCall from '../api/feedApiCall';
 import type { Blog as BlogType } from '../types/blog';
+import CommentV2 from 'components/Comment';
+import Comments from 'components/Comments';
 
 interface IComment {
   hide: boolean;
@@ -27,13 +29,15 @@ interface IComment {
 }
 const useStyles = makeStyles(() => ({
   header: {
-    color: 'red',
+    fontSize: '1.5rem',
   },
   image: {
-    width: '100px',
+    display: 'flex',
+    justifyContent: 'center',
   },
   paragraph: {
     color: 'black',
+    fontFamily: 'Roboto',
   },
   figure: {
     width: '100px',
@@ -52,12 +56,10 @@ const Blog = () => {
   const [BlogContent, setBlogContent] = useState<BlogType>();
   const [didFetchData, setDidFetchData] = useState(false);
   // const [content, setContent] = useState<any>();
-  console.log('BlogContent', BlogContent);
   const fetchData = async (): Promise<void> => {
     feedApiCall.getBlogById(blogId).then((res) => {
       if (res.status === 200) {
         const responseData = res.data;
-        console.log('responseData', responseData);
         setBlogContent(responseData);
 
         setDidFetchData(true);
@@ -121,11 +123,10 @@ const Blog = () => {
   //     setComments(data);
   //   }
   // }, [didFetchComment]);
-  console.log('blogcontent', BlogContent?.content);
   return (
     <Container>
       <Stack spacing={3}>
-        {BlogContent && didFetchData ? (
+        {/* {BlogContent && didFetchData ? (
           <BlogCard
             id={BlogContent.id}
             image={BlogContent.image}
@@ -135,7 +136,7 @@ const Blog = () => {
           />
         ) : (
           <Loading />
-        )}
+        )} */}
         {/* ----------------------------------------- read block content from local json file ------------------------ */}
 
         <Typography sx={{ maxWidth: '100%' }}>
@@ -175,22 +176,7 @@ const Blog = () => {
         <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
           รีวิวจากผู้อ่าน
         </Typography>
-        {comments &&
-          comments.map((comment) => {
-            return (
-              <Comment
-                handleDelete={handleDelete}
-                key={comment.id}
-                id={comment.id}
-                content={comment.content}
-                likes={comment.likes}
-                decrementLikes={decrementLikes}
-                incrementLikes={incrementLikes}
-                handleHideComment={handleHideComment}
-                hide={comment.hide}
-              />
-            );
-          })}
+        <Comments />
       </Stack>
     </Container>
   );
