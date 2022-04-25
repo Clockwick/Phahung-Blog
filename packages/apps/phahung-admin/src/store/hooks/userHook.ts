@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 

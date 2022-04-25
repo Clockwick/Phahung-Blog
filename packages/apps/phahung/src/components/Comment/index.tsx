@@ -31,7 +31,7 @@ const Comment: React.FC<CommentProps> = ({ comment }) => {
     owner,
     likes: initialLikes,
   } = comment;
-  const canEdit = owner.id === user?.id;
+  const canEdit = owner.id === user?.uid;
   const [content, setContent] = useState<string>(initialContent);
   const [readMore, setReadMore] = useState<boolean>(false);
   const [isLiked, setIsLiked] = useState<boolean>(false);

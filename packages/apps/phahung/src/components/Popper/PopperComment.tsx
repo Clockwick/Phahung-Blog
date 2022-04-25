@@ -46,7 +46,7 @@ const PopperComment: React.FC<PopperCommentProps> = ({
     handleHideComment(id);
     setOpen(false);
   };
-  const isAdmin = user?.role === 'admin';
+  const isAdmin = user?.role === 0;
   // console.log(user?.role);
 
   return isAdmin ? (

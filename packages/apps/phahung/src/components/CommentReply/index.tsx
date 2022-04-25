@@ -103,11 +103,11 @@ const CommentReply: React.FC<IComment> = ({
               </Stack>
             </Stack>
             <Typography sx={{ ml: 'auto', mb: 'auto' }}>
-              <PopperComment
+              {/* <PopperComment
                 id={id}
                 handleCanEdit={handleCanEdit}
                 handleDelete={handleDelete}
-              />
+              /> */}
             </Typography>
           </Stack>
           <Divider />

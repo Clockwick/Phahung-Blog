@@ -12,6 +12,7 @@ import {
   CircularProgress as Loading,
   Box,
 } from '@mui/material';
+import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
 import Blocks from 'editorjs-blocks-react-renderer';
 import { makeStyles } from '@mui/styles';
 import mockBlogContent from '../mocks/BlogContent';
@@ -22,6 +23,7 @@ import type { Blog as BlogType } from '../types/blog';
 import CommentV2 from 'components/Comment';
 import Comments from 'components/Comments';
 import '../styles/index.css';
+import { useUser } from 'store/hooks/userHook';
 
 interface IComment {
   hide: boolean;
@@ -36,6 +38,9 @@ const useStyles = makeStyles(() => ({
   image: {
     display: 'flex',
     justifyContent: 'center',
+    '& img': {
+      width: '150px',
+    },
   },
   paragraph: {
     color: 'black',
@@ -49,9 +54,13 @@ const useStyles = makeStyles(() => ({
 const Blog = () => {
   const classes = useStyles();
   const { id: blogId } = useParams<{ id: string }>();
+  const { user } = useUser();
+  console.log('user', user);
   // const [comments, setComments] = useState<IComment[]>([]);
   const [comments, setComments] = useState<IComment[]>(mockComments);
   const [newComment, setNewComment] = useState<string>('');
+  // input initial value likeblog
+  const [isLikeBlog, setIsLikeBlog] = useState<boolean>(false);
   // const [state, setState] = useState<boolean>(false);
   // const [didFetchComment, setDidFetchComment] = useState(false);
 
@@ -62,6 +71,7 @@ const Blog = () => {
     feedApiCall.getBlogById(blogId).then((res) => {
       if (res.status === 200) {
         const responseData = res.data;
+        console.log('responData', responseData);
         setBlogContent(responseData);
         setDidFetchData(true);
       }
@@ -127,23 +137,11 @@ const Blog = () => {
   return (
     <Container>
       <Stack spacing={3}>
-        {/* {BlogContent && didFetchData ? (
-          <BlogCard
-            id={BlogContent.id}
-            image={BlogContent.image}
-            title={BlogContent.title}
-            author={BlogContent.author}
-            likes={BlogContent.likes}
-          />
-        ) : (
-          <Loading />
-        )} */}
-        <Box className="ErrorBox">
-          <Loading />
-        </Box>
-
-        {/* ----------------------------------------- read block content from local json file ------------------------ */}
-
+        {!didFetchData && (
+          <Box className="ErrorBox">
+            <Loading />
+          </Box>
+        )}
         <Typography sx={{ maxWidth: '100%' }}>
           {BlogContent && (
             <Blocks
@@ -156,6 +154,13 @@ const Blog = () => {
             />
           )}
         </Typography>
+        <Button
+          variant="outlined"
+          startIcon={<ThumbUpOutlinedIcon />}
+          sx={{ whiteSpace: 'nowrap', width: '230px', mt: 4 }}
+        >
+          ถูกใจบทความนี้
+        </Button>
         <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
           แสดงความคิดเห็น
         </Typography>

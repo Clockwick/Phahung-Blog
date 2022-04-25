@@ -4,14 +4,17 @@
   box-sizing: border-box;
 }
 
-.ErrorBox{
-  display:flex;
-  width:100%;
-  height:30vh;
-  align-items:center;
-  justify-content:center;
+.ErrorBox {
+  display: flex;
+  width: 100%;
+  height: 30vh;
+  align-items: center;
+  justify-content: center;
 }
 
-.ErrorBox :first-child{
+.ErrorBox :first-child {
   font-size: 3rem;
+}
+.test {
+  width: 200px;
 }

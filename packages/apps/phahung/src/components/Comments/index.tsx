@@ -1,10 +1,9 @@
-import { CircularProgress } from '@mui/material';
+import { CircularProgress, Container } from '@mui/material';
 import Comment from 'components/Comment';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import api from 'src/utils/api';
 import { ParentComment } from 'types/comment';
-import { Container } from '@mui/material';
 
 const Comments = () => {
   const { id: blogId } = useParams<{ id: string }>();

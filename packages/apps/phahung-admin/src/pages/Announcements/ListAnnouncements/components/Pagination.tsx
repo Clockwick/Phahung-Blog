@@ -1,8 +1,9 @@
+/* eslint-disable import/no-unresolved */
 import React, { useCallback, useEffect, useState } from 'react';
 import { PageBox } from '@chan-chala/uikit';
+import announcementApiCall from 'api/Announcement/announcement';
 import { Announcement, IAnnouncementsResponse } from '../types';
 import config from './config';
-import announcementApiCall from 'api/Announcement/announcement';
 
 type PaginationProps = {
   announcementsHandler: {
