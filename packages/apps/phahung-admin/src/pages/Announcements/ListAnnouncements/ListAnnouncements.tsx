@@ -105,7 +105,6 @@ const ListAnnouncements: React.FC = () => {
       <Pagination
         announcementsHandler={{ setAnnouncements }}
         fetchHandler={{ isFetchingDocs, setIsFetchingDocs }}
-        // searchVal={''}        // searchVal={searchVal}
       />
     </div>
   );

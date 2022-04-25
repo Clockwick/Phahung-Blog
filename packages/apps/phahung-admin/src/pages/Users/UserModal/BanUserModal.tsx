@@ -28,13 +28,9 @@ const BanUserModal: React.FC<Props> = ({
     userApiCall
       .banUser(banHandler.banId)
       .then((res) => {
-        // if (res.status === 200) {
         toast(ToastTrigger.banUserSuccess());
         banHandler.setDidFetchUsers(false);
         handleDismiss();
-        // } else {
-        //   toast(ToastTrigger.deleteUserFailed(`${res.statusText}`));
-        // }
       })
       .catch((err) => {
         const errMsg = err.message;

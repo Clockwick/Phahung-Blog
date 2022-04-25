@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import { Box, Stack, Divider, Typography } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 
 interface BlogCardProps {
@@ -30,11 +30,9 @@ const BlogCard: React.FC<BlogCardProps> = ({
         height: '50vh',
         cursor: 'pointer',
         margin: '10px 0px',
-        // backgroundColor: 'yellow',
       }}
       onClick={() => {
         history.push(`/blog/${id}`);
-        // history.push(`blog/1`);
       }}
     >
       <Box
@@ -46,11 +44,8 @@ const BlogCard: React.FC<BlogCardProps> = ({
           width: '100%',
           maxHeight: '80%',
           maxWidth: '100%',
-          // objectFit: 'cover',
           overflow: 'hidden',
-          // zIndex: 0,
           borderRadius: '15px',
-          // backgroundColor: 'red',
           boxShadow: '2px 2px 7px #BBBBBB',
         }}
       >
@@ -73,7 +68,6 @@ const BlogCard: React.FC<BlogCardProps> = ({
           zIndex: 100,
           display: 'flex',
           justifyContent: 'center',
-          // backgroundColor: 'blue',
         }}
       >
         <Card
@@ -84,7 +78,6 @@ const BlogCard: React.FC<BlogCardProps> = ({
             display: 'flex',
             alignItems: 'center',
             backgroundColor: '#fffdf7',
-            // border: '1px solid black'
           }}
         >
           <CardContent

@@ -9,7 +9,6 @@ import { SearchContext } from 'src/contexts/SearchContext';
 import { announcement } from '../../types/announcement';
 
 const ListAnnouncement: React.FC = () => {
-  console.log('hello');
   const { inputSearch } = useContext(SearchContext);
   const [announcements, setAnnouncements] = React.useState<announcement[]>([]);
   useEffect(() => {
@@ -17,7 +16,6 @@ const ListAnnouncement: React.FC = () => {
       if (res.status === 200) {
         const responseData = res.data as announcement[];
         setAnnouncements(responseData);
-        console.log('announcements ', announcements);
       }
     });
   }, [inputSearch]);
@@ -45,6 +43,7 @@ const ListAnnouncement: React.FC = () => {
       ) : (
         announcements?.map((annoucement: announcement) => (
           <AnnouncementCard
+            key={annoucement.id}
             id={annoucement.id}
             title={annoucement.title}
             description={annoucement.description}

@@ -47,7 +47,6 @@ const PopperComment: React.FC<PopperCommentProps> = ({
     setOpen(false);
   };
   const isAdmin = user?.role === 0;
-  // console.log(user?.role);
 
   return isAdmin ? (
     <Box sx={{}}>

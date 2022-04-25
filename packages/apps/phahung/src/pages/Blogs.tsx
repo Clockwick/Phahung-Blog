@@ -1,3 +1,4 @@
+/* eslint-disable import/order */
 import React, { useState, useContext, useEffect } from 'react';
 import {
   Container,
@@ -8,7 +9,6 @@ import {
 } from '@mui/material';
 import BlogCard from '../components/BlogCard/BlogCard';
 import type { BlogPreview } from '../types/blog';
-import { BlogPreview as mockBlogPreview } from '../mocks/BlogPreview';
 import ListCategory from '../components/ListCategory';
 import Slogan from '../components/Slogan';
 import feedApiCall from '../api/feedApiCall';
@@ -22,8 +22,6 @@ const Blogs = () => {
   const [blogs, setBlogs] = useState<BlogPreview[]>([]);
   const [queryTag, setQueryTag] = useState<string>('');
 
-  console.log('Blogs : ', blogs);
-
   /// SEND GET TO BACKEND
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const fetchBlogsData = async (): Promise<void> => {
@@ -31,7 +29,6 @@ const Blogs = () => {
       feedApiCall.getBlogsByTag(queryTag, inputSearch).then((res) => {
         if (res.status === 200) {
           const responseData = res.data;
-          console.log('responseDataTag', responseData);
           setBlogs(responseData);
           setDidFetchBlogsData(true);
         }

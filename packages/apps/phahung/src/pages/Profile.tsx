@@ -8,25 +8,18 @@ import {
   Button,
   Typography,
   IconButton,
-  FormHelperText,
   Container,
-  Avatar,
-  Badge,
   Box,
-  Grid,
   CircularProgress as Loading,
 } from '@mui/material';
-import styled from '@emotion/styled';
-import HelpIcon from '@mui/icons-material/Help';
+
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
 import CreateIcon from '@mui/icons-material/Create';
-import CheckIcon from '@mui/icons-material/Check';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import SaveIcon from '@mui/icons-material/Save';
-import { BlogPreview as mockBlogPreview } from '../mocks/BlogPreview';
 import type { BlogPreview } from '../types/blog';
 import StackCard from '../components/StackCard/StackCard';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -91,15 +84,12 @@ const Profile: React.FC = () => {
       if (res.status === 200) {
         const responseData = res.data as BlogPreview[] | someResponse;
         if (isSomeResponse(responseData)) {
-          console.log(responseData);
           alert('something went wrong');
         } else {
-          console.log('getLikedBlogs', responseData);
           setDidFetchData(true);
           setLikedBlogs(responseData);
         }
       } else {
-        console.error('res', res);
         alert('upload fail please try again later');
       }
     });
@@ -117,7 +107,6 @@ const Profile: React.FC = () => {
         if (res.status === 200) {
           const responseData = res.data as { url: string } | someResponse;
           if (isSomeResponse(responseData)) {
-            console.log(responseData);
             alert('something went wrong');
           } else {
             await fetchSessionHandler();
@@ -126,7 +115,6 @@ const Profile: React.FC = () => {
             alert('upload image success');
           }
         } else {
-          console.error('res', res);
           alert('upload fail please try again later');
         }
       });
@@ -145,7 +133,6 @@ const Profile: React.FC = () => {
 
   function changePageCard(direction: 'next' | 'prev') {
     const len = likedBlogs.length;
-    console.log(cardPage, direction, len / 5);
 
     if (direction === 'next' && cardPage < Math.floor(len / 5)) {
       setCardPage(cardPage + 1);
@@ -169,7 +156,6 @@ const Profile: React.FC = () => {
   const handleClickStatus =
     (prop: keyof IValues, checked: boolean) =>
     (event: React.MouseEvent<HTMLButtonElement>) => {
-      console.log('checked', checked);
       setValues({
         ...values,
         [prop]: {
@@ -196,7 +182,6 @@ const Profile: React.FC = () => {
         if (res.status === 200) {
           const responseData = res.data as User | someResponse;
           if (isSomeResponse(responseData)) {
-            console.log(responseData);
             alert('something went wrong');
           } else {
             setValues({
@@ -214,12 +199,10 @@ const Profile: React.FC = () => {
             alert('save success');
           }
         } else {
-          console.log(res);
           alert('save fail please try again');
         }
       });
     } else {
-      console.log("don't have user");
       alert('save fail please sign in');
     }
   };

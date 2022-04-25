@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  Container,
-  Paper,
-  Typography,
-  Stack,
-  Avatar,
-  Divider,
-} from '@mui/material';
+import { Typography, Stack, Divider } from '@mui/material';
 import moment from 'moment';
 import CampaignIcon from '@mui/icons-material/Campaign';
 
@@ -25,7 +18,7 @@ const AnnouncementCard: React.FC<AnnoucementCardProps> = ({
 }) => {
   return (
     <>
-      <Stack direction="row" spacing={10}>
+      <Stack direction="row" spacing={10} key={id}>
         <Stack
           direction="row"
           alignItems="center"
@@ -60,14 +53,3 @@ const AnnouncementCard: React.FC<AnnoucementCardProps> = ({
 };
 
 export default AnnouncementCard;
-
-// {
-//   /* <div className="mr-4 font-bold">
-// <div>{`${moment(annoucement.createdAt).format(
-//   'LLLL',
-// )} น.`}</div>
-// <div>
-//   ({`${moment(annoucement.createdAt).fromNow()}`})
-// </div>
-// </div> */
-// }

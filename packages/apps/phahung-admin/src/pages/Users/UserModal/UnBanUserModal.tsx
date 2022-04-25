@@ -28,14 +28,9 @@ const UnBanUserModal: React.FC<Props> = ({
     userApiCall
       .unBanUser(unBanHandler.unBanId)
       .then((res) => {
-        console.log('resUnban', res);
-        // if (res.status === 200) {
         toast(ToastTrigger.unBanUserSuccess());
         unBanHandler.setDidFetchUsers(false);
         handleDismiss();
-        // } else {
-        //   toast(ToastTrigger.deleteUserFailed(`${res.statusText}`));
-        // }
       })
       .catch((err) => {
         const errMsg = err.message;

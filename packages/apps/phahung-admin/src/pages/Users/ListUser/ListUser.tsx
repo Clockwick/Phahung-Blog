@@ -2,12 +2,10 @@
 /* eslint-disable */
 
 import React, { useEffect, useMemo, useState } from 'react';
-// import { Box, Button, useModal } from '@chan-chala/uikit';
 import { Button, useModal } from '@chan-chala/uikit';
 import { BanUserModal, DeleteUserModal, UnBanUserModal } from '../UserModal';
 import { User } from './types';
 import { Pagination } from './components';
-import { flatMap } from 'lodash';
 
 const ListUser: React.FC = () => {
   const [didFetchUsers, setDidFetchUsers] = useState<boolean>(false);
@@ -58,22 +56,18 @@ const ListUser: React.FC = () => {
     [didFetchUsers, setDidFetchUsers, totalUser, filterUnBan, filterBan],
   );
   const handleOnClickFilterBan = () => {
-    console.log('Ban', filterBan, filterUnBan);
     setFilterUnBan(false);
     setFilterBan(true);
     setQuery('true');
     setDidFetchUsers(false);
   };
   const handleOnClickFilterUnBan = () => {
-    console.log('unBan', filterBan, filterUnBan);
     setFilterBan(false);
     setFilterUnBan(true);
     setQuery('false');
     setDidFetchUsers(false);
   };
 
-  /* eslint-enable */
-  console.log('renderedUsers', renderedUsers);
   return (
     <div className="w-full h-full">
       <div className="flex flex-row justify-between mb-4">

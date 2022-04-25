@@ -14,7 +14,7 @@ const ListCategory = ({ changeQueryTag }: Iprop): JSX.Element => {
     setQuery(categoryName);
     changeQueryTag(categoryName);
   };
-  console.log('query', query);
+
   return (
     <Stack direction="row" spacing={3} justifyContent="space-around">
       {categories.map((category, index) => (

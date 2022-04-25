@@ -2,7 +2,6 @@
 import React from 'react';
 import { Button, Modal } from '@chan-chala/uikit';
 import { useToast } from '@chakra-ui/react';
-
 import { ToastTrigger } from 'components/Toasts';
 import { userApiCall } from '../../../api';
 

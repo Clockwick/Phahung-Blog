@@ -1,13 +1,12 @@
+/* eslint-disable import/no-unresolved */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { Button, Input } from '@chan-chala/uikit';
 import React, { useEffect, useState } from 'react';
-import mockAnnouncement from 'mock/announcements';
 import { useParams, useHistory } from 'react-router-dom';
 import announcementApiCall from 'api/Announcement/announcement';
 import { useToast } from '@chakra-ui/react';
 import { ToastTrigger } from 'components/Toasts';
 import { IEditAnnouncementPayload } from './types';
-// import announcementApiCall from 'api/Announcement/announcement';
 
 interface Params {
   announcementId: string;
@@ -23,10 +22,8 @@ const EditAnnouncement: React.FC = () => {
 
   useEffect(() => {
     announcementApiCall.getAnnouncementById(announcementId).then((res) => {
-      console.log('res', res);
       const initialDataAnnouncement: IEditAnnouncementPayload =
         res.data as IEditAnnouncementPayload;
-      console.log(initialDataAnnouncement.title);
       setTitle(initialDataAnnouncement.title);
       setDescription(initialDataAnnouncement?.description);
     });
@@ -85,7 +82,6 @@ const EditAnnouncement: React.FC = () => {
               color="blue"
               type="button"
               border={false}
-              // onClick={() => onClick('publish')}
               onClick={() => {
                 handleOnClick();
               }}

@@ -54,8 +54,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 const SearchBar = () => {
-  const { setInputSearch, setValueSearch, inputSearch } =
-    useContext(SearchContext);
+  const { setInputSearch, inputSearch } = useContext(SearchContext);
   const handleSubmit = (e: any) => {
     e.preventDefault();
     setInputSearch('');

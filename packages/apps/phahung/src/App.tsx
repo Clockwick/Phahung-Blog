@@ -1,3 +1,4 @@
+/* eslint-disable import/order */
 /* eslint-disable import/no-unresolved */
 import React from 'react';
 import Blog from 'pages/Blog';

@@ -1,9 +1,9 @@
+/* eslint-disable import/order */
 /* eslint-disable react-hooks/exhaustive-deps */
 // eslint-disable-next-line import/no-unresolved
 import React, { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 // import Comment from 'components/Comment/v1';
-import TextareaAutosize from '@mui/material/TextareaAutosize';
 import {
   Button,
   Container,
@@ -16,7 +16,6 @@ import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
 import Blocks from 'editorjs-blocks-react-renderer';
 import { makeStyles } from '@mui/styles';
 import Comments from 'components/Comments';
-import BlogCard from '../components/BlogCard/BlogCard';
 import feedApiCall from '../api/feedApiCall';
 import type { Blog as BlogType } from '../types/blog';
 import { useUser } from 'store/hooks/userHook';
@@ -62,7 +61,6 @@ const Blog = () => {
     feedApiCall.getBlogById(blogId).then((res) => {
       if (res.status === 200) {
         const responseData = res.data;
-        console.log('responData', responseData);
         setBlogContent(responseData);
         setDidFetchData(true);
       }

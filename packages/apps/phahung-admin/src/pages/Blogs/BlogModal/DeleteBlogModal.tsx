@@ -4,7 +4,6 @@ import { Button, Modal } from '@chan-chala/uikit';
 import { useToast } from '@chakra-ui/react';
 import { ToastTrigger } from 'components/Toasts';
 import { blogApiCall } from '../../../api';
-import { IDeleteBlogResponse } from './types';
 
 type Props = {
   blogHandler: {
