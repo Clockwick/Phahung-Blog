@@ -40,10 +40,9 @@ const Pagination: React.FC<PaginationProps> = ({
       userApiCall
         .getUser(currentPage, config.perPage, q)
         .then((res) => {
-          console.log('res', res);
           if (res.status === 200) {
             const responseData = res.data as User[];
-            console.log('responseData', responseData);
+
             // setMaxPage(responseData.admins.totalPages);
             // usersHandler.setUsers(responseData.admins.docs);
             usersHandler.setUsers(responseData);

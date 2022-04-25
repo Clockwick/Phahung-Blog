@@ -21,17 +21,20 @@ const Setting: React.FC = () => {
               <div className="flex justify-center content-center">
                 <img
                   referrerPolicy="no-referrer"
-                  src={mockProfile}
+                  src={user.image || mockProfile}
                   alt="user.profile"
                   className="w-48 rounded-full border-2 border-white border-solid md:w-60"
                 />
               </div>
               <div className="my-8 text-center md:text-xl text-m">
                 <div className="flex flex-row justify-center items-baseline">
-                  <p>DisplayName : </p>
+                  <p className="font-bold">Admin Name : </p>
                   <Rename user={user} />
                 </div>
-                <p>Email : {user.email}</p>
+                <div className="flex justify-center ml-9">
+                  <p className="font-bold mx-2 ml-3">Email : </p>
+                  <p className="ml-1">{user.email}</p>
+                </div>
               </div>
             </div>
           ) : (

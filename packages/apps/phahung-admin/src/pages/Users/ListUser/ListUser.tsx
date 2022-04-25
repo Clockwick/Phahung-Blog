@@ -58,14 +58,12 @@ const ListUser: React.FC = () => {
     [didFetchUsers, setDidFetchUsers, totalUser, filterUnBan, filterBan],
   );
   const handleOnClickFilterBan = () => {
-    console.log('Ban', filterBan, filterUnBan);
     setFilterUnBan(false);
     setFilterBan(true);
     setQuery('true');
     setDidFetchUsers(false);
   };
   const handleOnClickFilterUnBan = () => {
-    console.log('unBan', filterBan, filterUnBan);
     setFilterBan(false);
     setFilterUnBan(true);
     setQuery('false');
@@ -73,7 +71,7 @@ const ListUser: React.FC = () => {
   };
 
   /* eslint-enable */
-  console.log('renderedUsers', renderedUsers);
+
   return (
     <div className="w-full h-full">
       <div className="flex flex-row justify-between mb-4">

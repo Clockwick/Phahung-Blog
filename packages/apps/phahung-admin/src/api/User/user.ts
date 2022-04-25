@@ -32,6 +32,16 @@ const userApiCall: IUserAPICall = {
       },
     });
   },
+  updateUser: (payload) => {
+    return api({
+      method: 'put',
+      url: `/user/update`,
+      data: payload,
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('idToken')}`,
+      },
+    });
+  },
   delete: (adminId) => {
     return api({
       method: 'delete',

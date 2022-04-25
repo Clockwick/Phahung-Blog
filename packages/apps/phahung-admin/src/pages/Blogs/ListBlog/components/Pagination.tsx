@@ -41,7 +41,7 @@ const Pagination: React.FC<PaginationProps> = ({
         .then((res) => {
           if (res.status === 200) {
             const responseData = res.data as Blog[];
-            console.log('responseData blog', responseData);
+
             // setMaxPage(5);
             blogsHandler(responseData);
             setIsFetchingDocs(true);

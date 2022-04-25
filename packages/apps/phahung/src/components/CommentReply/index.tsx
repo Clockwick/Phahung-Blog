@@ -51,13 +51,13 @@ const CommentReply: React.FC<IComment> = ({
   const handleOnclick = () => {
     setLike((prevState) => {
       if (prevState) {
-        console.log('prevState', prevState);
+        // console.log('prevState', prevState);
         decrementLikes(id);
         setLike(false);
       } else if (!prevState) {
-        console.log('prevState', prevState);
+        // console.log('prevState', prevState);
         incrementLikes(id);
-        console.log('asd');
+        // console.log('asd');
         setLike(true);
       }
       return !prevState;

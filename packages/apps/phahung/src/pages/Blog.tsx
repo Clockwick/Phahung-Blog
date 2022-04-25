@@ -52,12 +52,12 @@ const Blog = () => {
   const [BlogContent, setBlogContent] = useState<BlogType>();
   const [didFetchData, setDidFetchData] = useState(false);
   // const [content, setContent] = useState<any>();
-  console.log('BlogContent', BlogContent);
+  // console.log('BlogContent', BlossgContent);
   const fetchData = async (): Promise<void> => {
     feedApiCall.getBlogById(blogId).then((res) => {
       if (res.status === 200) {
         const responseData = res.data;
-        console.log('responseData', responseData);
+        // console.log('responseData', responseData);
         setBlogContent(responseData);
         setDidFetchData(true);
       }

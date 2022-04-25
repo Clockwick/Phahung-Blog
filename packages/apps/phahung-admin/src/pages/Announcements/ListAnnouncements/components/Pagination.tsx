@@ -1,9 +1,9 @@
+/* eslint-disable import/order */
 import React, { useCallback, useEffect, useState } from 'react';
 import { PageBox } from '@chan-chala/uikit';
 import { Announcement, IAnnouncementsResponse } from '../types';
 import config from './config';
-import announcementApiCall from 'api/Announcement/announcement';
-
+import announcementApiCall from '../../../../api/Announcement/announcement';
 type PaginationProps = {
   announcementsHandler: {
     setAnnouncements: React.Dispatch<React.SetStateAction<Announcement[]>>;
@@ -39,10 +39,10 @@ const Pagination: React.FC<PaginationProps> = ({
       announcementApiCall
         .getAnnouncements(currentPage, config.perPage)
         .then((res) => {
-          console.log('res', res);
+          // console.log('res', res);
           if (res.status === 200) {
             const responseData = res.data as Announcement[];
-            console.log('responseData', responseData);
+            // console.log('responseData', responseData);
             // setMaxPage(responseData.blogs.totalPages);
             announcementsHandler.setAnnouncements(responseData);
             setIsFetchingDocs(true);
