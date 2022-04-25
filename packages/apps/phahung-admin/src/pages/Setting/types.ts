@@ -11,3 +11,9 @@ export interface IEditUserPayload {
 export interface INamePayload {
   name: string;
 }
+
+export type someResponse = { message: string; status: number };
+
+export const isSomeResponse = (x: any): x is someResponse => {
+  return typeof x?.message === 'string' && typeof x?.status === 'number';
+};

@@ -195,6 +195,14 @@ const ToastCall: IToastCall = {
     isClosable: true,
     position: 'bottom-right',
   }),
+  uploadImageSuccess: () => ({
+    title: 'อัพโหลดรูปภาพสำเร็จ',
+    description: 'เกิดปัญหาขึ้นระหว่างการอัพโหลดรูปภาพ',
+    status: 'success',
+    duration: 5000,
+    isClosable: true,
+    position: 'bottom-right',
+  }),
   createAnnouncementSuccess: (description) => ({
     title: 'สร้างประกาศใหม่สำเร็จ',
     description,

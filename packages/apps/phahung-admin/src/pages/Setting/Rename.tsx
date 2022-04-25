@@ -1,12 +1,15 @@
 /* eslint-disable import/no-unresolved */
 /* eslint-disable no-console */
 import React, { useState } from 'react';
+import { IconButton } from '@mui/material';
 import { Input, Button } from '@chan-chala/uikit';
 import { useToast } from '@chakra-ui/react';
 import { ToastTrigger } from 'components/Toasts';
 import { useUser } from 'store/hooks/userHook';
 import { User } from 'store/types';
 import userApiCall from '../../api/User/user';
+import { someResponse, isSomeResponse } from './types';
+import SaveIcon from '@mui/icons-material/Save';
 
 interface UserProps {
   user: User;
@@ -18,31 +21,40 @@ const Rename: React.FC<UserProps> = ({ user }) => {
   const [state, setState] = useState(false);
   const [name, setName] = useState(`${user.firstName}  ${user.lastName}`);
 
-  const handleRename = (): void => {
+  const handleRename = (e: any): void => {
+    e.preventDefault();
+
     const newName = name
       .trim()
       .split(' ')
       .filter((el) => el !== '');
-
     const payload: User = {
       ...user,
       firstName: newName[0],
       lastName: newName[1],
     };
 
-    if (newName[0].length > 3 && newName[1].length > 3) {
+    if (newName[0].length > 2 && newName[1].length > 2) {
       userApiCall
         .updateUser(payload)
         .then((res) => {
           setState(false);
-
           if (res.status === 200) {
-            toast(
-              ToastTrigger.renameSuccess(
-                `เปลี่ยนชื่อผู้ใช้เป็น ${name} สำเร็จ!`,
-              ),
-            );
-            fetchSessionHandler();
+            const responseData = res.data as User | someResponse;
+            if (isSomeResponse(responseData)) {
+              toast(
+                ToastTrigger.renameFailed(
+                  `เปลี่ยนชื่อผู้ใช้ไม่สำเร็จ :\n${res.statusText}`,
+                ),
+              );
+            } else {
+              toast(
+                ToastTrigger.renameSuccess(
+                  `เปลี่ยนชื่อผู้ใช้เป็น ${name} สำเร็จ!`,
+                ),
+              );
+              fetchSessionHandler();
+            }
           } else {
             toast(
               ToastTrigger.renameFailed(
@@ -65,12 +77,7 @@ const Rename: React.FC<UserProps> = ({ user }) => {
   };
 
   return state ? (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        handleRename();
-      }}
-    >
+    <form onSubmit={(e) => handleRename(e)}>
       <Input
         name="name"
         className="m-1 text-center"
@@ -79,6 +86,9 @@ const Rename: React.FC<UserProps> = ({ user }) => {
           setName(event.target.value);
         }}
       />
+      <IconButton onClick={(e) => handleRename(e)}>
+        <SaveIcon />
+      </IconButton>
     </form>
   ) : (
     <div className="flex flex-row mx-2 w-100">

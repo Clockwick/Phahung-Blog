@@ -9,7 +9,7 @@ export type BlogPreview = {
   likes: number;
   createdAt: number;
   image: string;
-  tag: Tag;
+  tags: Tag;
 };
 
 export type Blog = {
@@ -20,5 +20,5 @@ export type Blog = {
   likes: number;
   createdAt: number;
   image: string;
-  tag: Tag;
+  tags: Tag;
 };

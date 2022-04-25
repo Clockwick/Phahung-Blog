@@ -1,6 +1,5 @@
 /* eslint-disable import/no-unresolved */
 import { AxiosResponse } from 'axios';
-import { User } from 'pages/Users/ListUser/types';
 import { EmailPayload } from 'pages/Users/UserModal/types';
 import { User } from 'store/types';
 
@@ -17,4 +16,5 @@ export interface IUserAPICall {
   updateUser: (payload: User) => Promise<AxiosResponse<User>>;
   delete: (adminId: string) => Promise<AxiosResponse>;
   createAdmin: (payload: EmailPayload) => Promise<AxiosResponse>;
+  uploadImage: (imageFile: FormData | undefined) => Promise<AxiosResponse>;
 }

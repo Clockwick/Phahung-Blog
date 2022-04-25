@@ -7,7 +7,7 @@ export interface User {
   role: 1;
   isBan: boolean;
   likedBlogs: BlogPreview[];
-  likedComments: comment[] | null;
+  likedComments: string[] | null;
 }
 export interface UserState {
   user?: User;
@@ -27,13 +27,4 @@ export type BlogPreview = {
   createdAt: number;
   image: string;
   tag: Tag;
-};
-
-export type comment = {
-  id: string;
-  createdAt: string;
-  author: string;
-  content: string;
-  likes: number;
-  hide: boolean;
 };
