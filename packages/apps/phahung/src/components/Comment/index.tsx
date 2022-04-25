@@ -8,11 +8,14 @@ import {
   Box,
   Avatar,
 } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useUser } from 'store/hooks/userHook';
 import { ParentComment } from 'types/comment';
 import ReplyIcon from '@mui/icons-material/Reply';
 import { styled } from '@mui/styles';
+import PopperComment from 'components/Popper/PopperComment';
+import api from 'src/utils/api';
+import { useLocation } from 'react-router-dom';
 
 const HiddenAndShowButton = styled(Button)({
   paddingX: '4px',
@@ -21,24 +24,31 @@ const HiddenAndShowButton = styled(Button)({
 
 interface CommentProps {
   comment: ParentComment;
+  fetchHandler: () => void;
 }
 
-const Comment: React.FC<CommentProps> = ({ comment }) => {
+const Comment: React.FC<CommentProps> = ({ comment, fetchHandler }) => {
   const { user } = useUser();
+  const { pathname } = useLocation();
   const {
+    id: commentId,
     visible,
     content: initialContent,
     owner,
     likes: initialLikes,
   } = comment;
-  const canEdit = owner.id === user?.id;
+
   const [content, setContent] = useState<string>(initialContent);
   const [readMore, setReadMore] = useState<boolean>(false);
   const [isLiked, setIsLiked] = useState<boolean>(false);
   const [likes, setLikes] = useState<number>(initialLikes);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const canEdit = owner.uid === user?.uid && isEditing;
+  const blogId = pathname.split('/')[2];
 
   const decrementLikes = () => setLikes(likes - 1);
   const incrementLikes = () => setLikes(likes + 1);
+
   const handleLike = () => {
     setIsLiked((prevState) => {
       if (prevState) {
@@ -52,6 +62,43 @@ const Comment: React.FC<CommentProps> = ({ comment }) => {
     });
   };
 
+  const handleCanEdit = () => {
+    setIsEditing(true);
+  };
+  const handleDelete = async () => {
+    const responseJson = await api<ParentComment>({
+      url: `/blogs/${blogId}/comments/${commentId}`,
+      method: 'DELETE',
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('idToken')}`,
+      },
+    });
+    if (responseJson.status === 200) {
+      fetchHandler();
+    }
+  };
+  const handleHideComment = (id: string) => {
+    console.log('hide comment');
+  };
+
+  const handleUpdateContent = async () => {
+    const responseJson = await api<ParentComment>({
+      url: `/blogs/${blogId}/comments/${commentId}`,
+      method: 'PUT',
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('idToken')}`,
+      },
+      data: {
+        content,
+      },
+    });
+
+    if (responseJson.status === 200) {
+      setIsEditing(false);
+      fetchHandler();
+    }
+  };
+
   return (
     <Box>
       <Paper
@@ -63,11 +110,7 @@ const Comment: React.FC<CommentProps> = ({ comment }) => {
         }}
       >
         <Stack spacing={1}>
-          <Stack
-            direction="row"
-            sx={{ paddingTop: '3px' }}
-            // justifyContent="space-evenly"
-          >
+          <Stack direction="row" sx={{ paddingTop: '3px' }}>
             <Stack
               direction="row"
               justifyContent="space-between"
@@ -76,7 +119,7 @@ const Comment: React.FC<CommentProps> = ({ comment }) => {
               <Stack direction="row" spacing={1}>
                 <Avatar
                   alt={owner.firstName}
-                  src={owner.picture}
+                  src={owner.picture === null ? '' : owner.picture}
                   sx={{ width: 56, height: 56, opacity: !visible ? 0.2 : 1 }}
                 />
                 <Stack direction="column">
@@ -89,12 +132,12 @@ const Comment: React.FC<CommentProps> = ({ comment }) => {
                 </Stack>
               </Stack>
               <Typography sx={{}}>
-                {/* <PopperComment
-                  id={id}
+                <PopperComment
+                  commentId={commentId}
                   handleCanEdit={handleCanEdit}
                   handleDelete={handleDelete}
                   handleHideComment={handleHideComment}
-                /> */}
+                />
               </Typography>
             </Stack>
           </Stack>
@@ -103,13 +146,12 @@ const Comment: React.FC<CommentProps> = ({ comment }) => {
           {canEdit ? (
             <Stack>
               <TextareaAutosize
-                id="standard-basic"
                 maxRows={7}
                 minRows={7}
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
               />
-              <Button>Submit</Button>
+              <Button onClick={handleUpdateContent}>ยืนยัน</Button>
             </Stack>
           ) : content.length > 50 ? (
             <>
@@ -145,11 +187,9 @@ const Comment: React.FC<CommentProps> = ({ comment }) => {
               )}
             </>
           ) : (
-            <>
-              <Typography sx={{ color: !visible ? '#4b4949' : '' }}>
-                {comment}
-              </Typography>
-            </>
+            <Typography sx={{ color: !visible ? '#4b4949' : '' }}>
+              {comment.content}
+            </Typography>
           )}
           <Stack direction="row" alignItems="center" spacing={1.5}>
             <Button
