@@ -1,7 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+
 import api from 'src/utils/api';
 
-// import { userApiCall } from '../../api';
+// import userApiCall from '../api/user/userApiCall';
 
 import { User } from '../types';
 
@@ -20,7 +21,6 @@ export const fetchSession = createAsyncThunk('user/fetchSession', async () => {
 export const fetchLogout = createAsyncThunk('user/fetchLogout', async () => {
   /* for production */
   localStorage.removeItem('idToken');
-  // return userApiCall
   //   .logout()
   //   .then((res) => {
   //     console.log('Logout response', res.data);

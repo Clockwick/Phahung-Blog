@@ -2,6 +2,16 @@
 // eslint-disable-next-line import/no-unresolved
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+// import Comment from 'components/Comment/v1';
+import TextareaAutosize from '@mui/material/TextareaAutosize';
+import {
+  Button,
+  Container,
+  Stack,
+  Typography,
+  CircularProgress as Loading,
+  Box,
+} from '@mui/material';
 import Blocks from 'editorjs-blocks-react-renderer';
 import { makeStyles } from '@mui/styles';
 import Comments from 'components/Comments';
@@ -59,6 +69,23 @@ const Blog = () => {
   return (
     <Container sx={{ paddingY: '10vh' }}>
       <Stack spacing={3}>
+        {/* {BlogContent && didFetchData ? (
+          <BlogCard
+            id={BlogContent.id}
+            image={BlogContent.image}
+            title={BlogContent.title}
+            author={BlogContent.author}
+            likes={BlogContent.likes}
+          />
+        ) : (
+          <Loading />
+        )} */}
+        <Box className="ErrorBox">
+          <Loading />
+        </Box>
+
+        {/* ----------------------------------------- read block content from local json file ------------------------ */}
+
         <Typography sx={{ maxWidth: '100%' }}>
           {blogContent && (
             <Blocks

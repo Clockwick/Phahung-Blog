@@ -74,7 +74,11 @@ const PopperBlog: React.FC = () => {
         >
           <Avatar
             alt="Remy Sharp"
-            src="https://images.unsplash.com/photo-1543357480-c60d40007a3f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTc3MDV8MHwxfHJhbmRvbXx8fHx8fHx8fDE2NDk5NTczNjc&ixlib=rb-1.2.1&q=80&w=400"
+            src={
+              user?.imageURL
+                ? user.imageURL
+                : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMrO1TLWPlYMHdJw5GJV_p8f42t-aUUGlIJqNFnFZFw4OO8Nk5lpSHhzJ1n4g0E-9R-1I&usqp=CAU'
+            }
           />
           <Typography
             sx={{
