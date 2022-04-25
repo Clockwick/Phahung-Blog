@@ -47,7 +47,6 @@ const Signup: React.FC = () => {
                     ...otherValue,
                     role: 0,
                   };
-
                   api({
                     method: 'POST',
                     url: '/signup',

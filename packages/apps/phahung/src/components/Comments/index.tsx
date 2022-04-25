@@ -47,7 +47,7 @@ const Comments = () => {
       },
     });
     if (responseJson.status === 201) {
-      setComments([...comments, responseJson.data]);
+      setDidFetchComments(false);
       setIsCreatingComment(false);
     }
   };
