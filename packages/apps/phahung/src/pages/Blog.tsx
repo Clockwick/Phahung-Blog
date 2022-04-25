@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 // eslint-disable-next-line import/no-unresolved
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 // import Comment from 'components/Comment/v1';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
@@ -50,13 +50,13 @@ const useStyles = makeStyles(() => ({
 const Blog = () => {
   const classes = useStyles();
   const { id: blogId } = useParams<{ id: string }>();
-  const { user } = useUser();
-  console.log('user', user);
-
-  const [isLikeBlog, setIsLikeBlog] = useState<boolean>(false);
-
+  const { user, fetchSessionHandler } = useUser();
   const [blogContent, setBlogContent] = useState<BlogType>();
   const [didFetchData, setDidFetchData] = useState(false);
+
+  const isLikeBlog = useMemo(() => {
+    return !!user?.likedBlogs.find((id) => id === blogId);
+  }, [JSON.stringify(user?.likedBlogs), blogId]);
   const fetchData = async (): Promise<void> => {
     feedApiCall.getBlogById(blogId).then((res) => {
       if (res.status === 200) {
@@ -67,9 +67,30 @@ const Blog = () => {
       }
     });
   };
+  const [isContained, setIsContained] = useState<boolean>(isLikeBlog);
+  const handleLikeBlog = () => {
+    if (user) {
+      setIsContained(!isContained);
+      if (!isLikeBlog) {
+        feedApiCall.likeBlog(blogId).then((res) => {
+          if (res.status === 200) {
+            fetchSessionHandler();
+          }
+        });
+      } else {
+        feedApiCall.unlikeBlog(blogId).then((res) => {
+          if (res.status === 200) {
+            fetchSessionHandler();
+          }
+        });
+      }
+    }
+  };
+
   useEffect(() => {
     if (!didFetchData) {
       fetchData();
+      fetchSessionHandler();
     }
   }, [didFetchData, fetchData]);
   return (
@@ -94,13 +115,16 @@ const Blog = () => {
             />
           )}
         </Typography>
+        {/* {!didFetchData && ( */}
         <Button
-          variant="outlined"
+          variant={isContained ? 'contained' : 'outlined'}
           startIcon={<ThumbUpOutlinedIcon />}
           sx={{ whiteSpace: 'nowrap', width: '230px', mt: 4 }}
+          onClick={handleLikeBlog}
         >
           ถูกใจบทความนี้
         </Button>
+        {/* )} */}
         <Comments />
       </Stack>
     </Container>
