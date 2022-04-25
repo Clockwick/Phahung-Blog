@@ -9,6 +9,7 @@ import mockProfile from '../../../public/images/Avatar.png';
 
 const Setting: React.FC = () => {
   const { user } = useUser();
+  console.log('user', user);
   return (
     <Menu>
       <div className="w-full h-full">
@@ -21,7 +22,7 @@ const Setting: React.FC = () => {
               <div className="flex justify-center content-center">
                 <img
                   referrerPolicy="no-referrer"
-                  src={user.image || mockProfile}
+                  src={user.imageURL || mockProfile}
                   alt="user.profile"
                   className="w-48 rounded-full border-2 border-white border-solid md:w-60"
                 />

@@ -1,15 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { userApiCall } from '../../api';
+import { User } from '../types';
 
-interface User {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  image: string;
-  role: string;
-}
 interface IUser {
   user: User;
 }

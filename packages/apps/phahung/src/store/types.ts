@@ -1,11 +1,15 @@
+import { BlogPreview } from '../types/blog';
+import { comment } from '../types/comment';
 export interface User {
-  id: string;
+  uid: string;
+  email: string;
   firstName: string;
   lastName: string;
-  email: string;
-  picture: string;
-  role: string;
+  imageURL?: string;
+  role: number;
   isBan: boolean;
+  likedBlogs: BlogPreview[];
+  likedComments?: comment[];
 }
 
 export interface UserState {

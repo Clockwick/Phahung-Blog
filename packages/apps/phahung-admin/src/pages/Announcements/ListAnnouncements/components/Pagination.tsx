@@ -4,6 +4,7 @@ import { PageBox } from '@chan-chala/uikit';
 import { Announcement, IAnnouncementsResponse } from '../types';
 import config from './config';
 import announcementApiCall from '../../../../api/Announcement/announcement';
+
 type PaginationProps = {
   announcementsHandler: {
     setAnnouncements: React.Dispatch<React.SetStateAction<Announcement[]>>;

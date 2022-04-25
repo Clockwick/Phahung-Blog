@@ -4,10 +4,8 @@ import React, { useState } from 'react';
 import { Input, Button } from '@chan-chala/uikit';
 import { useToast } from '@chakra-ui/react';
 import { ToastTrigger } from 'components/Toasts';
-import axios from 'axios';
 import { useUser } from 'store/hooks/userHook';
 import { User } from 'store/types';
-import { INamePayload } from './types';
 import userApiCall from '../../api/User/user';
 
 interface UserProps {
@@ -21,19 +19,20 @@ const Rename: React.FC<UserProps> = ({ user }) => {
   const [name, setName] = useState(`${user.firstName}  ${user.lastName}`);
 
   const handleRename = (): void => {
-    axios.defaults.withCredentials = true;
-    const payload: INamePayload = {
-      name,
+    const newName = name
+      .trim()
+      .split(' ')
+      .filter((el) => el !== '');
+
+    const payload: User = {
+      ...user,
+      firstName: newName[0],
+      lastName: newName[1],
     };
-    const headers = {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${localStorage.getItem('idToken')}`,
-    };
-    if (name.length > 5) {
-      axios
-        .put(`${import.meta.env.VITE_API_URL}/auth/admin/update`, payload, {
-          headers,
-        })
+
+    if (newName[0].length > 3 && newName[1].length > 3) {
+      userApiCall
+        .updateUser(payload)
         .then((res) => {
           setState(false);
 
@@ -76,7 +75,7 @@ const Rename: React.FC<UserProps> = ({ user }) => {
         name="name"
         className="m-1 text-center"
         value={name}
-        onChange={(event) => {
+        onChange={(event: any) => {
           setName(event.target.value);
         }}
       />

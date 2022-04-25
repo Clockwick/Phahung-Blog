@@ -13,6 +13,7 @@ export const fetchSession = createAsyncThunk('user/fetchSession', async () => {
     headers: {
       authorization: `Bearer ${localStorage.getItem('idToken')}`,
     },
+    withCredentials: true,
   });
   return user;
   // const user: User = {

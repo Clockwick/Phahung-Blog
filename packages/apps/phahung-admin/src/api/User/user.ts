@@ -40,6 +40,7 @@ const userApiCall: IUserAPICall = {
       headers: {
         authorization: `Bearer ${localStorage.getItem('idToken')}`,
       },
+      withCredentials: true,
     });
   },
   delete: (adminId) => {
