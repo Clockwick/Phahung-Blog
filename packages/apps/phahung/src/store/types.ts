@@ -1,5 +1,5 @@
 import { BlogPreview } from '../types/blog';
-import { comment } from '../types/comment';
+
 export interface User {
   uid: string;
   email: string;
@@ -9,7 +9,7 @@ export interface User {
   role: number;
   isBan: boolean;
   likedBlogs: BlogPreview[];
-  likedComments?: comment[];
+  likedComments?: string[];
 }
 
 export interface UserState {

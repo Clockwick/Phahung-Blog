@@ -2,9 +2,10 @@
 import { AxiosResponse } from 'axios';
 import { User } from 'pages/Users/ListUser/types';
 import { EmailPayload } from 'pages/Users/UserModal/types';
+import { User } from 'store/types';
 
 export interface IUserAPICall {
-  getSession: () => Promise<AxiosResponse>;
+  getSession: () => Promise<AxiosResponse<User>>;
   logout: () => Promise<AxiosResponse>;
   getUser: (
     page: number,

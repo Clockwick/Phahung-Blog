@@ -1,106 +1,116 @@
-/* eslint-disable no-nested-ternary */
 import {
-  Typography,
   Stack,
+  TextareaAutosize,
   Paper,
-  Button,
-  Avatar,
+  Typography,
   Divider,
-  Container,
+  Button,
+  Box,
+  Avatar,
 } from '@mui/material';
-import { styled } from '@mui/styles';
-import React, { useState } from 'react';
-// eslint-disable-next-line import/no-unresolved
-import PopperComment from 'components/Popper/PopperComment';
-import TextareaAutosize from '@mui/material/TextareaAutosize';
+import React, { useMemo, useState } from 'react';
+import { useUser } from 'store/hooks/userHook';
+import { ParentComment } from 'types/comment';
 import ReplyIcon from '@mui/icons-material/Reply';
-// eslint-disable-next-line import/no-unresolved
-import CommentReply from 'components/CommentReply';
+import { styled } from '@mui/styles';
+import PopperComment from 'components/Popper/PopperComment';
+import api from 'src/utils/api';
+import { useLocation } from 'react-router-dom';
 
 const HiddenAndShowButton = styled(Button)({
   paddingX: '4px',
   minWidth: 'min-content',
 });
 
-interface IComment {
-  id: string;
-  content: string;
-  likes: number;
-  hide: boolean;
-  handleDelete: (id: string) => void;
-  decrementLikes: (id: string) => void;
-  incrementLikes: (id: string) => void;
-  handleHideComment: (id: string) => void;
+interface CommentProps {
+  comment: ParentComment;
+  fetchHandler: () => void;
 }
 
-const Comment: React.FC<IComment> = ({
-  id,
-  content,
-  likes,
-  handleDelete,
-  decrementLikes,
-  incrementLikes,
-  handleHideComment,
-  hide,
-}) => {
-  const [readMore, setReadMore] = useState<boolean>(false);
-  const [like, setLike] = useState<boolean>(false);
-  const [canEdit, setCanEdit] = useState<boolean>(false);
-  const [comment, setComment] = useState<string>(content);
-  const [reply, setReply] = useState<boolean>(false);
-  const [contentReplyField, setContentReplyField] = useState<string>('');
-  const [contentReply, setContentReply] = useState<string[]>([]);
-  const [isLikeReply, setIsLikeReply] = useState<boolean>(false);
-  const [likeReply, setLikeReply] = useState<number>(0);
+const Comment: React.FC<CommentProps> = ({ comment, fetchHandler }) => {
+  const { user } = useUser();
+  const { pathname } = useLocation();
+  const {
+    id: commentId,
+    visible,
+    content: initialContent,
+    owner,
+    likes: initialLikes,
+  } = comment;
 
-  const handleCanEdit = (): void => {
-    setCanEdit(true);
-  };
-  const handleOnclick = () => {
-    setLike((prevState) => {
+  const [content, setContent] = useState<string>(initialContent);
+  const [readMore, setReadMore] = useState<boolean>(false);
+  const [isLiked, setIsLiked] = useState<boolean>(false);
+  const [likes, setLikes] = useState<number>(initialLikes);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const canEdit = owner.uid === user?.uid && isEditing;
+  const blogId = pathname.split('/')[2];
+
+  const decrementLikes = () => setLikes(likes - 1);
+  const incrementLikes = () => setLikes(likes + 1);
+
+  const handleLike = () => {
+    setIsLiked((prevState) => {
       if (prevState) {
-        decrementLikes(id);
-        setLike(false);
+        decrementLikes();
+        setIsLiked(false);
       } else if (!prevState) {
-        incrementLikes(id);
-        setLike(true);
+        incrementLikes();
+        setIsLiked(true);
       }
       return !prevState;
     });
   };
 
-  const handleSubmitComment = () => {
-    setCanEdit(false);
-    // setComment()
+  const handleCanEdit = () => {
+    setIsEditing(true);
+  };
+  const handleDelete = async () => {
+    const responseJson = await api<ParentComment>({
+      url: `/blogs/${blogId}/comments/${commentId}`,
+      method: 'DELETE',
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('idToken')}`,
+      },
+    });
+    if (responseJson.status === 200) {
+      fetchHandler();
+    }
+  };
+  const handleHideComment = (id: string) => {
+    console.log('hide comment');
   };
 
-  const handleReply = () => {
-    setReply(false);
-    setContentReply([...contentReply, contentReplyField]);
-    setContentReplyField('');
+  const handleUpdateContent = async () => {
+    const responseJson = await api<ParentComment>({
+      url: `/blogs/${blogId}/comments/${commentId}`,
+      method: 'PUT',
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('idToken')}`,
+      },
+      data: {
+        content,
+      },
+    });
+
+    if (responseJson.status === 200) {
+      setIsEditing(false);
+      fetchHandler();
+    }
   };
 
   return (
-    <Container>
-      <Stack direction="row" spacing={1}>
-        {/* <Typography sx={{ color: '#f9a825' }}>5.0</Typography> */}
-        {/* <Rating name="read-only" value={4} readOnly />
-        <Typography color="textSecondary"> (15 รีวิว)</Typography> */}
-      </Stack>
+    <Box>
       <Paper
         elevation={2}
         sx={{
           padding: '20px',
-          backgroundColor: hide ? '#bdbdbd' : '',
-          color: hide ? '#4b4949' : '',
+          backgroundColor: !visible ? '#bdbdbd' : '',
+          color: !visible ? '#4b4949' : '',
         }}
       >
         <Stack spacing={1}>
-          <Stack
-            direction="row"
-            sx={{ paddingTop: '3px' }}
-            // justifyContent="space-evenly"
-          >
+          <Stack direction="row" sx={{ paddingTop: '3px' }}>
             <Stack
               direction="row"
               justifyContent="space-between"
@@ -108,20 +118,22 @@ const Comment: React.FC<IComment> = ({
             >
               <Stack direction="row" spacing={1}>
                 <Avatar
-                  alt="Remy Sharp"
-                  src="https://images.unsplash.com/photo-1543357480-c60d40007a3f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTc3MDV8MHwxfHJhbmRvbXx8fHx8fHx8fDE2NDk5NTczNjc&ixlib=rb-1.2.1&q=80&w=400"
-                  sx={{ width: 56, height: 56, opacity: hide ? 0.2 : 1 }}
+                  alt={owner.firstName}
+                  src={owner.picture === null ? '' : owner.picture}
+                  sx={{ width: 56, height: 56, opacity: !visible ? 0.2 : 1 }}
                 />
                 <Stack direction="column">
-                  <Typography variant="subtitle1">สมชาย ขายไก่</Typography>
+                  <Typography variant="subtitle1">
+                    {owner.firstName} {owner.lastName}
+                  </Typography>
                   <Typography variant="subtitle1" color="textSecondary">
-                    10 มกราคม 2565 12:12 น.
+                    {new Date(comment.createAt).toLocaleString()}
                   </Typography>
                 </Stack>
               </Stack>
               <Typography sx={{}}>
                 <PopperComment
-                  id={id}
+                  commentId={commentId}
                   handleCanEdit={handleCanEdit}
                   handleDelete={handleDelete}
                   handleHideComment={handleHideComment}
@@ -130,18 +142,18 @@ const Comment: React.FC<IComment> = ({
             </Stack>
           </Stack>
           <Divider />
+          {/* eslint-disable */}
           {canEdit ? (
             <Stack>
               <TextareaAutosize
-                id="standard-basic"
                 maxRows={7}
                 minRows={7}
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
               />
-              <Button onClick={handleSubmitComment}>Submit</Button>
+              <Button onClick={handleUpdateContent}>ยืนยัน</Button>
             </Stack>
-          ) : comment.length > 50 ? (
+          ) : content.length > 50 ? (
             <>
               {readMore ? (
                 <>
@@ -151,7 +163,7 @@ const Comment: React.FC<IComment> = ({
                       wordWrap: 'break-word',
                     }}
                   >
-                    {comment}
+                    {content}
                     <HiddenAndShowButton
                       disableRipple
                       onClick={() => setReadMore(false)}
@@ -163,7 +175,7 @@ const Comment: React.FC<IComment> = ({
               ) : (
                 <Typography variant="body1">
                   <Typography>
-                    {comment.substring(0, 100)}
+                    {content.substring(0, 100)}
                     <HiddenAndShowButton
                       disableRipple
                       onClick={() => setReadMore(true)}
@@ -175,20 +187,18 @@ const Comment: React.FC<IComment> = ({
               )}
             </>
           ) : (
-            <>
-              <Typography sx={{ color: hide ? '#4b4949' : '' }}>
-                {comment}
-              </Typography>
-            </>
+            <Typography sx={{ color: !visible ? '#4b4949' : '' }}>
+              {comment.content}
+            </Typography>
           )}
           <Stack direction="row" alignItems="center" spacing={1.5}>
             <Button
-              onClick={handleOnclick}
-              disabled={hide}
+              onClick={handleLike}
+              disabled={!visible}
               startIcon={
                 <img
                   src={
-                    like
+                    isLiked
                       ? '/assets/images/buddha_color.png'
                       : '/assets/images/buddha.png'
                   }
@@ -196,22 +206,22 @@ const Comment: React.FC<IComment> = ({
                   width={30}
                 />
               }
-              sx={{ color: hide ? '#4b4949' : 'red' }}
+              sx={{ color: !visible ? '#4b4949' : 'red' }}
             >
               สาธุ
             </Button>
             {likes}
             <Button
               startIcon={<ReplyIcon />}
-              onClick={() => setReply(true)}
-              sx={{ color: hide ? '#4b4949' : 'primary' }}
-              disabled={hide}
+              // onClick={() => setReply(true)}
+              sx={{ color: !visible ? '#4b4949' : 'primary' }}
+              disabled={!visible}
             >
               reply
             </Button>
           </Stack>
           <>
-            {contentReply &&
+            {/* {contentReply &&
               // eslint-disable-next-line @typescript-eslint/no-shadow
               contentReply.map((reply) => {
                 return (
@@ -224,9 +234,9 @@ const Comment: React.FC<IComment> = ({
                     incrementLikes={incrementLikes}
                   />
                 );
-              })}
+              })} */}
           </>
-          {reply ? (
+          {/* {reply ? (
             <Stack direction="row" alignItems="center" spacing={2}>
               <Avatar
                 alt="Remy Sharp"
@@ -246,10 +256,10 @@ const Comment: React.FC<IComment> = ({
             </Stack>
           ) : (
             <></>
-          )}
+          )} */}
         </Stack>
       </Paper>
-    </Container>
+    </Box>
   );
 };
 
