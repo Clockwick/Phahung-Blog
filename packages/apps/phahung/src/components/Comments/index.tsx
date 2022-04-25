@@ -4,6 +4,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import api from 'src/utils/api';
 import { ParentComment } from 'types/comment';
+import { Container } from '@mui/material';
 
 const Comments = () => {
   const { id: blogId } = useParams<{ id: string }>();
@@ -27,7 +28,11 @@ const Comments = () => {
   }, [didFetchComments, fetchComments]);
 
   return didFetchComments && comments && comments.length > 0 ? (
-    comments.map((comment) => <Comment key={comment.id} comment={comment} />)
+    <Container>
+      {comments.map((comment) => (
+        <Comment key={comment.id} comment={comment} />
+      ))}
+    </Container>
   ) : (
     <CircularProgress />
   );
