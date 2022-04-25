@@ -2,7 +2,7 @@
 // eslint-disable-next-line import/no-unresolved
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import Comment from 'components/Comment/v1';
+// import Comment from 'components/Comment/v1';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 import {
   Button,
@@ -10,6 +10,7 @@ import {
   Stack,
   Typography,
   CircularProgress as Loading,
+  Box,
 } from '@mui/material';
 import Blocks from 'editorjs-blocks-react-renderer';
 import { makeStyles } from '@mui/styles';
@@ -20,6 +21,7 @@ import feedApiCall from '../api/feedApiCall';
 import type { Blog as BlogType } from '../types/blog';
 import CommentV2 from 'components/Comment';
 import Comments from 'components/Comments';
+import '../styles/index.css';
 
 interface IComment {
   hide: boolean;
@@ -136,6 +138,10 @@ const Blog = () => {
         ) : (
           <Loading />
         )} */}
+        <Box className="ErrorBox">
+          <Loading />
+        </Box>
+
         {/* ----------------------------------------- read block content from local json file ------------------------ */}
 
         <Typography sx={{ maxWidth: '100%' }}>

@@ -43,7 +43,7 @@ const Navbar = () => {
   //   setAnchorElUser(null);
   // };
   // console.log('path', path);
-  // console.log('user', user);
+  console.log('user', user);
   return location.pathname !== '/signin' && location.pathname !== '/signup' ? (
     <>
       <AppBar

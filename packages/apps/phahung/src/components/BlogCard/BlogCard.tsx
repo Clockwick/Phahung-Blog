@@ -51,6 +51,7 @@ const BlogCard: React.FC<BlogCardProps> = ({
           // zIndex: 0,
           borderRadius: '15px',
           // backgroundColor: 'red',
+          boxShadow: '2px 2px 7px #BBBBBB',
         }}
       >
         <img

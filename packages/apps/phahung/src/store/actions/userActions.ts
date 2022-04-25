@@ -1,7 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+
 import api from 'src/utils/api';
 
-// import { userApiCall } from '../../api';
+// import userApiCall from '../api/user/userApiCall';
 
 import { User } from '../types';
 
@@ -14,7 +15,8 @@ export const fetchSession = createAsyncThunk('user/fetchSession', async () => {
       authorization: `Bearer ${localStorage.getItem('idToken')}`,
     },
   });
-  return user;
+  // console.log('This is user in useAction', user.data);
+  return user.data;
   // const user: User = {
   //   id: '61e117bcbb06b63455356b30',
   //   picture: '/assets/man.png',
@@ -30,7 +32,6 @@ export const fetchSession = createAsyncThunk('user/fetchSession', async () => {
 export const fetchLogout = createAsyncThunk('user/fetchLogout', async () => {
   /* for production */
   localStorage.removeItem('idToken');
-  // return userApiCall
   //   .logout()
   //   .then((res) => {
   //     console.log('Logout response', res.data);
