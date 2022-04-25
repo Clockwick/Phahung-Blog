@@ -8,4 +8,6 @@ export interface IFeedApiCall {
     tagName: string,
     q: string,
   ) => Promise<AxiosResponse<BlogPreview[]>>;
+  likeBlog: (id: string) => Promise<AxiosResponse<Blog>>;
+  unlikeBlog: (id: string) => Promise<AxiosResponse<Blog>>;
 }

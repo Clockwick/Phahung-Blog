@@ -7,7 +7,7 @@ export interface User {
   imageURL: string;
   role: number;
   isBan: boolean;
-  likedBlogs: BlogPreview[];
+  likedBlogs: string[];
 }
 
 export interface UserState {
