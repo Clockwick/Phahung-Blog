@@ -39,7 +39,7 @@ const Navbar = () => {
     setAnchorElNav(null);
     setInputSearch('');
   };
-
+  const pathName = window.location.pathname;
   return location.pathname !== '/signin' && location.pathname !== '/signup' ? (
     <>
       <AppBar
@@ -94,7 +94,7 @@ const Navbar = () => {
                 </Button>
               </Link>
               {user && (
-                <Link to="/annoucement" style={{ textDecoration: 'none' }}>
+                <Link to="/announcement" style={{ textDecoration: 'none' }}>
                   <Button
                     key="Annoucement"
                     onClick={handleCloseNavMenu}
@@ -104,7 +104,7 @@ const Navbar = () => {
                       display: 'block',
                       px: 3,
                       borderBottom:
-                        location.pathname === '/annoucement'
+                        location.pathname === '/announcement'
                           ? '2px solid #000'
                           : 'none',
                       paddingBottom: '9px',
@@ -124,11 +124,19 @@ const Navbar = () => {
               justifyContent="center"
               alignItems="center"
             >
-              <SearchBar />
+              {pathName === '/' || pathName === '/announcement' ? (
+                <SearchBar />
+              ) : (
+                <></>
+              )}
               {user ? (
                 <PopperBlog />
               ) : (
-                <Link to="signin" style={{ textDecoration: 'none' }}>
+                <Link
+                  href="/signin"
+                  to="/signin"
+                  style={{ textDecoration: 'none' }}
+                >
                   <a>
                     <Button
                       variant="outlined"

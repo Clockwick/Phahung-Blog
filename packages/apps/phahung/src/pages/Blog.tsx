@@ -117,16 +117,20 @@ const Blog = () => {
           )}
         </Typography>
         {/* {!didFetchData && ( */}
-        <Button
-          variant={isContained ? 'contained' : 'outlined'}
-          startIcon={<ThumbUpOutlinedIcon />}
-          sx={{ whiteSpace: 'nowrap', width: '230px', mt: 4 }}
-          onClick={handleLikeBlog}
-        >
-          ถูกใจบทความนี้
-        </Button>
-        {/* )} */}
-        <Comments />
+        {user && (
+          <>
+            <Button
+              variant={isContained ? 'contained' : 'outlined'}
+              startIcon={<ThumbUpOutlinedIcon />}
+              sx={{ whiteSpace: 'nowrap', width: '230px', mt: 4 }}
+              onClick={handleLikeBlog}
+            >
+              ถูกใจบทความนี้
+            </Button>
+
+            <Comments />
+          </>
+        )}
       </Stack>
     </Container>
   );

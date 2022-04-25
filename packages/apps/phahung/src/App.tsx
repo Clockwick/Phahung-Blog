@@ -28,7 +28,7 @@ const App: React.FC = () => {
             <Route exact path="/profile" component={Profile} />
             <ProtectedRoute
               exact
-              path="/annoucement"
+              path="/announcement"
               component={ListAnnouncement}
               acceptRoles={1}
             />
