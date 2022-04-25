@@ -61,7 +61,6 @@ const Blog = () => {
       if (res.status === 200) {
         const responseData = res.data;
         setBlogContent(responseData);
-
         setDidFetchData(true);
       }
     });

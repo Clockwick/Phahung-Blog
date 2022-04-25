@@ -1,5 +1,5 @@
+/* eslint-disable import/no-unresolved */
 import React from 'react';
-
 import Menu from 'components/Menu';
 import { useUser } from 'store/hooks/userHook';
 import HelpButton from 'components/Button/HelpButton';
@@ -30,13 +30,6 @@ const Setting: React.FC = () => {
                 <div className="flex flex-row justify-center items-baseline">
                   <p>DisplayName : </p>
                   <Rename user={user} />
-                  <HelpButton
-                    value={<RenameGuide />}
-                    color="#1d96ff"
-                    id="rename-button-description"
-                    place="right"
-                    tooltipColor="info"
-                  />
                 </div>
                 <p>Email : {user.email}</p>
               </div>
