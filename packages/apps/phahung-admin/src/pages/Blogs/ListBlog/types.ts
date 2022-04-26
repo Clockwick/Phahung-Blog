@@ -25,7 +25,7 @@ export type Blog = {
   id: string;
   title: string;
   description: string;
-  time: number;
+  createAt: number;
   image: string;
   author: Author;
   status: string;

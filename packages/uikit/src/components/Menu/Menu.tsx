@@ -44,7 +44,7 @@ const Menu: React.FC<MenuProps> = ({
           showMenu ? 'sm:w-64' : 'sm:w-24',
         )}
       >
-        <div className="hidden overflow-hidden flex-col justify-center items-center py-4 h-32 sm:flex">
+        <div className="hidden overflow-hidden flex-col justify-center items-center py-4 h-32 sm:flex my-4">
           {title}
         </div>
         <div className="flex flex-row justify-evenly py-2 font-medium text-gray-800 sm:flex-col sm:py-4 sm:space-y-2">
@@ -71,7 +71,7 @@ const Menu: React.FC<MenuProps> = ({
       <div className="flex-auto">
         <Box
           className={classNames(
-            'flex fixed top-2 right-2 left-2 flex-row justify-between items-center p-2 h-16 bg-white border-gray-200 transition-all duration-300',
+            'flex absolute top-2 right-2 left-2 flex-row justify-between items-center p-2 h-16 bg-white border-gray-200 transition-all duration-300',
             'sm:top-4 sm:right-4 sm:p-4 z-30',
             showMenu ? 'sm:left-72' : 'sm:left-32',
           )}

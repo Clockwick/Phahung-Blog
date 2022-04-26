@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React, { useContext } from 'react';
 import SearchBar from 'components/SearchBar';
-import { Link, useLocation, useHistory } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 import {
   Stack,
   AppBar,
@@ -10,6 +10,7 @@ import {
   Typography,
   Container,
   Button,
+  Link,
 } from '@mui/material';
 import { useUser } from 'store/hooks/userHook';
 import PopperBlog from 'components/Popper/PopperBlog';
@@ -55,8 +56,12 @@ const Navbar = () => {
               sx={{ mr: 2, display: { xs: 'none', md: 'flex' }, pr: 2 }}
               onClick={() => setInputSearch('')}
             >
-              <Link href="/" to="/">
-                <img width="120px" src="/assets/images/logo.png" alt="logo" />
+              <Link href="/">
+                <img
+                  width="120px"
+                  src="/assets/images/logo-white.png"
+                  alt="logo"
+                />
               </Link>
             </Typography>
 
@@ -68,7 +73,7 @@ const Navbar = () => {
               direction="row"
               spacing={3}
             >
-              <Link to="/" style={{ textDecoration: 'none' }}>
+              <Link href="/" sx={{ textDecoration: 'none' }}>
                 <Button
                   key="Blog"
                   onClick={handleCloseNavMenu}
@@ -89,7 +94,7 @@ const Navbar = () => {
                 </Button>
               </Link>
               {user && (
-                <Link to="/announcement" style={{ textDecoration: 'none' }}>
+                <Link href="/announcement" sx={{ textDecoration: 'none' }}>
                   <Button
                     key="Annoucement"
                     onClick={handleCloseNavMenu}
@@ -129,17 +134,15 @@ const Navbar = () => {
               ) : (
                 <Link
                   href="/signin"
-                  to="/signin"
-                  style={{ textDecoration: 'none' }}
+                  sx={{ textDecoration: 'none', color: '#000000' }}
                 >
-                  <a>
-                    <Button
-                      variant="outlined"
-                      startIcon={<PersonOutlineIcon />}
-                    >
-                      Sign In
-                    </Button>
-                  </a>
+                  <Button
+                    color="inherit"
+                    variant="outlined"
+                    startIcon={<PersonOutlineIcon />}
+                  >
+                    Sign In
+                  </Button>
                 </Link>
               )}
             </Stack>

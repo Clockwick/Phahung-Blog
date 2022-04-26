@@ -72,12 +72,10 @@ const ListUser: React.FC = () => {
   console.log('user', users);
   return (
     <div className="w-full h-full">
-      <div className="flex flex-row justify-between mb-4">
-        <div className="text-4xl font-bold">
-          รายชื่อผู้ใช้ ({renderedTotalUsers})
-        </div>
+      <div className="flex flex-row justify-between mb-4 ">
+        <div className="text-4xl font-bold">รายชื่อผู้ใช้</div>
       </div>
-      <div className="flex">
+      <div className="flex space-x-4 mb-4">
         <Button
           size="lg"
           color={filterBan ? 'blue' : 'white'}
@@ -97,10 +95,9 @@ const ListUser: React.FC = () => {
         {/* Draft Component Outline */}
         {renderedUsers && renderedUsers.length > 0 ? (
           renderedUsers.map((user, index) => {
-            console.log(index);
             return (
               <div
-                className="flex flex-col justify-start items-center p-12 m-2 w-full h-96 bg-pink-50 rounded-lg shadow-lg sm:w-full md:w-64"
+                className="flex flex-col justify-start items-center p-12 m-2 w-full h-96 bg-white rounded-lg shadow sm:w-full md:w-64"
                 key={user.uid}
               >
                 <div className="mb-6">

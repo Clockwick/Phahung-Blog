@@ -332,7 +332,7 @@ const Comment: React.FC<CommentProps> = ({ comment, fetchHandler }) => {
                     width={30}
                   />
                 }
-                sx={{ color: !visible ? '#4b4949' : 'red' }}
+                sx={{ color: !visible ? '#4b4949' : 'primary' }}
               >
                 สาธุ
               </Button>
@@ -380,11 +380,7 @@ const Comment: React.FC<CommentProps> = ({ comment, fetchHandler }) => {
           </>
           {isReplying ? (
             <Stack direction="row" alignItems="center" spacing={2}>
-              <Avatar
-                alt="Remy Sharp"
-                src="https://images.unsplash.com/photo-1543357480-c60d40007a3f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTc3MDV8MHwxfHJhbmRvbXx8fHx8fHx8fDE2NDk5NTczNjc&ixlib=rb-1.2.1&q=80&w=400"
-                sx={{ width: 56, height: 56 }}
-              />
+              <Avatar src={user?.picture} sx={{ width: 56, height: 56 }} />
               <TextareaAutosize
                 maxRows={2}
                 minRows={2}

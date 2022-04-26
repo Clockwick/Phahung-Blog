@@ -89,7 +89,7 @@ const BlogCard: React.FC<BlogCardProps> = ({
           >
             <Stack direction="row" justifyContent="center" alignItems="center">
               <img
-                src="../../../public/assets/images/buddha_color.png"
+                src="/assets/images/buddha_color.png"
                 width="20px"
                 height="20px"
                 alt="buddha"

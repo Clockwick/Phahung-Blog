@@ -185,8 +185,10 @@ const ListBlog: React.FC = () => {
                           แก้ไขล่าสุดเมื่อ
                         </div>
                         <div className="mr-4 font-bold">
-                          <div>{`${moment(blog.time).format('LLLL')} น.`}</div>
-                          <div>({`${moment(blog.time).fromNow()}`})</div>
+                          <div>{`${moment(blog.createAt).format(
+                            'LLLL',
+                          )} น.`}</div>
+                          <div>({`${moment(blog.createAt).fromNow()}`})</div>
                         </div>
                       </div>
 

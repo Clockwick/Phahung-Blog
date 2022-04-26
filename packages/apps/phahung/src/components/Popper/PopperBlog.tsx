@@ -68,17 +68,13 @@ const PopperBlog: React.FC = () => {
         <Stack
           direction="row"
           alignItems="center"
-          spacing={0.5}
+          spacing={1.5}
           onClick={handleProfile}
           sx={{ cursor: 'pointer' }}
         >
           <Avatar
-            alt="Remy Sharp"
-            src={
-              user?.picture
-                ? user.picture
-                : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMrO1TLWPlYMHdJw5GJV_p8f42t-aUUGlIJqNFnFZFw4OO8Nk5lpSHhzJ1n4g0E-9R-1I&usqp=CAU'
-            }
+            src="/assets/images/profile.png"
+            sx={{ backgroundColor: 'white' }}
           />
           <Typography
             sx={{

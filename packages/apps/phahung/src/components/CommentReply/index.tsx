@@ -355,7 +355,7 @@ const CommentReply: React.FC<CommentReplyProps> = ({
                       width={30}
                     />
                   }
-                  sx={{ color: !visible ? '#4b4949' : 'red' }}
+                  sx={{ color: !visible ? '#4b4949' : 'primary' }}
                 >
                   สาธุ
                 </Button>

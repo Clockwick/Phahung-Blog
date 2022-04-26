@@ -34,8 +34,7 @@ const Pagination: React.FC<PaginationProps> = ({
           if (res.status === 200) {
             const responseData = res.data as User[];
             usersHandler.setUsers(responseData);
-            console.log('responseData', responseData);
-
+            usersHandler.setTotalUser(responseData.length);
             setDidFetchUsers(true);
           }
         })

@@ -9,6 +9,7 @@ import {
   Typography,
   CircularProgress as Loading,
   TextareaAutosize,
+  Link,
 } from '@mui/material';
 import { useUser } from 'store/hooks/userHook';
 
@@ -91,7 +92,9 @@ const Comments = () => {
           </Button>
         </Stack>
       ) : (
-        <Typography>กรุณาเข้าสู่ระบบเพื่อแสดงความคิดเห็น</Typography>
+        <Typography>
+          กรุณา<Link href="/signin">เข้าสู่ระบบ</Link>เพื่อแสดงความคิดเห็น
+        </Typography>
       )}
       <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
         รีวิวจากผู้อ่าน

@@ -28,6 +28,7 @@ import EditOffIcon from '@mui/icons-material/EditOff';
 import { User } from 'store/types';
 import { someResponse } from '../types/someResponse';
 import { isSomeResponse } from '../types/guard';
+import { Avatar } from '@mui/material';
 
 interface IValues {
   firstName: {
@@ -85,13 +86,13 @@ const Profile: React.FC = () => {
         const responseData = res.data as BlogPreview[] | someResponse;
         console.log(responseData);
         if (isSomeResponse(responseData)) {
-          alert('something went wrong');
+          // alert('something went wrong');
         } else {
           setDidFetchData(true);
           setLikedBlogs(responseData);
         }
       } else {
-        alert('upload fail please try again later');
+        // alert('upload fail please try again later');
       }
     });
 
@@ -109,15 +110,15 @@ const Profile: React.FC = () => {
           const responseData = res.data as { url: string } | someResponse;
           console.log(responseData);
           if (isSomeResponse(responseData)) {
-            alert('something went wrong');
+            // alert('something went wrong');
           } else {
             await fetchSessionHandler();
             const urlImage: string = responseData.url;
             setUserImage(urlImage);
-            alert('upload image success');
+            // alert('upload image success');
           }
         } else {
-          alert('upload fail please try again later');
+          // alert('upload fail please try again later');
         }
       });
     }
@@ -186,7 +187,7 @@ const Profile: React.FC = () => {
           const responseData = res.data as User | someResponse;
           console.log(responseData);
           if (isSomeResponse(responseData)) {
-            alert('something went wrong');
+            // alert('something went wrong');
           } else {
             setValues({
               ...values,
@@ -200,14 +201,14 @@ const Profile: React.FC = () => {
               },
             });
             await fetchSessionHandler();
-            alert('save success');
+            // alert('save success');
           }
         } else {
-          alert('save fail please try again');
+          // alert('save fail please try again');
         }
       });
     } else {
-      alert('save fail please sign in');
+      // alert('save fail please sign in');
     }
   };
 
@@ -235,18 +236,13 @@ const Profile: React.FC = () => {
                 justifyContent: 'center',
               }}
             >
-              <img
-                height="100%"
-                src={
-                  userImage
-                    ? userImage
-                    : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMrO1TLWPlYMHdJw5GJV_p8f42t-aUUGlIJqNFnFZFw4OO8Nk5lpSHhzJ1n4g0E-9R-1I&usqp=CAU'
-                }
-                alt="Logo"
-                style={{
-                  objectFit: 'cover',
-                  overflow: 'hidden',
+              <Avatar
+                sx={{
+                  height: '30vh',
+                  width: 'auto',
+                  border: '1px solid #EEEEEE',
                 }}
+                src={userImage ? userImage : '/assets/images/profile.png'}
               />
             </Box>
 
