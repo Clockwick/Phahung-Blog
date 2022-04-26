@@ -12,11 +12,12 @@ import mockProfile from '../../../public/images/Avatar.png';
 const Menu: React.FC = ({ children }) => {
   const { user } = useUser();
   const name = `${user?.firstName} ${user?.lastName}`;
+  const userImage = user?.imageURL ? user.imageURL : mockProfile;
   return (
     <MenuUI
       title={<MenuTitle />}
       links={config}
-      user={{ nickname: name, picture: mockProfile }}
+      user={{ nickname: name, picture: userImage }}
       dropdown={<MenuDropdown />}
     >
       {children}

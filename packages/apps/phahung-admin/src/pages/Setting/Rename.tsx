@@ -1,13 +1,15 @@
 /* eslint-disable import/no-unresolved */
 /* eslint-disable no-console */
 import React, { useState } from 'react';
+import { IconButton } from '@mui/material';
 import { Input, Button } from '@chan-chala/uikit';
 import { useToast } from '@chakra-ui/react';
 import { ToastTrigger } from 'components/Toasts';
-import axios from 'axios';
 import { useUser } from 'store/hooks/userHook';
 import { User } from 'store/types';
-import { INamePayload } from './types';
+import userApiCall from '../../api/User/user';
+import { someResponse, isSomeResponse } from './types';
+import SaveIcon from '@mui/icons-material/Save';
 
 interface UserProps {
   user: User;
@@ -19,30 +21,40 @@ const Rename: React.FC<UserProps> = ({ user }) => {
   const [state, setState] = useState(false);
   const [name, setName] = useState(`${user.firstName}  ${user.lastName}`);
 
-  const handleRename = (): void => {
-    axios.defaults.withCredentials = true;
-    const payload: INamePayload = {
-      name,
+  const handleRename = (e: any): void => {
+    e.preventDefault();
+
+    const newName = name
+      .trim()
+      .split(' ')
+      .filter((el) => el !== '');
+    const payload: User = {
+      ...user,
+      firstName: newName[0],
+      lastName: newName[1],
     };
-    const headers = {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${localStorage.getItem('idToken')}`,
-    };
-    if (name.length > 5) {
-      axios
-        .put(`${import.meta.env.VITE_API_URL}/auth/admin/update`, payload, {
-          headers,
-        })
+
+    if (newName[0].length > 2 && newName[1].length > 2) {
+      userApiCall
+        .updateUser(payload)
         .then((res) => {
           setState(false);
-
           if (res.status === 200) {
-            toast(
-              ToastTrigger.renameSuccess(
-                `เปลี่ยนชื่อผู้ใช้เป็น ${name} สำเร็จ!`,
-              ),
-            );
-            fetchSessionHandler();
+            const responseData = res.data as User | someResponse;
+            if (isSomeResponse(responseData)) {
+              toast(
+                ToastTrigger.renameFailed(
+                  `เปลี่ยนชื่อผู้ใช้ไม่สำเร็จ :\n${res.statusText}`,
+                ),
+              );
+            } else {
+              toast(
+                ToastTrigger.renameSuccess(
+                  `เปลี่ยนชื่อผู้ใช้เป็น ${name} สำเร็จ!`,
+                ),
+              );
+              fetchSessionHandler();
+            }
           } else {
             toast(
               ToastTrigger.renameFailed(
@@ -65,20 +77,18 @@ const Rename: React.FC<UserProps> = ({ user }) => {
   };
 
   return state ? (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        handleRename();
-      }}
-    >
+    <form onSubmit={(e) => handleRename(e)}>
       <Input
         name="name"
         className="m-1 text-center"
         value={name}
-        onChange={(event) => {
+        onChange={(event: any) => {
           setName(event.target.value);
         }}
       />
+      <IconButton onClick={(e) => handleRename(e)}>
+        <SaveIcon />
+      </IconButton>
     </form>
   ) : (
     <div className="flex flex-row mx-2 w-100">
@@ -90,11 +100,11 @@ const Rename: React.FC<UserProps> = ({ user }) => {
           setState(true);
         }}
       >
-        <div className="flex flex-row justify-around">
-          {name}
+        <div className="flex flex-row justify-around  ">
+          <div className="pr-3">{name}</div>
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6"
+            className="h-6 w-6  "
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"

@@ -13,6 +13,8 @@ export interface IUserAPICall {
   ) => Promise<AxiosResponse>;
   banUser: (adminId: string) => Promise<AxiosResponse>;
   unBanUser: (adminId: string) => Promise<AxiosResponse>;
+  updateUser: (payload: User) => Promise<AxiosResponse<User>>;
   delete: (adminId: string) => Promise<AxiosResponse>;
   createAdmin: (payload: EmailPayload) => Promise<AxiosResponse>;
+  uploadImage: (imageFile: FormData | undefined) => Promise<AxiosResponse>;
 }

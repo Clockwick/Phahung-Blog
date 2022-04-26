@@ -40,10 +40,10 @@ const Pagination: React.FC<PaginationProps> = ({
       announcementApiCall
         .getAnnouncements(currentPage, config.perPage)
         .then((res) => {
-          console.log('res', res);
+          // console.log('res', res);
           if (res.status === 200) {
             const responseData = res.data as Announcement[];
-            console.log('responseData', responseData);
+            // console.log('responseData', responseData);
             // setMaxPage(responseData.blogs.totalPages);
             announcementsHandler.setAnnouncements(responseData);
             setIsFetchingDocs(true);

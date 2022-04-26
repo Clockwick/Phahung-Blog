@@ -52,7 +52,7 @@ const ToastCall: IToastCall = {
   publishBlogStatus: () => ({
     title: 'เปลี่ยนสถานะบทความสำเร็จ',
     description:
-      'บทความได้ถูกเปลี่ยนเป็นสาธารณะ ผู้อ่านสามารถเห็นบทความนี้ในเว็บไซต์ชาญชรา',
+      'บทความได้ถูกเปลี่ยนเป็นสาธารณะ ผู้อ่านสามารถเห็นบทความนี้ในเว็บไซต์พาหุง',
     status: 'success',
     duration: 5000,
     isClosable: true,
@@ -61,7 +61,7 @@ const ToastCall: IToastCall = {
   draftBlogStatus: () => ({
     title: 'เปลี่ยนสถานะบทความสำเร็จ',
     description:
-      'บทความได้ถูกเปลี่ยนเป็นแบบร่าง ผู้อ่านจะไม่สามารถเห็นบทความนี้ในเว็บไซต์ชาญชรา',
+      'บทความได้ถูกเปลี่ยนเป็นแบบร่าง ผู้อ่านจะไม่สามารถเห็นบทความนี้ในเว็บไซต์พาหุง',
     status: 'warning',
     duration: 5000,
     isClosable: true,
@@ -191,6 +191,14 @@ const ToastCall: IToastCall = {
     title: 'ไม่สามารถอัพโหลดรูปภาพได้',
     description: 'เกิดปัญหาขึ้นระหว่างการอัพโหลดรูปภาพ',
     status: 'error',
+    duration: 5000,
+    isClosable: true,
+    position: 'bottom-right',
+  }),
+  uploadImageSuccess: () => ({
+    title: 'อัพโหลดรูปภาพสำเร็จ',
+    description: 'เกิดปัญหาขึ้นระหว่างการอัพโหลดรูปภาพ',
+    status: 'success',
     duration: 5000,
     isClosable: true,
     position: 'bottom-right',

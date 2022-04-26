@@ -25,4 +25,5 @@ export type User = {
   role: 1;
   imageURL: string;
   likedBlogs: string[];
+  likedComments: string[] | null;
 };

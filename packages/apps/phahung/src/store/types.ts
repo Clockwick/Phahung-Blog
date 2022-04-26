@@ -1,12 +1,13 @@
 export interface User {
   uid: string;
+  email: string;
   firstName: string;
   lastName: string;
-  email: string;
-  imageURL: string;
+  imageURL?: string;
   role: number;
   isBan: boolean;
-  likedBlogs: string[];
+  likedBlogs?: string[];
+  likedComments?: string[];
 }
 
 export interface UserState {

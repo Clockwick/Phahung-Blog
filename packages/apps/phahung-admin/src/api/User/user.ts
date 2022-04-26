@@ -32,6 +32,17 @@ const userApiCall: IUserAPICall = {
       },
     });
   },
+  updateUser: (payload) => {
+    return api({
+      method: 'put',
+      url: `/user/update`,
+      data: payload,
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('idToken')}`,
+      },
+      withCredentials: true,
+    });
+  },
   delete: (adminId) => {
     return api({
       method: 'delete',
@@ -69,6 +80,18 @@ const userApiCall: IUserAPICall = {
       },
     });
   },
+  uploadImage: (imageFile) =>
+    api({
+      method: 'put',
+      url: `/users/update-image`,
+      headers: {
+        ContentType: 'multipart/form-data',
+        // authorization: `Bearer ${TOKEN}`,
+        authorization: `Bearer ${localStorage.getItem('idToken')}`,
+      },
+      withCredentials: true,
+      data: imageFile,
+    }),
 };
 
 export default userApiCall;
