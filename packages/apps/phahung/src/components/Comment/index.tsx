@@ -171,7 +171,7 @@ const Comment: React.FC<CommentProps> = ({ comment, fetchHandler }) => {
   const handleReply = async () => {
     const response = await api({
       url: `/blogs/${blogId}/comments/${commentId}/subcomment`,
-      method: 'PUT',
+      method: 'POST',
       headers: {
         authorization: `Bearer ${localStorage.getItem('idToken')}`,
       },
