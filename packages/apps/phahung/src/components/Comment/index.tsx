@@ -8,7 +8,7 @@ import {
   Box,
   Avatar,
 } from '@mui/material';
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useUser } from 'store/hooks/userHook';
 import { ParentComment } from 'types/comment';
 import ReplyIcon from '@mui/icons-material/Reply';
@@ -51,8 +51,26 @@ const Comment: React.FC<CommentProps> = ({ comment, fetchHandler }) => {
   const canEdit = owner.uid === user?.uid && isEditing;
   const blogId = pathname.split('/')[2];
 
-  const decrementLikes = () => setLikes(likes - 1);
-  const incrementLikes = () => setLikes(likes + 1);
+  const decrementLikes = async () => {
+    setLikes(likes - 1);
+    await api({
+      url: `/blogs/${blogId}/comments/${commentId}/dislike`,
+      method: 'PUT',
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('idToken')}`,
+      },
+    });
+  };
+  const incrementLikes = async () => {
+    setLikes(likes + 1);
+    await api({
+      url: `/blogs/${blogId}/comments/${commentId}/like`,
+      method: 'PUT',
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('idToken')}`,
+      },
+    });
+  };
 
   const handleLike = () => {
     setIsLiked((prevState) => {
