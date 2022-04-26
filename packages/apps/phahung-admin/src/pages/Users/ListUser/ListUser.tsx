@@ -104,7 +104,7 @@ const ListUser: React.FC = () => {
                 <div className="mb-6">
                   <img
                     className="object-cover object-center w-36 h-36 rounded-full"
-                    src={user.imageURL}
+                    src={user.picture}
                     alt={user.firstName}
                   />
                 </div>

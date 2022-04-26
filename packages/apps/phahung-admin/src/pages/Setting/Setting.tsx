@@ -22,7 +22,7 @@ const Setting: React.FC = () => {
   console.log('user', user);
 
   useEffect(() => {
-    if (user && user?.imageURL) setUserImage(user?.imageURL);
+    if (user && user?.picture) setUserImage(user?.picture);
     else setUserImage(mockProfile);
 
     setDidSetImage(true);
