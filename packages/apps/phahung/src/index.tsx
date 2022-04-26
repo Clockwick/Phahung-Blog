@@ -1,4 +1,4 @@
-import { ThemeProvider, createTheme } from '@mui/material';
+import { ThemeProvider, createTheme, Box } from '@mui/material';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -18,7 +18,9 @@ ReactDOM.render(
   <ThemeProvider theme={theme}>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <App />
+        <Box sx={{ backgroundColor: '#FFF7F2' }}>
+          <App />
+        </Box>
       </PersistGate>
     </Provider>
   </ThemeProvider>,

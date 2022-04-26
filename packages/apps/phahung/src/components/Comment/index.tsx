@@ -241,7 +241,11 @@ const Comment: React.FC<CommentProps> = ({ comment, fetchHandler }) => {
               <Stack direction="row" spacing={1}>
                 <Avatar
                   alt={owner.firstName}
-                  src={owner.picture === null ? '' : owner.picture}
+                  src={
+                    owner.picture !== null
+                      ? owner.picture
+                      : '/assets/images/profile.png'
+                  }
                   sx={{ width: 56, height: 56, opacity: !visible ? 0.2 : 1 }}
                 />
                 <Stack direction="column" ref={commentRef}>
@@ -380,7 +384,14 @@ const Comment: React.FC<CommentProps> = ({ comment, fetchHandler }) => {
           </>
           {isReplying ? (
             <Stack direction="row" alignItems="center" spacing={2}>
-              <Avatar src={user?.picture} sx={{ width: 56, height: 56 }} />
+              <Avatar
+                src={
+                  user?.picture !== null
+                    ? user?.picture
+                    : '/assets/images/profile.png'
+                }
+                sx={{ width: 56, height: 56 }}
+              />
               <TextareaAutosize
                 maxRows={2}
                 minRows={2}

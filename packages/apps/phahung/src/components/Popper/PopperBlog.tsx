@@ -73,7 +73,7 @@ const PopperBlog: React.FC = () => {
           sx={{ cursor: 'pointer' }}
         >
           <Avatar
-            src="/assets/images/profile.png"
+            src={user?.picture || '/assets/images/profile.png'}
             sx={{ backgroundColor: 'white' }}
           />
           <Typography

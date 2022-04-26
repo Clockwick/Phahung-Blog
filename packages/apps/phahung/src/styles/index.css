@@ -34,6 +34,9 @@
   background-color: red;
   border-radius: 0.5rem;
 }
+li {
+  font-size: 1.3rem;
+}
 figure {
   display: flex;
   flex-direction: column;

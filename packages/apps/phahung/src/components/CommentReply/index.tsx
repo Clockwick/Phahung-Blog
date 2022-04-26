@@ -259,7 +259,11 @@ const CommentReply: React.FC<CommentReplyProps> = ({
               <Stack direction="row" spacing={1}>
                 <Avatar
                   alt={owner.firstName}
-                  src={owner.picture === null ? '' : owner.picture}
+                  src={
+                    owner.picture !== null
+                      ? owner.picture
+                      : '/assets/images/profile.png'
+                  }
                   sx={{ width: 56, height: 56, opacity: !visible ? 0.2 : 1 }}
                 />
                 <Stack direction="column">
