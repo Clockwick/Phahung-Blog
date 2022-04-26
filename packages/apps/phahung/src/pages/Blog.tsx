@@ -20,6 +20,7 @@ import Comments from 'components/Comments';
 import feedApiCall from '../api/feedApiCall';
 import type { Blog as BlogType } from '../types/blog';
 import { useUser } from 'store/hooks/userHook';
+import moment from 'moment';
 
 interface IComment {
   hide: boolean;
@@ -101,6 +102,19 @@ const Blog = () => {
           </Box>
         )}
         <Typography sx={{ maxWidth: '100%' }}>
+          <Stack direction="row" justifyContent="space-between">
+            <Stack direction="row">
+              วันที่เขียน{' '}
+              {blogContent &&
+                moment(blogContent.createdAt)
+                  .add(543, 'year')
+                  .locale('th')
+                  .format('ll')}{' '}
+            </Stack>
+            <Typography className="font-bold">
+              เขียนโดย {blogContent && blogContent.author}
+            </Typography>
+          </Stack>
           {blogContent && (
             <Blocks
               data={blogContent.content}

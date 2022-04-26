@@ -48,7 +48,7 @@ const ListUser: React.FC = () => {
 
   /* eslint-disable */
   const renderedUsers = useMemo(
-    () => users.filter((user) => user.role === 1),
+    () => users?.filter((user) => user.role === 1),
     [didFetchUsers, setDidFetchUsers, users, query],
   );
   const renderedTotalUsers = useMemo(
