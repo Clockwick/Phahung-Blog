@@ -67,7 +67,7 @@ const ListUser: React.FC = () => {
     setQuery('false');
     setDidFetchUsers(false);
   };
-
+  console.log('user', users);
   return (
     <div className="w-full h-full">
       <div className="flex flex-row justify-between mb-4">
@@ -94,7 +94,8 @@ const ListUser: React.FC = () => {
       <div className="flex flex-row flex-wrap items-start ">
         {/* Draft Component Outline */}
         {renderedUsers && renderedUsers.length > 0 ? (
-          renderedUsers.map((user) => {
+          renderedUsers.map((user, index) => {
+            console.log(index);
             return (
               <div
                 className="flex flex-col justify-start items-center p-12 m-2 w-full h-96 bg-pink-50 rounded-lg shadow-lg sm:w-full md:w-64"

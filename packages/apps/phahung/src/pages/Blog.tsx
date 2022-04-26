@@ -29,7 +29,7 @@ interface IComment {
 }
 const useStyles = makeStyles(() => ({
   header: {
-    fontSize: '1.5rem',
+    fontSize: '2.5rem',
   },
   image: {
     display: 'flex',
@@ -114,7 +114,6 @@ const Blog = () => {
             />
           )}
         </Typography>
-        {/* {!didFetchData && ( */}
         {user && (
           <Button
             variant={isContained ? 'contained' : 'outlined'}

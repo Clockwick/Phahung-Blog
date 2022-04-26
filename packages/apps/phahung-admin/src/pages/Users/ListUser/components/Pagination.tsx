@@ -21,19 +21,10 @@ const Pagination: React.FC<PaginationProps> = ({
   fetchHandler,
   q,
 }) => {
-  const [startPage, setStartPage] = useState<number>(1);
+  const [startPage] = useState<number>(1);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [maxPage, setMaxPage] = useState<number>(1);
   const { didFetchUsers, setDidFetchUsers } = fetchHandler;
-  const [configPage, setConfigPage] = useState<number>(config.page);
-  const [nextPage, setNextPage] = useState<boolean>(false);
-
-  const roundToNextConfigPage = (pageNum: number): number => {
-    for (let i = 0; i <= config.page; i += 1) {
-      if ((pageNum + i) % config.page === 0) return i;
-    }
-    return -1;
-  };
+  const [configPage] = useState<number>(config.page);
 
   useEffect(() => {
     if (!didFetchUsers) {
@@ -42,12 +33,8 @@ const Pagination: React.FC<PaginationProps> = ({
         .then((res) => {
           if (res.status === 200) {
             const responseData = res.data as User[];
-
-            // setMaxPage(responseData.admins.totalPages);
-            // usersHandler.setUsers(responseData.admins.docs);
             usersHandler.setUsers(responseData);
-            // usersHandler.setTotalUser(responseData.admins.totalDocs);
-            // setNextPage(responseData.admins.hasNextPage);
+
             setDidFetchUsers(true);
           }
         })
@@ -65,39 +52,8 @@ const Pagination: React.FC<PaginationProps> = ({
     setDidFetchUsers(false);
   };
 
-  const handleNext = useCallback(() => {
-    if (
-      currentPage + config.page - 1 <=
-      maxPage + roundToNextConfigPage(maxPage)
-    ) {
-      setDidFetchUsers(false);
-      setCurrentPage(configPage + 1);
-      setStartPage(configPage + 1);
-      setConfigPage((page) => page + config.page);
-    }
-  }, [currentPage, configPage, setDidFetchUsers, maxPage]);
-
-  const handlePrev = useCallback(() => {
-    setDidFetchUsers(false);
-    if (currentPage - config.page > 0) {
-      setCurrentPage(startPage - config.page);
-      setStartPage(startPage - config.page);
-      setConfigPage((page) => page - config.page);
-    } else {
-      setCurrentPage(1);
-      setStartPage(1);
-      setConfigPage(config.page);
-    }
-  }, [currentPage, setConfigPage, setDidFetchUsers, startPage]);
-
   return (
     <div className="flex justify-center items-center my-8 space-x-4">
-      <PageBox
-        className={`${currentPage === 1 ? 'cursor-default' : 'cursor-pointer'}`}
-        clickHandler={handlePrev}
-      >
-        Prev
-      </PageBox>
       <div className="flex space-x-4">
         {Array.from(Array(configPage)).map(
           (_, i) =>
@@ -115,11 +71,6 @@ const Pagination: React.FC<PaginationProps> = ({
             ),
         )}
       </div>
-      {nextPage && (
-        <PageBox className="cursor-pointer" clickHandler={handleNext}>
-          Next
-        </PageBox>
-      )}
     </div>
   );
 };
