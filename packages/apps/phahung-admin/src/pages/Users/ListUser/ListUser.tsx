@@ -6,6 +6,7 @@ import { Button, useModal } from '@chan-chala/uikit';
 import { BanUserModal, DeleteUserModal, UnBanUserModal } from '../UserModal';
 import { User } from './types';
 import { Pagination } from './components';
+import { useUser } from 'store/hooks/userHook';
 
 const ListUser: React.FC = () => {
   const [didFetchUsers, setDidFetchUsers] = useState<boolean>(false);
@@ -17,6 +18,7 @@ const ListUser: React.FC = () => {
   const [filterBan, setFilterBan] = useState<boolean>(false);
   const [filterUnBan, setFilterUnBan] = useState<boolean>(false);
   const [query, setQuery] = useState<string>('');
+  const { isLoggedIn } = useUser();
   const [handleDeleteModalPresent] = useModal(
     <DeleteUserModal deleteHandler={{ deleteId, setDidFetchUsers }} />,
   );
@@ -48,7 +50,7 @@ const ListUser: React.FC = () => {
 
   /* eslint-disable */
   const renderedUsers = useMemo(
-    () => users?.filter((user) => user.role === 1),
+    () => isLoggedIn && users?.filter((user) => user.role === 1),
     [didFetchUsers, setDidFetchUsers, users, query],
   );
   const renderedTotalUsers = useMemo(
