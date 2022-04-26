@@ -89,7 +89,6 @@ const Blog = () => {
   useEffect(() => {
     if (!didFetchData) {
       fetchData();
-      fetchSessionHandler();
     }
   }, [didFetchData, fetchData]);
   return (
@@ -116,19 +115,16 @@ const Blog = () => {
         </Typography>
         {/* {!didFetchData && ( */}
         {user && (
-          <>
-            <Button
-              variant={isContained ? 'contained' : 'outlined'}
-              startIcon={<ThumbUpOutlinedIcon />}
-              sx={{ whiteSpace: 'nowrap', width: '230px', mt: 4 }}
-              onClick={handleLikeBlog}
-            >
-              ถูกใจบทความนี้
-            </Button>
-
-            <Comments />
-          </>
+          <Button
+            variant={isContained ? 'contained' : 'outlined'}
+            startIcon={<ThumbUpOutlinedIcon />}
+            sx={{ whiteSpace: 'nowrap', width: '230px', mt: 4 }}
+            onClick={handleLikeBlog}
+          >
+            ถูกใจบทความนี้
+          </Button>
         )}
+        <Comments />
       </Stack>
     </Container>
   );

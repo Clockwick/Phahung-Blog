@@ -20,7 +20,7 @@ const PopperBlog: React.FC = () => {
 
   const handleLogout = (): void => {
     logoutHandler();
-    history.push('/signin');
+    // history.push('/signin');
   };
 
   const handleClick =

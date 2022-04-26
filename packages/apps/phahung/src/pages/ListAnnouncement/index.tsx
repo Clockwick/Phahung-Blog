@@ -1,8 +1,14 @@
 /* eslint-disable import/order */
 /* eslint-disable import/extensions */
 /* eslint-disable import/no-unresolved */
-import React, { useContext, useEffect } from 'react';
-import { Container } from '@mui/material';
+/* eslint-disable */
+import React, { useContext, useState, useEffect } from 'react';
+import {
+  Container,
+  Typography,
+  CircularProgress as Loading,
+  Box,
+} from '@mui/material';
 import AnnouncementCard from 'components/AnnouncementCard';
 import announcementApiCall from '../../api/Announcement/announcement';
 import { SearchContext } from 'src/contexts/SearchContext';
@@ -10,19 +16,21 @@ import { announcement } from '../../types/announcement';
 
 const ListAnnouncement: React.FC = () => {
   const { inputSearch } = useContext(SearchContext);
+  const [didFetchData, setDidFetchData] = useState(false);
   const [announcements, setAnnouncements] = React.useState<announcement[]>([]);
   useEffect(() => {
     announcementApiCall.getAnnouncements().then((res) => {
       if (res.status === 200) {
         const responseData = res.data as announcement[];
         setAnnouncements(responseData);
+        setDidFetchData(true);
       }
     });
-  }, [inputSearch]);
+  }, [inputSearch, didFetchData]);
   // set localsetItem ('idToken') ไว้ใน api
-  return (
+  return didFetchData ? (
     <Container maxWidth="lg">
-      {announcements && inputSearch ? (
+      {announcements.length > 0 && inputSearch ? (
         <>
           {announcements
             .filter((announcementFilter) =>
@@ -40,7 +48,7 @@ const ListAnnouncement: React.FC = () => {
               />
             ))}
         </>
-      ) : (
+      ) : announcements.length > 0 ? (
         announcements?.map((annoucement: announcement) => (
           <AnnouncementCard
             key={annoucement.id}
@@ -50,8 +58,19 @@ const ListAnnouncement: React.FC = () => {
             createdAt={annoucement.createdAt}
           />
         ))
+      ) : (
+        <Container
+          maxWidth="lg"
+          sx={{ display: 'flex', justifyContent: 'center' }}
+        >
+          <Typography>ยังไม่มีประกาศ</Typography>
+        </Container>
       )}
     </Container>
+  ) : (
+    <Box className="ErrorBox">
+      <Loading />
+    </Box>
   );
 };
 
