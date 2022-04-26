@@ -102,8 +102,10 @@ const BlogCard: React.FC<BlogCardProps> = ({
                 fontWeight: 'bold',
                 fontSize: ['1rem', '1rem', '1.3rem', '1.3rem', '1.5rem'],
                 // lineHeight: ['1rem', '1rem', '1.3rem', '1.3rem', '1.5rem'],
+                lineHeight: '30px',
 
                 // maxHeight: ['2rem', '2rem', '2.6rem', '2.6rem', '3rem'],
+                maxHeight: '60px',
                 overflow: 'clip',
                 margin: 1,
               }}
