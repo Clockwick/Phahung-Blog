@@ -21,7 +21,7 @@ const feedApiCall: IFeedApiCall = {
   likeBlog: (id) =>
     api({
       method: 'put',
-      url: `/${id}/like`,
+      url: `/blogs/${id}/like`,
       headers: {
         authorization: `Bearer ${localStorage.getItem('idToken')}`,
       },
@@ -29,7 +29,7 @@ const feedApiCall: IFeedApiCall = {
   unlikeBlog: (id) =>
     api({
       method: 'put',
-      url: `/${id}/dislike`,
+      url: `/blogs/${id}/dislike`,
       headers: {
         authorization: `Bearer ${localStorage.getItem('idToken')}`,
       },

@@ -11,8 +11,11 @@ import {
   Typography,
   CircularProgress as Loading,
   Box,
+  IconButton,
+  Tooltip,
 } from '@mui/material';
 import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
+import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 // import Blocks from 'editorjs-blocks-react-renderer';
 import Blocks from 'components/Blocks/Blocks';
 import { makeStyles } from '@mui/styles';
@@ -101,6 +104,47 @@ const Blog = () => {
           </Box>
         )}
         <Typography sx={{ maxWidth: '100%' }}>
+          {user && (
+            <Tooltip
+              title={isContained ? 'ยกเลิกการกดสาธุบล๊อคนี้' : 'กดสาธุบล๊อคนี้'}
+              arrow
+            >
+              <IconButton
+                aria-label="delete"
+                size="large"
+                onClick={handleLikeBlog}
+                sx={{
+                  position: 'relative',
+                  left: '95%',
+                  top: '40%',
+                  width: '4vw',
+                  height: '4vw',
+                  border: '0.1px solid grey',
+                  boxShadow: '2px 2px 4px #AAAAAA',
+                  textAlign: 'center',
+                  '&:hover': {
+                    backgroundColor: '#f5f5f5',
+                  },
+                }}
+              >
+                {isContained ? (
+                  <img
+                    src="../../../public/assets/images/buddha_color.png"
+                    width="100%"
+                    height="100%"
+                    alt="buddha_color"
+                  />
+                ) : (
+                  <img
+                    src="../../../public/assets/images/buddha.png"
+                    width="100%"
+                    height="100%"
+                    alt="buddha"
+                  />
+                )}
+              </IconButton>
+            </Tooltip>
+          )}
           {blogContent && (
             <Blocks
               data={blogContent.content}
@@ -115,7 +159,7 @@ const Blog = () => {
           )}
         </Typography>
         {/* {!didFetchData && ( */}
-        {user && (
+        {/* {user && (
           <Button
             variant={isContained ? 'contained' : 'outlined'}
             startIcon={<ThumbUpOutlinedIcon />}
@@ -124,7 +168,7 @@ const Blog = () => {
           >
             ถูกใจบทความนี้
           </Button>
-        )}
+        )} */}
         <Comments />
       </Stack>
     </Container>

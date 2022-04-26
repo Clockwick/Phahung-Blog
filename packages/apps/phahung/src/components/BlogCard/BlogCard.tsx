@@ -73,10 +73,12 @@ const BlogCard: React.FC<BlogCardProps> = ({
         <Card
           sx={{
             maxWidth: '60%',
+            minWidth: '30%',
             borderRadius: '15px',
             boxShadow: '2px 2px 7px #BBBBBB',
             display: 'flex',
             alignItems: 'center',
+            justifyContent: 'center',
             backgroundColor: '#fffdf7',
           }}
         >
