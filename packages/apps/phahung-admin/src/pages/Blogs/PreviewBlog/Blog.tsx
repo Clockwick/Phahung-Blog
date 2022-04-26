@@ -45,7 +45,7 @@ const Blog: React.FC = () => {
         <div className="mt-3 sm:mt-5 w-11/12 break-words">
           <div className="flex justify-between mb-5 text-xl sm:mt-2 ">
             <div>
-              วันที่เขียน{' '}
+              <div className="font-bold">วันที่เขียน </div>
               {blogData &&
                 moment(blogData.content.time)
                   .add(543, 'year')

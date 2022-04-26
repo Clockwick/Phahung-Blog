@@ -105,7 +105,7 @@ const Blog = () => {
   return (
     <Box
       sx={{
-        paddingY: '4vh',
+        paddingBottom: '4vh',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -168,39 +168,43 @@ const Blog = () => {
         >
           <Stack direction="row" justifyContent="space-between">
             <Stack direction="row">
-              วันที่เขียน{' '}
-              {blogContent &&
-                moment(blogContent.createdAt)
-                  .add(543, 'year')
-                  .locale('th')
-                  .format('ll')}{' '}
+              <Typography sx={{ fontWeight: 'bold', fontSize: '1.2rem' }}>
+                วันที่เขียน{' '}
+                {blogContent &&
+                  moment(blogContent.createAt)
+                    .add(543, 'year')
+                    .locale('th')
+                    .format('ll')}{' '}
+              </Typography>
             </Stack>
-            <Typography className="font-bold">
+            <Typography sx={{ fontWeight: 'bold', fontSize: '1.2rem' }}>
               เขียนโดย {blogContent && blogContent.author}
             </Typography>
           </Stack>
-          {blogContent && (
-            <Blocks
-              data={blogContent.content}
-              config={{
-                header: { className: classes.header },
-                image: {
-                  className: classes.image,
-                },
-                paragraph: { className: classes.paragraph },
+          <Box sx={{ marginY: '4vh' }}>
+            {blogContent && (
+              <Blocks
+                data={blogContent.content}
+                config={{
+                  header: { className: classes.header },
+                  image: {
+                    className: classes.image,
+                  },
+                  paragraph: { className: classes.paragraph },
 
-                list: {
-                  className: classes.list,
-                },
-                delimiter: {
-                  className: classes.delimiter,
-                },
-                code: {
-                  className: classes.code,
-                },
-              }}
-            />
-          )}
+                  list: {
+                    className: classes.list,
+                  },
+                  delimiter: {
+                    className: classes.delimiter,
+                  },
+                  code: {
+                    className: classes.code,
+                  },
+                }}
+              />
+            )}
+          </Box>
         </Typography>
         <Comments />
       </Stack>

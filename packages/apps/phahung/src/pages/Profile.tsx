@@ -83,6 +83,7 @@ const Profile: React.FC = () => {
     UserApiCall.getLikedBlogs().then((res) => {
       if (res.status === 200) {
         const responseData = res.data as BlogPreview[] | someResponse;
+        console.log(responseData);
         if (isSomeResponse(responseData)) {
           alert('something went wrong');
         } else {
@@ -106,6 +107,7 @@ const Profile: React.FC = () => {
       UserApiCall.uploadImage(formData).then(async (res) => {
         if (res.status === 200) {
           const responseData = res.data as { url: string } | someResponse;
+          console.log(responseData);
           if (isSomeResponse(responseData)) {
             alert('something went wrong');
           } else {
@@ -175,12 +177,14 @@ const Profile: React.FC = () => {
         role: user.role,
         isBan: user.isBan,
         likedBlogs: user.likedBlogs,
+        likedComments: user.likedComments,
         firstName: values.firstName.value,
         lastName: values.lastName.value,
       };
       UserApiCall.updateUser(payload).then(async (res) => {
         if (res.status === 200) {
           const responseData = res.data as User | someResponse;
+          console.log(responseData);
           if (isSomeResponse(responseData)) {
             alert('something went wrong');
           } else {

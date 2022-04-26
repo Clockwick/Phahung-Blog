@@ -1,11 +1,10 @@
 /* source code from https://codepen.io/natthakiat-khunkaew/pen/dyORgee */
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&display=swap'); */
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'DM Mono', monospace;
 }
 
 .container {
@@ -32,7 +31,7 @@
   background: #ffffff;
   color: rgb(20, 17, 17);
   box-shadow: -1rem 0 3rem rgb(109, 109, 109);
-  transition: .2s ease;
+  transition: 0.2s ease;
   scroll-snap-align: start;
   clear: both;
   position: relative;
@@ -62,7 +61,7 @@
   margin-bottom: 10px;
 }
 .card:hover .card-header h2 {
-  background: linear-gradient(90deg,#ff8a00,#e52e71);
+  background: linear-gradient(90deg, #ff8a00, #e52e71);
   text-shadow: none;
   -webkit-text-fill-color: transparent;
   -webkit-background-clip: text;

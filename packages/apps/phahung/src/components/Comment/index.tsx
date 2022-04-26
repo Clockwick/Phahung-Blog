@@ -41,11 +41,12 @@ const Comment: React.FC<CommentProps> = ({ comment, fetchHandler }) => {
   } = comment;
   const [content, setContent] = useState<string>(initialContent);
   const [readMore, setReadMore] = useState<boolean>(false);
-  const [isLiked, setIsLiked] = useState<boolean>(
-    !!user?.likedComments.find(
-      (likedCommentId) => likedCommentId === commentId,
-    ),
-  );
+  const initialIsLiked = user
+    ? !!user.likedComments.find(
+        (likedCommentId) => likedCommentId === commentId,
+      )
+    : false;
+  const [isLiked, setIsLiked] = useState<boolean>(initialIsLiked);
   const [likes, setLikes] = useState<number>(initialLikes);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [isReplying, setIsReplying] = useState<boolean>(false);

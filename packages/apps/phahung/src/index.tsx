@@ -1,3 +1,4 @@
+import { ThemeProvider, createTheme } from '@mui/material';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -8,13 +9,18 @@ import store from './store';
 import './styles/index.css';
 
 const persistor = persistStore(store);
+const theme = createTheme({
+  typography: {
+    fontFamily: 'Roboto',
+  },
+});
 ReactDOM.render(
-  <React.StrictMode>
+  <ThemeProvider theme={theme}>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <App />
       </PersistGate>
     </Provider>
-  </React.StrictMode>,
+  </ThemeProvider>,
   document.getElementById('root'),
 );

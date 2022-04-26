@@ -73,7 +73,7 @@ const BlogCard: React.FC<BlogCardProps> = ({
         <Card
           sx={{
             maxWidth: '60%',
-            minWidth: '30%',
+            minWidth: '250px',
             borderRadius: '15px',
             boxShadow: '2px 2px 7px #BBBBBB',
             display: 'flex',
@@ -101,8 +101,9 @@ const BlogCard: React.FC<BlogCardProps> = ({
               sx={{
                 fontWeight: 'bold',
                 fontSize: ['1rem', '1rem', '1.3rem', '1.3rem', '1.5rem'],
-                lineHeight: ['1rem', '1rem', '1.3rem', '1.3rem', '1.5rem'],
-                maxHeight: ['2rem', '2rem', '2.6rem', '2.6rem', '3rem'],
+                // lineHeight: ['1rem', '1rem', '1.3rem', '1.3rem', '1.5rem'],
+
+                // maxHeight: ['2rem', '2rem', '2.6rem', '2.6rem', '3rem'],
                 overflow: 'clip',
                 margin: 1,
               }}

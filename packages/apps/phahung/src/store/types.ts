@@ -6,7 +6,7 @@ export interface User {
   picture?: string;
   role: number;
   isBan: boolean;
-  likedBlogs?: string[];
+  likedBlogs: string[];
   likedComments: string[];
 }
 

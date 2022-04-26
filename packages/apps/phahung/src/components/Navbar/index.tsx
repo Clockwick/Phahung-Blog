@@ -44,7 +44,7 @@ const Navbar = () => {
     <>
       <AppBar
         position="static"
-        sx={{ backgroundColor: '#FFF7F2', mb: 5, width: '100vw' }}
+        sx={{ backgroundColor: '#eda053', mb: 5, width: '100vw' }}
       >
         <Container maxWidth="xl">
           <Toolbar disableGutters>
@@ -56,12 +56,7 @@ const Navbar = () => {
               onClick={() => setInputSearch('')}
             >
               <Link href="/" to="/">
-                <img
-                  src="/assets/images/logo.png"
-                  width="60px"
-                  height="65px"
-                  alt="logo"
-                />
+                <img width="120px" src="/assets/images/logo.png" alt="logo" />
               </Link>
             </Typography>
 

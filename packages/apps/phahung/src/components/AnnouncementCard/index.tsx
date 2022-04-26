@@ -18,7 +18,7 @@ const AnnouncementCard: React.FC<AnnoucementCardProps> = ({
 }) => {
   return (
     <>
-      <Stack direction="row" spacing={10} key={id}>
+      <Stack direction="row" spacing={10} key={id} sx={{ mt: 3, mb: 1 }}>
         <Stack
           direction="row"
           alignItems="center"
@@ -28,7 +28,11 @@ const AnnouncementCard: React.FC<AnnoucementCardProps> = ({
         >
           <Stack spacing={1}>
             <Stack direction="row" spacing={1} alignItems="center">
-              <CampaignIcon />
+              <img
+                src="/assets/images/announcementIcon.png"
+                alt="icon"
+                width="35px"
+              />
               <Typography variant="h5">{title}</Typography>
             </Stack>
             <Typography variant="subtitle1">{description}</Typography>
