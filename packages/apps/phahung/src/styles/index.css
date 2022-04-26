@@ -26,3 +26,23 @@
 .text-left {
   text-align: left;
 }
+.quote {
+  font-size: 1.5rem;
+  background-color: #e5e7eb;
+  border-radius: 0.5rem;
+}
+.code {
+  font-size: 1.5rem;
+  background-color: red;
+  border-radius: 0.5rem;
+}
+figure {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+hr {
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
