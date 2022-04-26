@@ -38,7 +38,7 @@ const CommentReply: React.FC<CommentReplyProps> = ({
   parentRef,
   fetchHandler,
 }) => {
-  const { user, fetchSessionHandler } = useUser();
+  const { user, fetchSessionHandler, isLoggedIn } = useUser();
   const { pathname } = useLocation();
   const {
     id: commentId,
@@ -280,36 +280,55 @@ const CommentReply: React.FC<CommentReplyProps> = ({
               {comment.content}
             </Typography>
           )}
+
           <Stack direction="row" alignItems="center" spacing={1.5}>
-            <Button
-              onClick={handleLike}
-              disabled={!visible || disabledLike}
-              startIcon={
-                <img
-                  src={
-                    isLiked
-                      ? '/assets/images/buddha_color.png'
-                      : '/assets/images/buddha.png'
+            {isLoggedIn ? (
+              <>
+                <Button
+                  onClick={handleLike}
+                  disabled={!visible || disabledLike}
+                  startIcon={
+                    <img
+                      src={
+                        isLiked
+                          ? '/assets/images/buddha_color.png'
+                          : '/assets/images/buddha.png'
+                      }
+                      alt="likeIcon"
+                      width={30}
+                    />
                   }
-                  alt="likeIcon"
-                  width={30}
-                />
-              }
-              sx={{ color: !visible ? '#4b4949' : 'red' }}
-            >
-              สาธุ
-            </Button>
-            <Typography color={disabledLike ? 'grey.500' : 'inherit'}>
-              {likes}
-            </Typography>
-            <Button
-              startIcon={<ReplyIcon />}
-              onClick={handleOnClickReply}
-              sx={{ color: !visible ? '#4b4949' : 'primary' }}
-              disabled={!visible}
-            >
-              reply
-            </Button>
+                  sx={{ color: !visible ? '#4b4949' : 'red' }}
+                >
+                  สาธุ
+                </Button>
+                <Typography color={disabledLike ? 'grey.500' : 'inherit'}>
+                  {likes}
+                </Typography>
+                <Button
+                  startIcon={<ReplyIcon />}
+                  onClick={handleOnClickReply}
+                  sx={{ color: !visible ? '#4b4949' : 'primary' }}
+                  disabled={!visible}
+                >
+                  reply
+                </Button>
+              </>
+            ) : (
+              <Button
+                disabled
+                startIcon={
+                  <img
+                    src="/assets/images/buddha.png"
+                    alt="likeIcon"
+                    width={30}
+                  />
+                }
+                sx={{ color: 'black' }}
+              >
+                {likes} สาธุ
+              </Button>
+            )}
           </Stack>
           {isReplying ? (
             <Stack direction="row" alignItems="center" spacing={2}>
