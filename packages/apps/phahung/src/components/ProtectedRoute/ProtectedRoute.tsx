@@ -17,7 +17,7 @@ const ProtectedRoute: React.FC<Props> = ({ acceptRoles, ...routeProps }) => {
   const canAccess = user && acceptRoles === user.role;
   return (
     <>
-      {!isLoggedIn && <Redirect to="/login" />}
+      {!isLoggedIn && <Redirect to="/signin" />}
       {isLoggedIn && canAccess ? (
         <Route {...routeProps} /> // eslint-disable-line
       ) : (
