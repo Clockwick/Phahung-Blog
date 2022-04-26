@@ -53,7 +53,7 @@ const Comment: React.FC<CommentProps> = ({ comment, fetchHandler }) => {
   const [disabledLike, setDisabledLike] = useState<boolean>(false);
   const commentRef = useRef<HTMLDivElement>(null);
   const isOwner = useMemo(() => user?.uid === owner.uid, [user, owner]);
-
+  const isAdmin = useMemo(() => user?.role === 0, [user]);
   const canEdit = owner.uid === user?.uid && isEditing;
   const blogId = pathname.split('/')[2];
 
@@ -118,8 +118,35 @@ const Comment: React.FC<CommentProps> = ({ comment, fetchHandler }) => {
     }
   };
 
-  const handleHideComment = (id: string) => {
-    console.log('hide comment');
+  const handleHideComment = async () => {
+    const responseJson = await api<ParentComment>({
+      url: `/blogs/${blogId}/comments/${commentId}/hide`,
+      method: 'PUT',
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('idToken')}`,
+      },
+      data: {
+        visible,
+      },
+    });
+    if (responseJson.status === 200) {
+      fetchHandler();
+    }
+  };
+  const handleUnHideComment = async () => {
+    const responseJson = await api<ParentComment>({
+      url: `/blogs/${blogId}/comments/${commentId}/show`,
+      method: 'PUT',
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('idToken')}`,
+      },
+      data: {
+        visible,
+      },
+    });
+    if (responseJson.status === 200) {
+      fetchHandler();
+    }
   };
 
   const handleUpdateContent = async () => {
@@ -143,7 +170,7 @@ const Comment: React.FC<CommentProps> = ({ comment, fetchHandler }) => {
   const handleReply = async () => {
     const response = await api({
       url: `/blogs/${blogId}/comments/${commentId}/subcomment`,
-      method: 'POST',
+      method: 'PUT',
       headers: {
         authorization: `Bearer ${localStorage.getItem('idToken')}`,
       },
@@ -199,12 +226,14 @@ const Comment: React.FC<CommentProps> = ({ comment, fetchHandler }) => {
                   </Typography>
                 </Stack>
               </Stack>
-              {isOwner && (
+              {(isOwner || isAdmin) && (
                 <PopperComment
-                  commentId={commentId}
+                  isOwner={isOwner}
+                  visible={visible}
                   handleCanEdit={handleCanEdit}
                   handleDelete={handleDelete}
                   handleHideComment={handleHideComment}
+                  handleUnHideComment={handleUnHideComment}
                 />
               )}
             </Stack>
@@ -313,27 +342,13 @@ const Comment: React.FC<CommentProps> = ({ comment, fetchHandler }) => {
             {comments.map((comment) => {
               return (
                 <CommentReply
+                  key={comment.id}
                   comment={comment}
                   parentRef={commentRef}
                   fetchHandler={fetchHandler}
                 />
               );
             })}
-
-            {/* {contentReply &&
-              // eslint-disable-next-line @typescript-eslint/no-shadow
-              contentReply.map((reply) => {
-                return (
-                  <CommentReply
-                    id="1123123"
-                    content={reply}
-                    handleDelete={handleDelete}
-                    decrementLikes={decrementLikes}
-                    likes={likeReply}
-                    incrementLikes={incrementLikes}
-                  />
-                );
-              })} */}
           </>
           {isReplying ? (
             <Stack direction="row" alignItems="center" spacing={2}>

@@ -63,6 +63,7 @@ const CommentReply: React.FC<CommentReplyProps> = ({
   const [replyContent, setReplyContent] = useState<string>('');
   const [disabledLike, setDisabledLike] = useState<boolean>(false);
   const isOwner = useMemo(() => user?.uid === owner.uid, [user, owner]);
+  const isAdmin = useMemo(() => user?.role === 0, [user]);
   const canEdit = owner.uid === user?.uid && isEditing;
   const blogId = pathname.split('/')[2];
 
@@ -137,8 +138,35 @@ const CommentReply: React.FC<CommentReplyProps> = ({
     }
   };
 
-  const handleHideComment = (id: string) => {
-    console.log('hide comment');
+  const handleHideComment = async () => {
+    const responseJson = await api({
+      url: `/blogs/${blogId}/comments/${parentId}/subcomment/${commentId}/hide`,
+      method: 'PUT',
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('idToken')}`,
+      },
+      data: {
+        visible,
+      },
+    });
+    if (responseJson.status === 200) {
+      fetchHandler();
+    }
+  };
+  const handleUnHideComment = async () => {
+    const responseJson = await api({
+      url: `/blogs/${blogId}/comments/${parentId}/subcomment/${commentId}/show`,
+      method: 'PUT',
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('idToken')}`,
+      },
+      data: {
+        visible,
+      },
+    });
+    if (responseJson.status === 200) {
+      fetchHandler();
+    }
   };
 
   const handleUpdateContent = async () => {
@@ -217,12 +245,14 @@ const CommentReply: React.FC<CommentReplyProps> = ({
                   </Typography>
                 </Stack>
               </Stack>
-              {isOwner && (
+              {(isOwner || isAdmin) && (
                 <PopperComment
-                  commentId={commentId}
+                  isOwner={isOwner}
+                  visible={visible}
                   handleCanEdit={handleCanEdit}
                   handleDelete={handleDelete}
                   handleHideComment={handleHideComment}
+                  handleUnHideComment={handleUnHideComment}
                 />
               )}
             </Stack>

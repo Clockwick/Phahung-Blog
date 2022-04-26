@@ -26,6 +26,9 @@ const Comments = () => {
     const responseJson = await api<ParentComment[]>({
       url,
       method: 'GET',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('idToken')}`,
+      },
     });
     if (responseJson.status === 200) {
       setComments(responseJson.data);
