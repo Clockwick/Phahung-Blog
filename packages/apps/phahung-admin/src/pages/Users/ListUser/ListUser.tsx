@@ -170,7 +170,6 @@ const ListUser: React.FC = () => {
         ) : (
           <div> ไม่มีข้อมูล </div>
         )}
-        {/* Draft Component Outline */}
       </div>
       <Pagination
         usersHandler={{ setUsers, setTotalUser }}
