@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React, { JSXElementConstructor, ReactElement, useMemo } from 'react';
 import Box from '@mui/material/Box';
 import PopperMUI, { PopperPlacementType } from '@mui/material/Popper';
 import Button from '@mui/material/Button';
@@ -9,18 +10,23 @@ import IconButton from '@mui/material/IconButton';
 import { useUser } from 'store/hooks/userHook';
 
 interface PopperCommentProps {
-  commentId: string;
+  visible: boolean;
+  isOwner: boolean;
   handleCanEdit: () => void;
   handleDelete: () => void;
-  handleHideComment: (id: string) => void;
+  handleHideComment: () => void;
+  handleUnHideComment: () => void;
+  handleBanUser: () => void;
 }
-
 const PopperComment: React.FC<PopperCommentProps> = ({
-  commentId,
+  visible,
+  isOwner,
   handleCanEdit,
   handleDelete,
   handleHideComment,
-}) => {
+  handleUnHideComment,
+  handleBanUser,
+}): ReactElement<any, string | JSXElementConstructor<any>> => {
   const [anchorEl, setAnchorEl] =
     React.useState<HTMLButtonElement | null>(null);
   const [open, setOpen] = React.useState(false);
@@ -43,13 +49,25 @@ const PopperComment: React.FC<PopperCommentProps> = ({
     setOpen(false);
   };
   const handleOnClickHideComment = () => {
-    handleHideComment(commentId);
+    handleHideComment();
     setOpen(false);
   };
-  const isAdmin = user?.role === 0;
+  const handleOnClickUnHideComment = () => {
+    handleUnHideComment();
+    setOpen(false);
+  };
+  const handleOnClickBanUser = () => {
+    handleBanUser();
+    setOpen(false);
+  };
+  const isAdmin = useMemo(() => user?.role === 0, [user]);
+  const isAdminAndOwner = useMemo(() => isAdmin && isOwner, [isAdmin, isOwner]);
 
-  return isAdmin ? (
-    <Box sx={{}}>
+  const renderAdminInteractionList = (): ReactElement<
+    any,
+    string | JSXElementConstructor<any>
+  > => (
+    <Box>
       <PopperMUI
         open={open}
         anchorEl={anchorEl}
@@ -61,16 +79,24 @@ const PopperComment: React.FC<PopperCommentProps> = ({
           // eslint-disable-next-line react/jsx-props-no-spreading
           <Fade {...TransitionProps} timeout={350}>
             <Paper elevation={4}>
+              {visible ? (
+                <Button
+                  sx={{ width: '100%' }}
+                  onClick={() => handleOnClickHideComment()}
+                >
+                  Hide Comment
+                </Button>
+              ) : (
+                <Button
+                  sx={{ width: '100%' }}
+                  onClick={() => handleOnClickUnHideComment()}
+                >
+                  Unhide Comment
+                </Button>
+              )}
               <Button
                 sx={{ width: '100%' }}
-                onClick={() => handleOnClickHideComment()}
-              >
-                {' '}
-                Hide Comment
-              </Button>
-              <Button
-                sx={{ width: '100%' }}
-                onClick={() => handleOnClickDeleteComment()}
+                onClick={() => handleOnClickBanUser()}
               >
                 {' '}
                 Ban User
@@ -90,7 +116,12 @@ const PopperComment: React.FC<PopperCommentProps> = ({
         <MoreHorizIcon />
       </IconButton>
     </Box>
-  ) : (
+  );
+
+  const renderUserInteractionList = (): ReactElement<
+    any,
+    string | JSXElementConstructor<any>
+  > => (
     <Box>
       <PopperMUI
         open={open}
@@ -122,5 +153,9 @@ const PopperComment: React.FC<PopperCommentProps> = ({
       </IconButton>
     </Box>
   );
+
+  return isAdminAndOwner || !isAdmin
+    ? renderUserInteractionList()
+    : renderAdminInteractionList();
 };
 export default PopperComment;

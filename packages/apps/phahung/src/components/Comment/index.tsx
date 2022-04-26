@@ -29,7 +29,7 @@ interface CommentProps {
 }
 
 const Comment: React.FC<CommentProps> = ({ comment, fetchHandler }) => {
-  const { user } = useUser();
+  const { user, fetchSessionHandler, isLoggedIn } = useUser();
   const { pathname } = useLocation();
   const {
     id: commentId,
@@ -41,35 +41,52 @@ const Comment: React.FC<CommentProps> = ({ comment, fetchHandler }) => {
   } = comment;
   const [content, setContent] = useState<string>(initialContent);
   const [readMore, setReadMore] = useState<boolean>(false);
-  const [isLiked, setIsLiked] = useState<boolean>(false);
+  const [isLiked, setIsLiked] = useState<boolean>(
+    !!user?.likedComments.find(
+      (likedCommentId) => likedCommentId === commentId,
+    ),
+  );
   const [likes, setLikes] = useState<number>(initialLikes);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [isReplying, setIsReplying] = useState<boolean>(false);
   const [replyContent, setReplyContent] = useState<string>('');
+  const [disabledLike, setDisabledLike] = useState<boolean>(false);
+  const [isBanned, setIsBanned] = useState<boolean>(false);
   const commentRef = useRef<HTMLDivElement>(null);
-
+  const isOwner = useMemo(() => user?.uid === owner.uid, [user, owner]);
+  const isAdmin = useMemo(() => user?.role === 0, [user]);
   const canEdit = owner.uid === user?.uid && isEditing;
   const blogId = pathname.split('/')[2];
 
   const decrementLikes = async () => {
-    setLikes(likes - 1);
-    await api({
+    setDisabledLike(true);
+    const response = await api({
       url: `/blogs/${blogId}/comments/${commentId}/dislike`,
       method: 'PUT',
       headers: {
         authorization: `Bearer ${localStorage.getItem('idToken')}`,
       },
     });
+    if (response.status === 200) {
+      fetchSessionHandler();
+    }
+    setLikes(likes - 1);
+    setDisabledLike(false);
   };
   const incrementLikes = async () => {
-    setLikes(likes + 1);
-    await api({
+    setDisabledLike(true);
+    const response = await api({
       url: `/blogs/${blogId}/comments/${commentId}/like`,
       method: 'PUT',
       headers: {
         authorization: `Bearer ${localStorage.getItem('idToken')}`,
       },
     });
+    if (response.status === 200) {
+      fetchSessionHandler();
+    }
+    setLikes(likes + 1);
+    setDisabledLike(false);
   };
 
   const handleLike = () => {
@@ -88,6 +105,7 @@ const Comment: React.FC<CommentProps> = ({ comment, fetchHandler }) => {
   const handleCanEdit = () => {
     setIsEditing(true);
   };
+
   const handleDelete = async () => {
     const responseJson = await api<ParentComment>({
       url: `/blogs/${blogId}/comments/${commentId}`,
@@ -101,8 +119,35 @@ const Comment: React.FC<CommentProps> = ({ comment, fetchHandler }) => {
     }
   };
 
-  const handleHideComment = (id: string) => {
-    console.log('hide comment');
+  const handleHideComment = async () => {
+    const responseJson = await api<ParentComment>({
+      url: `/blogs/${blogId}/comments/${commentId}/hide`,
+      method: 'PUT',
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('idToken')}`,
+      },
+      data: {
+        visible,
+      },
+    });
+    if (responseJson.status === 200) {
+      fetchHandler();
+    }
+  };
+  const handleUnHideComment = async () => {
+    const responseJson = await api<ParentComment>({
+      url: `/blogs/${blogId}/comments/${commentId}/show`,
+      method: 'PUT',
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('idToken')}`,
+      },
+      data: {
+        visible,
+      },
+    });
+    if (responseJson.status === 200) {
+      fetchHandler();
+    }
   };
 
   const handleUpdateContent = async () => {
@@ -146,8 +191,33 @@ const Comment: React.FC<CommentProps> = ({ comment, fetchHandler }) => {
     }
   };
 
+  const handleBanUser = async () => {
+    const response = await api({
+      url: `/users/${owner.uid}/ban`,
+      method: 'DELETE',
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('idToken')}`,
+      },
+    });
+    if (response.status === 200) {
+      setIsBanned(true);
+      await new Promise<void>((done) => setTimeout(() => done(), 3000));
+      fetchHandler();
+    }
+  };
+
   const handleOnClickReply = () => {
     setIsReplying(true);
+  };
+
+  const paperColor = (): string => {
+    if (!visible) {
+      return '#bdbdbd';
+    }
+    if (isBanned) {
+      return 'red';
+    }
+    return '';
   };
 
   return (
@@ -156,7 +226,7 @@ const Comment: React.FC<CommentProps> = ({ comment, fetchHandler }) => {
         elevation={2}
         sx={{
           padding: '20px',
-          backgroundColor: !visible ? '#bdbdbd' : '',
+          backgroundColor: paperColor(),
           color: !visible ? '#4b4949' : '',
         }}
       >
@@ -182,14 +252,17 @@ const Comment: React.FC<CommentProps> = ({ comment, fetchHandler }) => {
                   </Typography>
                 </Stack>
               </Stack>
-              <Typography>
+              {(isOwner || isAdmin) && (
                 <PopperComment
-                  commentId={commentId}
+                  isOwner={isOwner}
+                  visible={visible}
                   handleCanEdit={handleCanEdit}
                   handleDelete={handleDelete}
                   handleHideComment={handleHideComment}
+                  handleUnHideComment={handleUnHideComment}
+                  handleBanUser={handleBanUser}
                 />
-              </Typography>
+              )}
             </Stack>
           </Stack>
           <Divider />
@@ -242,60 +315,67 @@ const Comment: React.FC<CommentProps> = ({ comment, fetchHandler }) => {
               {comment.content}
             </Typography>
           )}
-          <Stack direction="row" alignItems="center" spacing={1.5}>
-            <Button
-              onClick={handleLike}
-              disabled={!visible}
-              startIcon={
-                <img
-                  src={
-                    isLiked
-                      ? '/assets/images/buddha_color.png'
-                      : '/assets/images/buddha.png'
-                  }
-                  alt="likeIcon"
-                  width={30}
-                />
-              }
-              sx={{ color: !visible ? '#4b4949' : 'red' }}
-            >
-              สาธุ
-            </Button>
-            {likes}
-            <Button
-              startIcon={<ReplyIcon />}
-              onClick={handleOnClickReply}
-              sx={{ color: !visible ? '#4b4949' : 'primary' }}
-              disabled={!visible}
-            >
-              reply
-            </Button>
-          </Stack>
+          {isLoggedIn ? (
+            <Stack direction="row" alignItems="center" spacing={1.5}>
+              <Button
+                onClick={handleLike}
+                disabled={!visible || disabledLike}
+                startIcon={
+                  <img
+                    src={
+                      isLiked
+                        ? '/assets/images/buddha_color.png'
+                        : '/assets/images/buddha.png'
+                    }
+                    alt="likeIcon"
+                    width={30}
+                  />
+                }
+                sx={{ color: !visible ? '#4b4949' : 'red' }}
+              >
+                สาธุ
+              </Button>
+              <Typography color={disabledLike ? 'grey.500' : 'inherit'}>
+                {likes}
+              </Typography>
+              <Button
+                startIcon={<ReplyIcon />}
+                onClick={handleOnClickReply}
+                sx={{ color: !visible ? '#4b4949' : 'primary' }}
+                disabled={!visible}
+              >
+                reply
+              </Button>
+            </Stack>
+          ) : (
+            <Stack direction="row" alignItems="center">
+              <Button
+                disabled
+                startIcon={
+                  <img
+                    src="/assets/images/buddha.png"
+                    alt="likeIcon"
+                    width={30}
+                  />
+                }
+                sx={{ color: 'black' }}
+              >
+                {likes} สาธุ
+              </Button>
+            </Stack>
+          )}
+
           <>
             {comments.map((comment) => {
               return (
                 <CommentReply
+                  key={comment.id}
                   comment={comment}
                   parentRef={commentRef}
                   fetchHandler={fetchHandler}
                 />
               );
             })}
-
-            {/* {contentReply &&
-              // eslint-disable-next-line @typescript-eslint/no-shadow
-              contentReply.map((reply) => {
-                return (
-                  <CommentReply
-                    id="1123123"
-                    content={reply}
-                    handleDelete={handleDelete}
-                    decrementLikes={decrementLikes}
-                    likes={likeReply}
-                    incrementLikes={incrementLikes}
-                  />
-                );
-              })} */}
           </>
           {isReplying ? (
             <Stack direction="row" alignItems="center" spacing={2}>

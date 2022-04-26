@@ -27,6 +27,7 @@ export const useUser = (): {
   const logoutHandler = useCallback(() => {
     dispatch(fetchLogout());
     history.push('/login');
+    history.go(0);
   }, [dispatch, history]);
 
   return { user, isLoggedIn, fetchSessionHandler, logoutHandler };

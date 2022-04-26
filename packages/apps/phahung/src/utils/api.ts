@@ -10,7 +10,6 @@ export default <T>(config: AxiosRequestConfig): Promise<AxiosResponse<T>> => {
       return response;
     },
     (error) => {
-      console.log('401', error.response);
       if (error.response.status === 401) {
         const localAdminJson = localStorage.getItem('phahung-user') ?? '';
         if (localAdminJson.length > 0) {
