@@ -8,7 +8,7 @@ import {
   Box,
   Avatar,
 } from '@mui/material';
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import { useUser } from 'store/hooks/userHook';
 import { ParentComment } from 'types/comment';
 import ReplyIcon from '@mui/icons-material/Reply';
@@ -16,6 +16,7 @@ import { styled } from '@mui/styles';
 import PopperComment from 'components/Popper/PopperComment';
 import api from 'src/utils/api';
 import { useLocation } from 'react-router-dom';
+import CommentReply from 'components/CommentReply';
 
 const HiddenAndShowButton = styled(Button)({
   paddingX: '4px',
@@ -36,12 +37,17 @@ const Comment: React.FC<CommentProps> = ({ comment, fetchHandler }) => {
     content: initialContent,
     owner,
     likes: initialLikes,
+    comments,
   } = comment;
   const [content, setContent] = useState<string>(initialContent);
   const [readMore, setReadMore] = useState<boolean>(false);
   const [isLiked, setIsLiked] = useState<boolean>(false);
   const [likes, setLikes] = useState<number>(initialLikes);
   const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [isReplying, setIsReplying] = useState<boolean>(false);
+  const [replyContent, setReplyContent] = useState<string>('');
+  const commentRef = useRef<HTMLDivElement>(null);
+
   const canEdit = owner.uid === user?.uid && isEditing;
   const blogId = pathname.split('/')[2];
 
@@ -76,6 +82,7 @@ const Comment: React.FC<CommentProps> = ({ comment, fetchHandler }) => {
       fetchHandler();
     }
   };
+
   const handleHideComment = (id: string) => {
     console.log('hide comment');
   };
@@ -96,6 +103,33 @@ const Comment: React.FC<CommentProps> = ({ comment, fetchHandler }) => {
       setIsEditing(false);
       fetchHandler();
     }
+  };
+
+  const handleReply = async () => {
+    const response = await api({
+      url: `/blogs/${blogId}/comments/${commentId}/subcomment`,
+      method: 'POST',
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('idToken')}`,
+      },
+      data: {
+        content: replyContent,
+        parentOwner: {
+          uid: owner.uid,
+          firstName: owner.firstName,
+          lastName: owner.lastName,
+          picture: owner.picture,
+        },
+      },
+    });
+    if (response.status === 201) {
+      fetchHandler();
+      setIsReplying(false);
+    }
+  };
+
+  const handleOnClickReply = () => {
+    setIsReplying(true);
   };
 
   return (
@@ -121,7 +155,7 @@ const Comment: React.FC<CommentProps> = ({ comment, fetchHandler }) => {
                   src={owner.picture === null ? '' : owner.picture}
                   sx={{ width: 56, height: 56, opacity: !visible ? 0.2 : 1 }}
                 />
-                <Stack direction="column">
+                <Stack direction="column" ref={commentRef}>
                   <Typography variant="subtitle1">
                     {owner.firstName} {owner.lastName}
                   </Typography>
@@ -130,7 +164,7 @@ const Comment: React.FC<CommentProps> = ({ comment, fetchHandler }) => {
                   </Typography>
                 </Stack>
               </Stack>
-              <Typography sx={{}}>
+              <Typography>
                 <PopperComment
                   commentId={commentId}
                   handleCanEdit={handleCanEdit}
@@ -212,7 +246,7 @@ const Comment: React.FC<CommentProps> = ({ comment, fetchHandler }) => {
             {likes}
             <Button
               startIcon={<ReplyIcon />}
-              // onClick={() => setReply(true)}
+              onClick={handleOnClickReply}
               sx={{ color: !visible ? '#4b4949' : 'primary' }}
               disabled={!visible}
             >
@@ -220,6 +254,16 @@ const Comment: React.FC<CommentProps> = ({ comment, fetchHandler }) => {
             </Button>
           </Stack>
           <>
+            {comments.map((comment) => {
+              return (
+                <CommentReply
+                  comment={comment}
+                  parentRef={commentRef}
+                  fetchHandler={fetchHandler}
+                />
+              );
+            })}
+
             {/* {contentReply &&
               // eslint-disable-next-line @typescript-eslint/no-shadow
               contentReply.map((reply) => {
@@ -235,7 +279,7 @@ const Comment: React.FC<CommentProps> = ({ comment, fetchHandler }) => {
                 );
               })} */}
           </>
-          {/* {reply ? (
+          {isReplying ? (
             <Stack direction="row" alignItems="center" spacing={2}>
               <Avatar
                 alt="Remy Sharp"
@@ -243,19 +287,18 @@ const Comment: React.FC<CommentProps> = ({ comment, fetchHandler }) => {
                 sx={{ width: 56, height: 56 }}
               />
               <TextareaAutosize
-                id="standard-basic"
                 maxRows={2}
                 minRows={2}
                 style={{ width: 500, fontSize: '16px' }}
                 autoFocus
-                value={contentReplyField}
-                onChange={(e) => setContentReplyField(e.target.value)}
+                value={replyContent}
+                onChange={(e) => setReplyContent(e.target.value)}
               />
-              <Button onClick={handleReply}>Reply</Button>
+              <Button onClick={handleReply}>ตอบกลับ</Button>
             </Stack>
           ) : (
             <></>
-          )} */}
+          )}
         </Stack>
       </Paper>
     </Box>

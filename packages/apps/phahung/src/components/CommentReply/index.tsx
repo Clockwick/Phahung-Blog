@@ -8,6 +8,7 @@ import {
   Avatar,
   Divider,
   Box,
+  Link,
 } from '@mui/material';
 import { styled } from '@mui/styles';
 import React, { useState } from 'react';
@@ -15,114 +16,197 @@ import React, { useState } from 'react';
 import PopperComment from 'components/Popper/PopperComment';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 import ReplyIcon from '@mui/icons-material/Reply';
+import { CommentOwner } from 'types/user';
+import { SubComment } from 'types/comment';
+import { useUser } from 'store/hooks/userHook';
+import { useLocation } from 'react-router-dom';
+import api from 'src/utils/api';
 
 const HiddenAndShowButton = styled(Button)({
   paddingX: '4px',
   minWidth: 'min-content',
 });
 
-interface IComment {
-  id: string;
-  content: string;
-  likes: number;
-  handleDelete: (id: string) => void;
-  decrementLikes: (id: string) => void;
-  incrementLikes: (id: string) => void;
+interface CommentReplyProps {
+  comment: SubComment;
+  parentRef: React.RefObject<HTMLDivElement>;
+  fetchHandler: () => void;
 }
 
-const CommentReply: React.FC<IComment> = ({
-  id,
-  content,
-  likes,
-  handleDelete,
-  decrementLikes,
-  incrementLikes,
+const CommentReply: React.FC<CommentReplyProps> = ({
+  comment,
+  parentRef,
+  fetchHandler,
 }) => {
+  const { user } = useUser();
+  const { pathname } = useLocation();
+  const {
+    id: commentId,
+    visible,
+    content: initialContent,
+    owner,
+    likes: initialLikes,
+    parentId,
+    parentOwner,
+  } = comment;
+
+  const [content, setContent] = useState<string>(initialContent);
   const [readMore, setReadMore] = useState<boolean>(false);
-  const [like, setLike] = useState<boolean>(false);
-  const [canEdit, setCanEdit] = useState<boolean>(false);
-  const [comment, setComment] = useState<string>(content);
-  const [reply, setReply] = useState<boolean>(false);
-  const [contentReplyFiled, setContentReplyFiled] = useState('');
-  const [contentReply, setContentReply] = useState<string[]>([]);
-  const handleCanEdit = (): void => {
-    setCanEdit(true);
-  };
-  const handleOnclick = () => {
-    setLike((prevState) => {
+  const [isLiked, setIsLiked] = useState<boolean>(false);
+  const [likes, setLikes] = useState<number>(initialLikes);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [isReplying, setIsReplying] = useState<boolean>(false);
+  const [replyContent, setReplyContent] = useState<string>('');
+
+  const canEdit = owner.uid === user?.uid && isEditing;
+  const blogId = pathname.split('/')[2];
+
+  const decrementLikes = () => setLikes(likes - 1);
+  const incrementLikes = () => setLikes(likes + 1);
+
+  const handleLike = () => {
+    setIsLiked((prevState) => {
       if (prevState) {
-        console.log('prevState', prevState);
-        decrementLikes(id);
-        setLike(false);
+        decrementLikes();
+        setIsLiked(false);
       } else if (!prevState) {
-        console.log('prevState', prevState);
-        incrementLikes(id);
-        console.log('asd');
-        setLike(true);
+        incrementLikes();
+        setIsLiked(true);
       }
       return !prevState;
     });
   };
 
-  const handleSubmitComment = () => {
-    setCanEdit(false);
-    // setComment()
+  const scrollToParent = () => {
+    if (parentRef.current) {
+      parentRef?.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    }
   };
 
-  const handleReply = () => {
-    setReply(false);
-    setContentReply([...contentReply, contentReplyFiled]);
-    setContentReplyFiled('');
+  const handleCanEdit = () => {
+    setIsEditing(true);
   };
+  // const handleDelete = async () => {
+  //   const responseJson = await api<ParentComment>({
+  //     url: `/blogs/${blogId}/comments/${commentId}`,
+  //     method: 'DELETE',
+  //     headers: {
+  //       authorization: `Bearer ${localStorage.getItem('idToken')}`,
+  //     },
+  //   });
+  //   if (responseJson.status === 200) {
+  //     fetchHandler();
+  //   }
+  // };
+
+  const handleHideComment = (id: string) => {
+    console.log('hide comment');
+  };
+
+  // const handleUpdateContent = async () => {
+  //   const responseJson = await api<ParentComment>({
+  //     url: `/blogs/${blogId}/comments/${commentId}`,
+  //     method: 'PUT',
+  //     headers: {
+  //       authorization: `Bearer ${localStorage.getItem('idToken')}`,
+  //     },
+  //     data: {
+  //       content,
+  //     },
+  //   });
+
+  //   if (responseJson.status === 200) {
+  //     setIsEditing(false);
+  //     fetchHandler();
+  //   }
+  // };
+
+  const handleReply = async () => {
+    const response = await api({
+      url: `/blogs/${blogId}/comments/${parentId}/subcomment`,
+      method: 'POST',
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('idToken')}`,
+      },
+      data: {
+        content: replyContent,
+        parentOwner: {
+          uid: owner.uid,
+          firstName: owner.firstName,
+          lastName: owner.lastName,
+          picture: owner.picture,
+        },
+      },
+    });
+    if (response.status === 201) {
+      fetchHandler();
+      setIsReplying(false);
+    }
+  };
+
+  const handleOnClickReply = () => {
+    setIsReplying(true);
+  };
+
+  // console.log(commentId, comments);
 
   return (
-    <>
-      <Stack direction="row" spacing={1}>
-        {/* <Typography sx={{ color: '#f9a825' }}>5.0</Typography> */}
-        {/* <Rating name="read-only" value={4} readOnly />
-          <Typography color="textSecondary"> (15 รีวิว)</Typography> */}
-      </Stack>
-      <Box sx={{ paddingX: '30px' }}>
+    <Box>
+      <Box
+        sx={{
+          padding: '20px',
+          backgroundColor: !visible ? '#bdbdbd' : '',
+          color: !visible ? '#4b4949' : '',
+        }}
+      >
         <Stack spacing={1}>
-          <Stack
-            direction="row"
-            sx={{ paddingTop: '3px' }}
-            justifyContent="space-evenly"
-          >
-            <Stack direction="row" spacing={1}>
-              <Avatar
-                alt="Remy Sharp"
-                src="https://images.unsplash.com/photo-1543357480-c60d40007a3f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTc3MDV8MHwxfHJhbmRvbXx8fHx8fHx8fDE2NDk5NTczNjc&ixlib=rb-1.2.1&q=80&w=400"
-                sx={{ width: 56, height: 56 }}
-              />
-              <Stack direction="column">
-                <Typography variant="subtitle1">สมชาย ขายไก่</Typography>
-                <Typography variant="subtitle1" color="textSecondary">
-                  10 มกราคม 2565 12:12 น.
-                </Typography>
+          <Stack direction="row" sx={{ paddingTop: '3px' }}>
+            <Stack
+              direction="row"
+              justifyContent="space-between"
+              sx={{ minWidth: '100%' }}
+            >
+              <Stack direction="row" spacing={1}>
+                <Avatar
+                  alt={owner.firstName}
+                  src={owner.picture === null ? '' : owner.picture}
+                  sx={{ width: 56, height: 56, opacity: !visible ? 0.2 : 1 }}
+                />
+                <Stack direction="column">
+                  <Typography variant="subtitle1">
+                    {owner.firstName} {owner.lastName}
+                  </Typography>
+                  <Typography variant="subtitle1" color="textSecondary">
+                    {new Date(comment.createAt).toLocaleString()}
+                  </Typography>
+                </Stack>
               </Stack>
+              <Typography sx={{}}>
+                {/* <PopperComment
+                  commentId={commentId}
+                  handleCanEdit={handleCanEdit}
+                  // handleDelete={handleDelete}
+                  handleHideComment={handleHideComment}
+                /> */}
+              </Typography>
             </Stack>
-            <Typography sx={{ ml: 'auto', mb: 'auto' }}>
-              {/* <PopperComment
-                id={id}
-                handleCanEdit={handleCanEdit}
-                handleDelete={handleDelete}
-              /> */}
-            </Typography>
           </Stack>
           <Divider />
+          {/* eslint-disable */}
           {canEdit ? (
             <Stack>
               <TextareaAutosize
-                id="standard-basic"
                 maxRows={7}
                 minRows={7}
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
               />
-              <Button onClick={handleSubmitComment}>Submit</Button>
+              {/* <Button onClick={handleUpdateContent}>ยืนยัน</Button> */}
             </Stack>
-          ) : comment.length > 50 ? (
+          ) : content.length > 50 ? (
             <>
               {readMore ? (
                 <>
@@ -132,7 +216,7 @@ const CommentReply: React.FC<IComment> = ({
                       wordWrap: 'break-word',
                     }}
                   >
-                    {comment}
+                    {content}
                     <HiddenAndShowButton
                       disableRipple
                       onClick={() => setReadMore(false)}
@@ -144,7 +228,7 @@ const CommentReply: React.FC<IComment> = ({
               ) : (
                 <Typography variant="body1">
                   <Typography>
-                    {comment.substring(0, 100)}
+                    {content.substring(0, 100)}
                     <HiddenAndShowButton
                       disableRipple
                       onClick={() => setReadMore(true)}
@@ -156,17 +240,21 @@ const CommentReply: React.FC<IComment> = ({
               )}
             </>
           ) : (
-            <>
-              <Typography>{comment}</Typography>
-            </>
+            <Typography sx={{ color: !visible ? '#4b4949' : '' }}>
+              <Link onClick={() => scrollToParent()} sx={{ cursor: 'pointer' }}>
+                @{parentOwner.firstName} {parentOwner.lastName}
+              </Link>{' '}
+              {comment.content}
+            </Typography>
           )}
           <Stack direction="row" alignItems="center" spacing={1.5}>
             <Button
-              onClick={handleOnclick}
+              onClick={handleLike}
+              disabled={!visible}
               startIcon={
                 <img
                   src={
-                    like
+                    isLiked
                       ? '/assets/images/buddha_color.png'
                       : '/assets/images/buddha.png'
                   }
@@ -174,32 +262,21 @@ const CommentReply: React.FC<IComment> = ({
                   width={30}
                 />
               }
-              sx={{ color: 'red' }}
+              sx={{ color: !visible ? '#4b4949' : 'red' }}
             >
               สาธุ
             </Button>
             {likes}
-            <Button startIcon={<ReplyIcon />} onClick={() => setReply(true)}>
+            <Button
+              startIcon={<ReplyIcon />}
+              onClick={handleOnClickReply}
+              sx={{ color: !visible ? '#4b4949' : 'primary' }}
+              disabled={!visible}
+            >
               reply
             </Button>
           </Stack>
-          <>
-            {contentReply &&
-              // eslint-disable-next-line @typescript-eslint/no-shadow
-              contentReply.map((reply) => {
-                return (
-                  <CommentReply
-                    id="asdasd"
-                    content={reply}
-                    handleDelete={handleDelete}
-                    decrementLikes={decrementLikes}
-                    likes={0}
-                    incrementLikes={incrementLikes}
-                  />
-                );
-              })}
-          </>
-          {reply ? (
+          {isReplying ? (
             <Stack direction="row" alignItems="center" spacing={2}>
               <Avatar
                 alt="Remy Sharp"
@@ -207,22 +284,21 @@ const CommentReply: React.FC<IComment> = ({
                 sx={{ width: 56, height: 56 }}
               />
               <TextareaAutosize
-                id="standard-basic"
                 maxRows={2}
                 minRows={2}
                 style={{ width: 500, fontSize: '16px' }}
                 autoFocus
-                value={contentReplyFiled}
-                onChange={(e) => setContentReplyFiled(e.target.value)}
+                value={replyContent}
+                onChange={(e) => setReplyContent(e.target.value)}
               />
-              <Button onClick={handleReply}>Reply</Button>
+              <Button onClick={handleReply}>ตอบกลับ</Button>
             </Stack>
           ) : (
             <></>
           )}
         </Stack>
       </Box>
-    </>
+    </Box>
   );
 };
 

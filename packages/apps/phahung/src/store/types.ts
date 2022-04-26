@@ -1,4 +1,3 @@
-import { BlogPreview } from '../types/blog';
 export interface User {
   uid: string;
   firstName: string;
@@ -7,7 +6,7 @@ export interface User {
   imageURL: string;
   role: number;
   isBan: boolean;
-  likedBlogs: BlogPreview[];
+  likedBlogs: string[];
 }
 
 export interface UserState {
