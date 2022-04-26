@@ -125,12 +125,13 @@ const CommentReply: React.FC<CommentReplyProps> = ({
 
   const handleDelete = async () => {
     const responseJson = await api<SubComment>({
-      url: `/blogs/${blogId}/comments/${commentId}`,
+      url: `/blogs/${blogId}/comments/${parentId}/subcomment/${commentId}`,
       method: 'DELETE',
       headers: {
         authorization: `Bearer ${localStorage.getItem('idToken')}`,
       },
     });
+
     if (responseJson.status === 200) {
       fetchHandler();
     }
@@ -142,7 +143,7 @@ const CommentReply: React.FC<CommentReplyProps> = ({
 
   const handleUpdateContent = async () => {
     const responseJson = await api<SubComment>({
-      url: `/blogs/${blogId}/comments/${commentId}`,
+      url: `/blogs/${blogId}/comments/${parentId}/subcomment/${commentId}`,
       method: 'PUT',
       headers: {
         authorization: `Bearer ${localStorage.getItem('idToken')}`,
