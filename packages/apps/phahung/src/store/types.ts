@@ -3,7 +3,7 @@ export interface User {
   email: string;
   firstName: string;
   lastName: string;
-  imageURL?: string;
+  picture?: string;
   role: number;
   isBan: boolean;
   likedBlogs?: string[];

@@ -27,13 +27,9 @@ const DeleteUserModal: React.FC<Props> = ({
     userApiCall
       .delete(deleteHandler.deleteId)
       .then((res) => {
-        // if (res.status === 200) {
         toast(ToastTrigger.deleteUserSuccess());
         deleteHandler.setDidFetchUsers(false);
         handleDismiss();
-        // } else {
-        //   toast(ToastTrigger.deleteUserFailed(`${res.statusText}`));
-        // }
       })
       .catch((err) => {
         const errMsg = err.message;

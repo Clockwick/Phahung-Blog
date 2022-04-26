@@ -77,7 +77,7 @@ const Profile: React.FC = () => {
         },
       });
 
-      setUserImage(user.imageURL || '');
+      setUserImage(user.picture || '');
     }
 
     UserApiCall.getLikedBlogs().then((res) => {
@@ -171,7 +171,7 @@ const Profile: React.FC = () => {
       const payload: User = {
         uid: user.uid,
         email: user.email,
-        imageURL: user.imageURL,
+        picture: user.picture,
         role: user.role,
         isBan: user.isBan,
         likedBlogs: user.likedBlogs,

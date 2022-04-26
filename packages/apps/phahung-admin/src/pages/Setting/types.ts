@@ -5,7 +5,7 @@ export interface IEditUserPayload {
   lastName: string;
   isBan: false;
   role: 0;
-  imageURL: string;
+  picture: string;
   likedBlogs: string[];
 }
 export interface INamePayload {

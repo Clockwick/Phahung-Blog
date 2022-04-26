@@ -12,7 +12,7 @@ import mockProfile from '../../../public/images/Avatar.png';
 const Menu: React.FC = ({ children }) => {
   const { user } = useUser();
   const name = `${user?.firstName} ${user?.lastName}`;
-  const userImage = user?.imageURL ? user.imageURL : mockProfile;
+  const userImage = user?.picture ? user.picture : mockProfile;
   return (
     <MenuUI
       title={<MenuTitle />}

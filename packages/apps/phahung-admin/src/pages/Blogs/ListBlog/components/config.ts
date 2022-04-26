@@ -1,5 +1,5 @@
 const configPage = {
-  page: 3,
+  page: 5,
   perPage: 7,
 };
 

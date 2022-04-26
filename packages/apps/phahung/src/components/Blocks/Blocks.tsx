@@ -67,6 +67,7 @@ const Blocks = ({
     <>
       {data?.blocks?.map((block, i) => {
         if (block.type.toString() in availableRenderers) {
+          console.log('data', block.type === 'quote');
           let className: string = '';
           switch (block?.tunes?.alignmentBlockTune?.alignment) {
             case 'left':
@@ -78,6 +79,12 @@ const Blocks = ({
             case 'center':
               className += 'text-center';
               break;
+          }
+          if (block.data.text === '') {
+            block.data.text = 'ㅤ'; // Invisible character, Do not touch it!!!
+          }
+          if (block?.type?.toString() === 'quote') {
+            className += 'quote';
           }
           if (config[block.type]?.className) {
             className += ' ' + config[block.type].className;

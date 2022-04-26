@@ -6,6 +6,7 @@ import { Button, useModal } from '@chan-chala/uikit';
 import { BanUserModal, DeleteUserModal, UnBanUserModal } from '../UserModal';
 import { User } from './types';
 import { Pagination } from './components';
+import { useUser } from 'store/hooks/userHook';
 
 const ListUser: React.FC = () => {
   const [didFetchUsers, setDidFetchUsers] = useState<boolean>(false);
@@ -17,6 +18,7 @@ const ListUser: React.FC = () => {
   const [filterBan, setFilterBan] = useState<boolean>(false);
   const [filterUnBan, setFilterUnBan] = useState<boolean>(false);
   const [query, setQuery] = useState<string>('');
+  const { isLoggedIn } = useUser();
   const [handleDeleteModalPresent] = useModal(
     <DeleteUserModal deleteHandler={{ deleteId, setDidFetchUsers }} />,
   );
@@ -48,7 +50,7 @@ const ListUser: React.FC = () => {
 
   /* eslint-disable */
   const renderedUsers = useMemo(
-    () => users.filter((user) => user.role === 1),
+    () => isLoggedIn && users?.filter((user) => user.role === 1),
     [didFetchUsers, setDidFetchUsers, users, query],
   );
   const renderedTotalUsers = useMemo(
@@ -67,7 +69,7 @@ const ListUser: React.FC = () => {
     setQuery('false');
     setDidFetchUsers(false);
   };
-
+  console.log('user', users);
   return (
     <div className="w-full h-full">
       <div className="flex flex-row justify-between mb-4">
@@ -94,7 +96,8 @@ const ListUser: React.FC = () => {
       <div className="flex flex-row flex-wrap items-start ">
         {/* Draft Component Outline */}
         {renderedUsers && renderedUsers.length > 0 ? (
-          renderedUsers.map((user) => {
+          renderedUsers.map((user, index) => {
+            console.log(index);
             return (
               <div
                 className="flex flex-col justify-start items-center p-12 m-2 w-full h-96 bg-pink-50 rounded-lg shadow-lg sm:w-full md:w-64"
@@ -103,7 +106,7 @@ const ListUser: React.FC = () => {
                 <div className="mb-6">
                   <img
                     className="object-cover object-center w-36 h-36 rounded-full"
-                    src={user.imageURL}
+                    src={user.picture}
                     alt={user.firstName}
                   />
                 </div>

@@ -23,7 +23,7 @@ export type User = {
   lastName: string;
   isBan: false;
   role: 1;
-  imageURL: string;
+  picture: string;
   likedBlogs: string[];
   likedComments: string[] | null;
 };

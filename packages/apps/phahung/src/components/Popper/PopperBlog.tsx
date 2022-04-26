@@ -75,8 +75,8 @@ const PopperBlog: React.FC = () => {
           <Avatar
             alt="Remy Sharp"
             src={
-              user?.imageURL
-                ? user.imageURL
+              user?.picture
+                ? user.picture
                 : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMrO1TLWPlYMHdJw5GJV_p8f42t-aUUGlIJqNFnFZFw4OO8Nk5lpSHhzJ1n4g0E-9R-1I&usqp=CAU'
             }
           />
