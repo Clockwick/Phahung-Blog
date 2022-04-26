@@ -16,6 +16,13 @@
 .ErrorBox :first-child {
   font-size: 3rem;
 }
-.test {
-  width: 200px;
+
+.text-center {
+  text-align: center;
+}
+.text-right {
+  text-align: right;
+}
+.text-left {
+  text-align: left;
 }

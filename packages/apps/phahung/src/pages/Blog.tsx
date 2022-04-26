@@ -13,7 +13,8 @@ import {
   Box,
 } from '@mui/material';
 import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
-import Blocks from 'editorjs-blocks-react-renderer';
+// import Blocks from 'editorjs-blocks-react-renderer';
+import Blocks from 'components/Blocks/Blocks';
 import { makeStyles } from '@mui/styles';
 import Comments from 'components/Comments';
 import feedApiCall from '../api/feedApiCall';
