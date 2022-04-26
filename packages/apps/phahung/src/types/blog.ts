@@ -7,9 +7,10 @@ export type BlogPreview = {
   title: string;
   author: string;
   likes: number;
-  createdAt: number;
+  createAt: number;
   image: string;
   tags: Tag;
+  status: string;
 };
 
 export type Blog = {
@@ -18,7 +19,7 @@ export type Blog = {
   content: DataProp;
   author: string;
   likes: number;
-  createdAt: number;
+  createAt: number;
   image: string;
   tags: Tag;
 };

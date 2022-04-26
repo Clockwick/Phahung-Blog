@@ -20,6 +20,7 @@ const Blogs = () => {
   const { inputSearch } = useContext(SearchContext);
   const [didFetchBlogsData, setDidFetchBlogsData] = useState(false);
   const [blogs, setBlogs] = useState<BlogPreview[]>([]);
+  const [filteredBlog, setFilteredBlog] = useState<BlogPreview[]>([]);
   const [queryTag, setQueryTag] = useState<string>('');
 
   /// SEND GET TO BACKEND
@@ -30,15 +31,16 @@ const Blogs = () => {
         if (res.status === 200) {
           const responseData = res.data;
           setBlogs(responseData);
-          setDidFetchBlogsData(true);
         }
       });
     }, 250);
   };
+
   const changeQueryTag = (newTag: string) => {
     setQueryTag(newTag);
     setDidFetchBlogsData(false);
   };
+
   useEffect(() => {
     fetchBlogsData();
   }, [inputSearch]);
@@ -47,6 +49,11 @@ const Blogs = () => {
       fetchBlogsData();
     }
   }, [didFetchBlogsData, fetchBlogsData, changeQueryTag]);
+  useEffect(() => {
+    setFilteredBlog(blogs.filter((blog) => blog.status === 'publish'));
+    setDidFetchBlogsData(true);
+  }, [blogs]);
+
   const renderLayout = (
     gridLayout: GridLayout,
     receivedBlogs: BlogPreview[],
@@ -273,8 +280,8 @@ const Blogs = () => {
         <ListCategory changeQueryTag={changeQueryTag} />
       </Stack>
       <Grid container direction="row" alignItems="center">
-        {blogs && didFetchBlogsData ? (
-          getBlogs(blogs)
+        {filteredBlog && didFetchBlogsData ? (
+          getBlogs(filteredBlog)
         ) : (
           <Box className="ErrorBox">
             <Loading />

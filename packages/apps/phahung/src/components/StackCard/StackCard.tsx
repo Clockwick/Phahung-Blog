@@ -16,7 +16,7 @@ const StackCard: React.FC<StackCardProp> = ({ Blogs }) => {
       <section className="card-list">
         {Blogs ? (
           Blogs.map((blog, index) => {
-            const { id, title, author, likes, createdAt, tags } = blog;
+            const { id, title, author, likes, createAt, tags } = blog;
 
             return (
               <Box
@@ -33,7 +33,7 @@ const StackCard: React.FC<StackCardProp> = ({ Blogs }) => {
                 }}
               >
                 <header className="card-header">
-                  <p>{moment.unix(createdAt).fromNow()}</p>
+                  <p>{moment(createAt).fromNow()}</p>
                   <h2>{title}</h2>
                   <p>{tags.join(',')}</p>
                 </header>
