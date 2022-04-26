@@ -7,7 +7,7 @@ export interface User {
   role: number;
   isBan: boolean;
   likedBlogs?: string[];
-  likedComments?: string[];
+  likedComments: string[];
 }
 
 export interface UserState {

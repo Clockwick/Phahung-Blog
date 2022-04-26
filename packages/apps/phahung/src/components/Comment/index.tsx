@@ -29,7 +29,7 @@ interface CommentProps {
 }
 
 const Comment: React.FC<CommentProps> = ({ comment, fetchHandler }) => {
-  const { user } = useUser();
+  const { user, fetchSessionHandler } = useUser();
   const { pathname } = useLocation();
   const {
     id: commentId,
@@ -41,35 +41,51 @@ const Comment: React.FC<CommentProps> = ({ comment, fetchHandler }) => {
   } = comment;
   const [content, setContent] = useState<string>(initialContent);
   const [readMore, setReadMore] = useState<boolean>(false);
-  const [isLiked, setIsLiked] = useState<boolean>(false);
+  const [isLiked, setIsLiked] = useState<boolean>(
+    !!user?.likedComments.find(
+      (likedCommentId) => likedCommentId === commentId,
+    ),
+  );
+  console.log(user?.likedComments);
   const [likes, setLikes] = useState<number>(initialLikes);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [isReplying, setIsReplying] = useState<boolean>(false);
   const [replyContent, setReplyContent] = useState<string>('');
+  const [disabledLike, setDisabledLike] = useState<boolean>(false);
   const commentRef = useRef<HTMLDivElement>(null);
 
   const canEdit = owner.uid === user?.uid && isEditing;
   const blogId = pathname.split('/')[2];
 
   const decrementLikes = async () => {
-    setLikes(likes - 1);
-    await api({
+    setDisabledLike(true);
+    const response = await api({
       url: `/blogs/${blogId}/comments/${commentId}/dislike`,
       method: 'PUT',
       headers: {
         authorization: `Bearer ${localStorage.getItem('idToken')}`,
       },
     });
+    if (response.status === 200) {
+      fetchSessionHandler();
+    }
+    setLikes(likes - 1);
+    setDisabledLike(false);
   };
   const incrementLikes = async () => {
-    setLikes(likes + 1);
-    await api({
+    setDisabledLike(true);
+    const response = await api({
       url: `/blogs/${blogId}/comments/${commentId}/like`,
       method: 'PUT',
       headers: {
         authorization: `Bearer ${localStorage.getItem('idToken')}`,
       },
     });
+    if (response.status === 200) {
+      fetchSessionHandler();
+    }
+    setLikes(likes + 1);
+    setDisabledLike(false);
   };
 
   const handleLike = () => {
@@ -245,7 +261,7 @@ const Comment: React.FC<CommentProps> = ({ comment, fetchHandler }) => {
           <Stack direction="row" alignItems="center" spacing={1.5}>
             <Button
               onClick={handleLike}
-              disabled={!visible}
+              disabled={!visible || disabledLike}
               startIcon={
                 <img
                   src={
@@ -261,7 +277,9 @@ const Comment: React.FC<CommentProps> = ({ comment, fetchHandler }) => {
             >
               สาธุ
             </Button>
-            {likes}
+            <Typography color={disabledLike ? 'grey.500' : 'inherit'}>
+              {likes}
+            </Typography>
             <Button
               startIcon={<ReplyIcon />}
               onClick={handleOnClickReply}

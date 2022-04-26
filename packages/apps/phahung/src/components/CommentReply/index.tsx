@@ -38,7 +38,7 @@ const CommentReply: React.FC<CommentReplyProps> = ({
   parentRef,
   fetchHandler,
 }) => {
-  const { user } = useUser();
+  const { user, fetchSessionHandler } = useUser();
   const { pathname } = useLocation();
   const {
     id: commentId,
@@ -52,17 +52,22 @@ const CommentReply: React.FC<CommentReplyProps> = ({
 
   const [content, setContent] = useState<string>(initialContent);
   const [readMore, setReadMore] = useState<boolean>(false);
-  const [isLiked, setIsLiked] = useState<boolean>(false);
+  const [isLiked, setIsLiked] = useState<boolean>(
+    !!user?.likedComments.find(
+      (likedCommentId) => likedCommentId === commentId,
+    ),
+  );
   const [likes, setLikes] = useState<number>(initialLikes);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [isReplying, setIsReplying] = useState<boolean>(false);
   const [replyContent, setReplyContent] = useState<string>('');
+  const [disabledLike, setDisabledLike] = useState<boolean>(false);
 
   const canEdit = owner.uid === user?.uid && isEditing;
   const blogId = pathname.split('/')[2];
 
   const decrementLikes = async () => {
-    setLikes(likes - 1);
+    setDisabledLike(true);
     const response = await api({
       url: `/blogs/${blogId}/comments/${parentId}/subcomment/${commentId}/dislike`,
       method: 'PUT',
@@ -70,13 +75,14 @@ const CommentReply: React.FC<CommentReplyProps> = ({
         authorization: `Bearer ${localStorage.getItem('idToken')}`,
       },
     });
-    console.log(response);
+    if (response.status === 200) {
+      fetchSessionHandler();
+    }
+    setLikes(likes - 1);
+    setDisabledLike(false);
   };
   const incrementLikes = async () => {
-    setLikes(likes + 1);
-    console.log(
-      `/blogs/${blogId}/comments/${parentId}/subcomment/${commentId}/like`,
-    );
+    setDisabledLike(true);
     const response = await api({
       url: `/blogs/${blogId}/comments/${parentId}/subcomment/${commentId}/like`,
       method: 'PUT',
@@ -84,7 +90,11 @@ const CommentReply: React.FC<CommentReplyProps> = ({
         authorization: `Bearer ${localStorage.getItem('idToken')}`,
       },
     });
-    console.log(response);
+    if (response.status === 200) {
+      fetchSessionHandler();
+    }
+    setLikes(likes + 1);
+    setDisabledLike(false);
   };
 
   const handleLike = () => {
@@ -273,7 +283,7 @@ const CommentReply: React.FC<CommentReplyProps> = ({
           <Stack direction="row" alignItems="center" spacing={1.5}>
             <Button
               onClick={handleLike}
-              disabled={!visible}
+              disabled={!visible || disabledLike}
               startIcon={
                 <img
                   src={
@@ -289,7 +299,9 @@ const CommentReply: React.FC<CommentReplyProps> = ({
             >
               สาธุ
             </Button>
-            {likes}
+            <Typography color={disabledLike ? 'grey.500' : 'inherit'}>
+              {likes}
+            </Typography>
             <Button
               startIcon={<ReplyIcon />}
               onClick={handleOnClickReply}
