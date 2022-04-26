@@ -46,13 +46,13 @@ const Comment: React.FC<CommentProps> = ({ comment, fetchHandler }) => {
       (likedCommentId) => likedCommentId === commentId,
     ),
   );
-  console.log(user?.likedComments);
   const [likes, setLikes] = useState<number>(initialLikes);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [isReplying, setIsReplying] = useState<boolean>(false);
   const [replyContent, setReplyContent] = useState<string>('');
   const [disabledLike, setDisabledLike] = useState<boolean>(false);
   const commentRef = useRef<HTMLDivElement>(null);
+  const isOwner = useMemo(() => user?.uid === owner.uid, [user, owner]);
 
   const canEdit = owner.uid === user?.uid && isEditing;
   const blogId = pathname.split('/')[2];
@@ -104,6 +104,7 @@ const Comment: React.FC<CommentProps> = ({ comment, fetchHandler }) => {
   const handleCanEdit = () => {
     setIsEditing(true);
   };
+
   const handleDelete = async () => {
     const responseJson = await api<ParentComment>({
       url: `/blogs/${blogId}/comments/${commentId}`,
@@ -198,14 +199,14 @@ const Comment: React.FC<CommentProps> = ({ comment, fetchHandler }) => {
                   </Typography>
                 </Stack>
               </Stack>
-              <Typography>
+              {isOwner && (
                 <PopperComment
                   commentId={commentId}
                   handleCanEdit={handleCanEdit}
                   handleDelete={handleDelete}
                   handleHideComment={handleHideComment}
                 />
-              </Typography>
+              )}
             </Stack>
           </Stack>
           <Divider />

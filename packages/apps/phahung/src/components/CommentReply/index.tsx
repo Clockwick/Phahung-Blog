@@ -11,7 +11,7 @@ import {
   Link,
 } from '@mui/material';
 import { styled } from '@mui/styles';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 // eslint-disable-next-line import/no-unresolved
 import PopperComment from 'components/Popper/PopperComment';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
@@ -62,7 +62,7 @@ const CommentReply: React.FC<CommentReplyProps> = ({
   const [isReplying, setIsReplying] = useState<boolean>(false);
   const [replyContent, setReplyContent] = useState<string>('');
   const [disabledLike, setDisabledLike] = useState<boolean>(false);
-
+  const isOwner = useMemo(() => user?.uid === owner.uid, [user, owner]);
   const canEdit = owner.uid === user?.uid && isEditing;
   const blogId = pathname.split('/')[2];
 
@@ -122,40 +122,41 @@ const CommentReply: React.FC<CommentReplyProps> = ({
   const handleCanEdit = () => {
     setIsEditing(true);
   };
-  // const handleDelete = async () => {
-  //   const responseJson = await api<ParentComment>({
-  //     url: `/blogs/${blogId}/comments/${commentId}`,
-  //     method: 'DELETE',
-  //     headers: {
-  //       authorization: `Bearer ${localStorage.getItem('idToken')}`,
-  //     },
-  //   });
-  //   if (responseJson.status === 200) {
-  //     fetchHandler();
-  //   }
-  // };
+
+  const handleDelete = async () => {
+    const responseJson = await api<SubComment>({
+      url: `/blogs/${blogId}/comments/${commentId}`,
+      method: 'DELETE',
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('idToken')}`,
+      },
+    });
+    if (responseJson.status === 200) {
+      fetchHandler();
+    }
+  };
 
   const handleHideComment = (id: string) => {
     console.log('hide comment');
   };
 
-  // const handleUpdateContent = async () => {
-  //   const responseJson = await api<ParentComment>({
-  //     url: `/blogs/${blogId}/comments/${commentId}`,
-  //     method: 'PUT',
-  //     headers: {
-  //       authorization: `Bearer ${localStorage.getItem('idToken')}`,
-  //     },
-  //     data: {
-  //       content,
-  //     },
-  //   });
+  const handleUpdateContent = async () => {
+    const responseJson = await api<SubComment>({
+      url: `/blogs/${blogId}/comments/${commentId}`,
+      method: 'PUT',
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('idToken')}`,
+      },
+      data: {
+        content,
+      },
+    });
 
-  //   if (responseJson.status === 200) {
-  //     setIsEditing(false);
-  //     fetchHandler();
-  //   }
-  // };
+    if (responseJson.status === 200) {
+      setIsEditing(false);
+      fetchHandler();
+    }
+  };
 
   const handleReply = async () => {
     const response = await api({
@@ -183,8 +184,6 @@ const CommentReply: React.FC<CommentReplyProps> = ({
   const handleOnClickReply = () => {
     setIsReplying(true);
   };
-
-  // console.log(commentId, comments);
 
   return (
     <Box>
@@ -217,14 +216,14 @@ const CommentReply: React.FC<CommentReplyProps> = ({
                   </Typography>
                 </Stack>
               </Stack>
-              <Typography sx={{}}>
-                {/* <PopperComment
+              {isOwner && (
+                <PopperComment
                   commentId={commentId}
                   handleCanEdit={handleCanEdit}
-                  // handleDelete={handleDelete}
+                  handleDelete={handleDelete}
                   handleHideComment={handleHideComment}
-                /> */}
-              </Typography>
+                />
+              )}
             </Stack>
           </Stack>
           <Divider />
@@ -237,7 +236,7 @@ const CommentReply: React.FC<CommentReplyProps> = ({
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
               />
-              {/* <Button onClick={handleUpdateContent}>ยืนยัน</Button> */}
+              <Button onClick={handleUpdateContent}>ยืนยัน</Button>
             </Stack>
           ) : content.length > 50 ? (
             <>
