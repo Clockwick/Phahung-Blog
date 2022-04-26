@@ -16,6 +16,7 @@ interface PopperCommentProps {
   handleDelete: () => void;
   handleHideComment: () => void;
   handleUnHideComment: () => void;
+  handleBanUser: () => void;
 }
 const PopperComment: React.FC<PopperCommentProps> = ({
   visible,
@@ -24,6 +25,7 @@ const PopperComment: React.FC<PopperCommentProps> = ({
   handleDelete,
   handleHideComment,
   handleUnHideComment,
+  handleBanUser,
 }): ReactElement<any, string | JSXElementConstructor<any>> => {
   const [anchorEl, setAnchorEl] =
     React.useState<HTMLButtonElement | null>(null);
@@ -52,6 +54,10 @@ const PopperComment: React.FC<PopperCommentProps> = ({
   };
   const handleOnClickUnHideComment = () => {
     handleUnHideComment();
+    setOpen(false);
+  };
+  const handleOnClickBanUser = () => {
+    handleBanUser();
     setOpen(false);
   };
   const isAdmin = useMemo(() => user?.role === 0, [user]);
@@ -90,7 +96,7 @@ const PopperComment: React.FC<PopperCommentProps> = ({
               )}
               <Button
                 sx={{ width: '100%' }}
-                onClick={() => handleOnClickDeleteComment()}
+                onClick={() => handleOnClickBanUser()}
               >
                 {' '}
                 Ban User

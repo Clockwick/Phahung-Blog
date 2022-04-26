@@ -62,6 +62,7 @@ const CommentReply: React.FC<CommentReplyProps> = ({
   const [isReplying, setIsReplying] = useState<boolean>(false);
   const [replyContent, setReplyContent] = useState<string>('');
   const [disabledLike, setDisabledLike] = useState<boolean>(false);
+  const [isBanned, setIsBanned] = useState<boolean>(false);
   const isOwner = useMemo(() => user?.uid === owner.uid, [user, owner]);
   const isAdmin = useMemo(() => user?.role === 0, [user]);
   const canEdit = owner.uid === user?.uid && isEditing;
@@ -210,8 +211,33 @@ const CommentReply: React.FC<CommentReplyProps> = ({
     }
   };
 
+  const handleBanUser = async () => {
+    const response = await api({
+      url: `/users/${owner.uid}/ban`,
+      method: 'DELETE',
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('idToken')}`,
+      },
+    });
+    if (response.status === 200) {
+      setIsBanned(true);
+      await new Promise<void>((done) => setTimeout(() => done(), 3000));
+      fetchHandler();
+    }
+  };
+
   const handleOnClickReply = () => {
     setIsReplying(true);
+  };
+
+  const paperColor = (): string => {
+    if (!visible) {
+      return '#bdbdbd';
+    }
+    if (isBanned) {
+      return 'red';
+    }
+    return '';
   };
 
   return (
@@ -219,7 +245,7 @@ const CommentReply: React.FC<CommentReplyProps> = ({
       <Box
         sx={{
           padding: '20px',
-          backgroundColor: !visible ? '#bdbdbd' : '',
+          backgroundColor: paperColor(),
           color: !visible ? '#4b4949' : '',
         }}
       >
@@ -253,6 +279,7 @@ const CommentReply: React.FC<CommentReplyProps> = ({
                   handleDelete={handleDelete}
                   handleHideComment={handleHideComment}
                   handleUnHideComment={handleUnHideComment}
+                  handleBanUser={handleBanUser}
                 />
               )}
             </Stack>
