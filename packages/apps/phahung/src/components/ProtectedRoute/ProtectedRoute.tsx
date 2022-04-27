@@ -9,12 +9,12 @@ import type { RouteProps } from 'react-router-dom';
 const Forbidden = React.lazy(() => import('pages/Forbidden'));
 
 interface Props extends RouteProps {
-  acceptRoles: number;
+  acceptRoles: string[];
 }
 
 const ProtectedRoute: React.FC<Props> = ({ acceptRoles, ...routeProps }) => {
   const { user, isLoggedIn } = useUser();
-  const canAccess = user && acceptRoles === user.role;
+  const canAccess = user && acceptRoles.includes(user.role.toString());
   return (
     <>
       {!isLoggedIn && <Redirect to="/signin" />}

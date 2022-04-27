@@ -31,7 +31,7 @@ const App: React.FC = () => {
               exact
               path="/announcement"
               component={ListAnnouncement}
-              acceptRoles={1}
+              acceptRoles={['0', '1']}
             />
             <Route path="*" component={NotFound} />
           </Switch>
