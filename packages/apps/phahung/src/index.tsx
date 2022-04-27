@@ -18,7 +18,7 @@ ReactDOM.render(
   <ThemeProvider theme={theme}>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <Box sx={{ backgroundColor: '#FFF7F2' }}>
+        <Box sx={{ backgroundColor: '#FFF7F2', minHeight: '100vh' }}>
           <App />
         </Box>
       </PersistGate>
