@@ -1,6 +1,6 @@
 const configPage = {
-  page: 4,
-  perPage: 3,
+  page: 3,
+  perPage: 5,
 };
 
 export default configPage;
