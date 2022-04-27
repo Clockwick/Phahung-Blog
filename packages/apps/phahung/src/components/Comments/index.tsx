@@ -12,27 +12,37 @@ import {
   Link,
 } from '@mui/material';
 import { useUser } from 'store/hooks/userHook';
+import { AxiosRequestHeaders } from 'axios';
 
 const Comments = () => {
   const { id: blogId } = useParams<{ id: string }>();
-  const { user } = useUser();
+  const { user, isLoggedIn } = useUser();
   const [didFetchComments, setDidFetchComments] = useState<boolean>(false);
   const [comments, setComments] = useState<ParentComment[]>([]);
   const [newComment, setNewComment] = useState<string>('');
   const [isCreatingComment, setIsCreatingComment] = useState<boolean>(false);
-  const { isLoggedIn } = useUser();
 
   const fetchComments = useCallback(async (): Promise<void> => {
     const url = `/blogs/${blogId}/comments`;
-    const responseJson = await api<ParentComment[]>({
-      url,
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('idToken')}`,
-      },
-    });
-    if (responseJson.status === 200) {
-      setComments(responseJson.data);
+    if (isLoggedIn) {
+      const responseJson = await api<ParentComment[]>({
+        url,
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('idToken')}`,
+        },
+      });
+      if (responseJson.status === 200) {
+        setComments(responseJson.data);
+      }
+    } else {
+      const responseJson = await api<ParentComment[]>({
+        url,
+        method: 'GET',
+      });
+      if (responseJson.status === 200) {
+        setComments(responseJson.data);
+      }
     }
   }, [blogId]);
 

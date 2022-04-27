@@ -236,14 +236,18 @@ const Profile: React.FC = () => {
                 justifyContent: 'center',
               }}
             >
-              <Avatar
-                sx={{
-                  height: '30vh',
-                  width: 'auto',
-                  border: '1px solid #EEEEEE',
-                }}
-                src={userImage ? userImage : '/assets/images/profile.png'}
-              />
+              {userImage ? (
+                <img src={userImage} alt="profile" />
+              ) : (
+                <Avatar
+                  sx={{
+                    height: '30vh',
+                    width: 'auto',
+                    border: '1px solid #EEEEEE',
+                  }}
+                  src={userImage ? userImage : '/assets/images/profile.png'}
+                />
+              )}
             </Box>
 
             <IconButton

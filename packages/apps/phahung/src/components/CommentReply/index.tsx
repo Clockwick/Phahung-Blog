@@ -395,7 +395,11 @@ const CommentReply: React.FC<CommentReplyProps> = ({
             <Stack direction="row" alignItems="center" spacing={2}>
               <Avatar
                 alt="Remy Sharp"
-                src="https://images.unsplash.com/photo-1543357480-c60d40007a3f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMTc3MDV8MHwxfHJhbmRvbXx8fHx8fHx8fDE2NDk5NTczNjc&ixlib=rb-1.2.1&q=80&w=400"
+                src={
+                  user?.picture !== null
+                    ? user?.picture
+                    : '/assets/images/profile.png'
+                }
                 sx={{ width: 56, height: 56 }}
               />
               <TextareaAutosize
